@@ -299,7 +299,7 @@ class CosyVoice2Model(CosyVoiceModel):
         if self.fp16 is True:
             self.llm.half()
             self.flow.half()
-        import ipdb;ipdb.set_trace()
+        # import ipdb;ipdb.set_trace()
         self.token_hop_len = 1 * self.flow.input_frame_rate #2
         # here we fix flow encoder/decoder decoding_chunk_size, in the future we will send it as arguments, or use cache
         self.flow.encoder.static_chunk_size = 1 * self.flow.input_frame_rate #2
@@ -318,6 +318,7 @@ class CosyVoice2Model(CosyVoiceModel):
         self.llm_end_dict = {}
         self.hift_cache_dict = {}
         self.first_chunk_size = 20
+        # self.first_chunk_size = 16
 
     def load_jit(self, flow_encoder_model):
         flow_encoder = torch.jit.load(flow_encoder_model, map_location=self.device)
@@ -327,7 +328,7 @@ class CosyVoice2Model(CosyVoiceModel):
         
         import time
         # --- Flow 模块计步 ---
-        torch.npu.synchronize() # 确保之前的操作完成
+        # torch.npu.synchronize() # 确保之前的操作完成
         start_flow = time.time()
         
         tts_mel, _ = self.flow.inference(token=token.to(self.device),
@@ -339,7 +340,7 @@ class CosyVoice2Model(CosyVoiceModel):
                                          embedding=embedding.to(self.device),
                                          finalize=finalize)
         
-        torch.npu.synchronize()
+        # torch.npu.synchronize()
         flow_time = (time.time() - start_flow) * 1000 # 毫秒
 
         tts_mel = tts_mel[:, :, token_offset * self.flow.token_mel_ratio:]
@@ -370,7 +371,7 @@ class CosyVoice2Model(CosyVoiceModel):
             if self.hift_cache_dict[uuid] is not None:
                 tts_speech = fade_in_out(tts_speech, self.hift_cache_dict[uuid]['speech'], self.speech_window)
         
-        torch.npu.synchronize()
+        # torch.npu.synchronize()
         hift_time = (time.time() - start_hift) * 1000 # 毫秒
         # print(f"模块耗时详情: Flow={flow_time:.2f}ms | Hift={hift_time:.2f}ms")
         
@@ -393,7 +394,7 @@ class CosyVoice2Model(CosyVoiceModel):
         # import ipdb;ipdb.set_trace()
         if stream is True:
             token_offset = 0
-            
+            print("首保大小为：",self.first_chunk_size)
             # 1. 记录 LLM 开始迭代的时间
             llm_start_time = time.time()
 
@@ -411,7 +412,7 @@ class CosyVoice2Model(CosyVoiceModel):
                     #this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid][:token_offset + self.token_hop_len + self.flow.pre_lookahead_len]).unsqueeze(dim=0)
                     
                     # --- 计算 LLM 攒够这一包 token 的耗时 ---
-                    torch_npu.npu.synchronize()
+                    # torch_npu.npu.synchronize()
                     llm_duration = (time.time() - llm_start_time) * 1000
                     
                     if token_offset == 0:
@@ -430,7 +431,7 @@ class CosyVoice2Model(CosyVoiceModel):
                                                         token_offset=token_offset,
                                                         finalize=False)
                     
-                    torch_npu.npu.synchronize()
+                    # torch_npu.npu.synchronize()
                     t2w_duration = (time.time() - start_t2w) * 1000
                     
                     # 打印当前分包的详细耗时
@@ -443,6 +444,7 @@ class CosyVoice2Model(CosyVoiceModel):
                         token_offset += self.first_chunk_size
                     else:
                         token_offset += self.token_hop_len
+                    # print(self.token_hop_len)
                     yield {'tts_speech': this_tts_speech.cpu()}
 
                     # 重置 LLM 计时器，准备下一包
@@ -460,7 +462,7 @@ class CosyVoice2Model(CosyVoiceModel):
                                                 token_offset=token_offset,
                                                 finalize=True)
             
-            torch_npu.npu.synchronize()
+            # torch_npu.npu.synchronize()
             final_duration = (time.time() - start_final) * 1000
             # print(f"[Profiling Final] Tail Logic Time: {final_duration:.1f}ms")
 

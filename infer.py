@@ -24,8 +24,8 @@ if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description="CosyVoice infer")
     parser.add_argument("--model_path", type=str, help="model path")
-    parser.add_argument('--warm_up_times', default=2, type=int, help='warm up times')
-    parser.add_argument('--infer_count', default=20, type=int, help='infer loop count')
+    parser.add_argument('--warm_up_times', default=5, type=int, help='warm up times')
+    parser.add_argument('--infer_count', default=5, type=int, help='infer loop count')
     parser.add_argument('--stream', action="store_true", help='stream infer')
     args = parser.parse_args()
 
@@ -54,4 +54,4 @@ if __name__ == '__main__':
         # import ipdb;ipdb.set_trace()
         for _ in range(args.infer_count):
             for i, j in enumerate(cosyvoice.inference_sft(prompt_txt, '中文女', stream=args.stream)):
-                torchaudio.save('sft_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)
+                torchaudio.save('/home/ma-user/work/test/model/CosyVoice-claude/testout/flowstep4/sft_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)
