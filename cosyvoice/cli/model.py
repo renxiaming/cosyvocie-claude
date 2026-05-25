@@ -318,6 +318,8 @@ class CosyVoice2Model(CosyVoiceModel):
         self.llm_end_dict = {}
         self.hift_cache_dict = {}
         self.first_chunk_size = 20
+        # self.flow.pre_lookahead_len = 2
+        self.flow_context_len = int(os.environ.get('COSYVOICE2_FLOW_CONTEXT_TOKENS', '50'))
         # self.first_chunk_size = 16
 
     def load_jit(self, flow_encoder_model):
@@ -394,7 +396,7 @@ class CosyVoice2Model(CosyVoiceModel):
         # import ipdb;ipdb.set_trace()
         if stream is True:
             token_offset = 0
-            print("首保大小为：",self.first_chunk_size)
+            print("首保大小为：", self.first_chunk_size, "Flow上下文大小为：", self.flow_context_len)
             # 1. 记录 LLM 开始迭代的时间
             llm_start_time = time.time()
 
@@ -417,8 +419,12 @@ class CosyVoice2Model(CosyVoiceModel):
                     
                     if token_offset == 0:
                         this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid][:self.first_chunk_size + self.flow.pre_lookahead_len]).unsqueeze(dim=0)
+                        flow_token_offset = 0
                     else: 
-                        this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid][:token_offset + self.token_hop_len + self.flow.pre_lookahead_len]).unsqueeze(dim=0)
+                        flow_token_start = max(0, token_offset - self.flow_context_len)
+                        flow_token_end = token_offset + self.token_hop_len + self.flow.pre_lookahead_len
+                        this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid][flow_token_start:flow_token_end]).unsqueeze(dim=0)
+                        flow_token_offset = token_offset - flow_token_start
                     
                     # --- 2. 测量 token2wav (包含 Flow 和 Hift) 的耗时 ---
                     start_t2w = time.time()
@@ -428,16 +434,16 @@ class CosyVoice2Model(CosyVoiceModel):
                                                         prompt_feat=prompt_speech_feat,
                                                         embedding=flow_embedding,
                                                         uuid=this_uuid,
-                                                        token_offset=token_offset,
+                                                        token_offset=flow_token_offset,
                                                         finalize=False)
                     
                     # torch_npu.npu.synchronize()
                     t2w_duration = (time.time() - start_t2w) * 1000
                     
                     # 打印当前分包的详细耗时
-                    # print(f"\n[Profiling] Chunk Offset: {token_offset}")
-                    # print(f" > LLM 累积耗时: {llm_duration:.2f}ms")
-                    # print(f" > Flow+Hift 推理耗时: {t2w_duration:.2f}ms")
+                    print(f"\n[Profiling] Chunk Offset: {token_offset}")
+                    print(f" > LLM 累积耗时: {llm_duration:.2f}ms")
+                    print(f" > Flow+Hift 推理耗时: {t2w_duration:.2f}ms")
                     
                     #token_offset += self.token_hop_len
                     if token_offset == 0:
@@ -453,13 +459,14 @@ class CosyVoice2Model(CosyVoiceModel):
             # --- 2. 结尾 Finalize 处理 (此处即为你问的“结尾”) ---
             start_final = time.time()
 
-            this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid]).unsqueeze(dim=0)
+            flow_token_start = max(0, token_offset - self.flow_context_len)
+            this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid][flow_token_start:]).unsqueeze(dim=0)
             this_tts_speech = self.token2wav(token=this_tts_speech_token,
                                                 prompt_token=flow_prompt_speech_token,
                                                 prompt_feat=prompt_speech_feat,
                                                 embedding=flow_embedding,
                                                 uuid=this_uuid,
-                                                token_offset=token_offset,
+                                                token_offset=token_offset - flow_token_start,
                                                 finalize=True)
             
             # torch_npu.npu.synchronize()

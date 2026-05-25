@@ -54,4 +54,4 @@ if __name__ == '__main__':
         # import ipdb;ipdb.set_trace()
         for _ in range(args.infer_count):
             for i, j in enumerate(cosyvoice.inference_sft(prompt_txt, '中文女', stream=args.stream)):
-                torchaudio.save('/home/ma-user/work/test/model/CosyVoice-claude/testout/flowstep4/sft_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)
+                torchaudio.save('/home/ma-user/work/test/model/CosyVoice-claude/testout/flowstep4_50look/sft_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)

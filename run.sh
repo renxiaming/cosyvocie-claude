@@ -6,6 +6,8 @@ export PYTHONPATH=transformers/src:$PYTHONPATH
 # export ASCEND_GEO_W8A16=1
 # export DYNAMIC_QUANT=1
 
+
+
 # 使能环境变量
 source /usr/local/Ascend/ascend-toolkit/set_env.sh
 # 规避找不到ttsfrd

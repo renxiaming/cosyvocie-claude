@@ -185,3 +185,4 @@ def mask_to_bias(mask: torch.Tensor, dtype: torch.dtype) -> torch.Tensor:
     #     chunk_masks = (1.0 - chunk_masks) * torch.finfo(dtype).min
     mask = (1.0 - mask) * -1.0e+10
     return mask
+ 
