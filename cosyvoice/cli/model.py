@@ -319,7 +319,7 @@ class CosyVoice2Model(CosyVoiceModel):
         self.hift_cache_dict = {}
         self.first_chunk_size = 20
         # self.flow.pre_lookahead_len = 2
-        self.flow_context_len = int(os.environ.get('COSYVOICE2_FLOW_CONTEXT_TOKENS', '50'))
+        self.flow_context_len = int(os.environ.get('COSYVOICE2_FLOW_CONTEXT_TOKENS', '75'))
         # self.first_chunk_size = 16
 
     def load_jit(self, flow_encoder_model):
@@ -375,7 +375,7 @@ class CosyVoice2Model(CosyVoiceModel):
         
         # torch.npu.synchronize()
         hift_time = (time.time() - start_hift) * 1000 # 毫秒
-        # print(f"模块耗时详情: Flow={flow_time:.2f}ms | Hift={hift_time:.2f}ms")
+        print(f"模块耗时详情: Flow={flow_time:.2f}ms | Hift={hift_time:.2f}ms")
         
         return tts_speech
 
