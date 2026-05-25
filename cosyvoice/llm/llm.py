@@ -321,6 +321,9 @@ class Qwen2LM(TransformerLM):
         cache = None
         input_length = lm_input.shape[1]
         for i in range(max_len):
+            # 档位统计
+            # if i % 25 == 0:
+            #     print(f"[LLM] input_length={input_length}, i={i}, curr_len={input_length + i}")
             prompt_length = input_length + i
             if i == 0:
                 masks = torch.tril(torch.ones((1, lm_input.shape[1], lm_input.shape[1]), device=lm_input.device)).to(torch.bool).logical_not()
