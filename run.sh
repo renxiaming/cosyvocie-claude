@@ -21,3 +21,4 @@ export CPLUS_INCLUDE_PATH=/usr/local/Ascend/ascend-toolkit/8.1.RC1/toolkit/toolc
 rm -rf ~/.cache/modelscope/
 
 python3 infer.py --model_path=../weight/CosyVoice2-0.5B --stream
+# python3 register_wav.py 

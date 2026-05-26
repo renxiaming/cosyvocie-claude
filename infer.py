@@ -9,6 +9,7 @@
 # See the Mulan PSL v2 for more details.
 
 import argparse
+import os
 import torch
 import torchaudio
 import torch_npu
@@ -26,8 +27,11 @@ if __name__ == '__main__':
     parser.add_argument("--model_path", type=str, help="model path")
     parser.add_argument('--warm_up_times', default=5, type=int, help='warm up times')
     parser.add_argument('--infer_count', default=5, type=int, help='infer loop count')
+    parser.add_argument('--output_dir', default='/home/ma-user/work/test/model/CosyVoice-claude/testout/demo2',
+                        type=str, help='output dir')
     parser.add_argument('--stream', action="store_true", help='stream infer')
     args = parser.parse_args()
+    os.makedirs(args.output_dir, exist_ok=True)
 
     cosyvoice = CosyVoice2(args.model_path, load_om=True, fp16=True)
     cosyvoice.model.llm.eval()
@@ -43,15 +47,31 @@ if __name__ == '__main__':
 
 
     # 输入数据加载
-    prompt_txt = '收到好友从远方寄来的生日礼物，那份意外的惊喜和深深的祝福，让我心中充满了甜蜜的快乐，笑容如花儿般绽放。'
+    prompt_texts = [
+        '是的，您现在还有大概1个G的流量。',
+        '不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。',
+        '查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。',
+        '好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！',
+        '您好，中国移动，很高兴为您服务。请问有什么可以帮您？',
+        '好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？',
+        '好的。这款“青春畅想5G套餐”主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？',
+    ]
 
     with torch.no_grad():
         # import ipdb;ipdb.set_trace()
         print('warm up start')
         for _ in range(args.warm_up_times):
-            next(cosyvoice.inference_sft(prompt_txt, '中文女', stream=args.stream))
+            next(cosyvoice.inference_sft(prompt_texts[0], '03729', stream=args.stream))
         print('warm up end')
         # import ipdb;ipdb.set_trace()
-        for _ in range(args.infer_count):
-            for i, j in enumerate(cosyvoice.inference_sft(prompt_txt, '中文女', stream=args.stream)):
-                torchaudio.save('/home/ma-user/work/test/model/CosyVoice-claude/testout/flowstep4_75look/sft_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)
+        for infer_idx in range(args.infer_count):
+            for text_idx, prompt_txt in enumerate(prompt_texts):
+                print('[INFO] infer round {}, text {}: {}'.format(infer_idx, text_idx, prompt_txt))
+                speech_chunks = []
+                for _, j in enumerate(cosyvoice.inference_sft(prompt_txt, '03729', stream=args.stream)):
+                    speech_chunks.append(j['tts_speech'])
+                if speech_chunks:
+                    full_speech = torch.cat(speech_chunks, dim=1)
+                    output_path = os.path.join(args.output_dir, 'sft_full_{}_{}.wav'.format(infer_idx, text_idx))
+                    torchaudio.save(output_path, full_speech, cosyvoice.sample_rate)
+                    print('[INFO] save full speech to {}'.format(output_path))

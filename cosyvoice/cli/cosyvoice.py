@@ -171,9 +171,13 @@ class CosyVoice2(CosyVoice):
             load_jit, load_trt, fp16 = False, False, False
             logging.warning('no cuda device, set load_jit/load_trt/fp16 to False')
         self.model = CosyVoice2Model(configs['llm'], configs['flow'], configs['hift'], fp16)
-        self.model.load('{}/llm.pt'.format(model_dir),
+        self.model.load('/home/ma-user/work/test/model/CosyVoice-claude/huawei_model/llm.pt',
                         '{}/flow.pt'.format(model_dir),
                         '{}/hift.pt'.format(model_dir))
+        
+        # self.model.load('{}/llm.pt'.format(model_dir),
+        #                 '{}/flow.pt'.format(model_dir),
+        #                 '{}/hift.pt'.format(model_dir))
         if load_jit:
             self.model.load_jit('{}/flow.encoder.{}.zip'.format(model_dir, 'fp16' if self.fp16 is True else 'fp32'))
         if load_trt:

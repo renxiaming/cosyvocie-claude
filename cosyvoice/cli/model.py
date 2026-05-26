@@ -67,7 +67,7 @@ class CosyVoiceModel:
         self.hift_cache_dict = {}
 
     def load(self, llm_model, flow_model, hift_model):
-        self.llm.load_state_dict(torch.load(llm_model, map_location=self.device), strict=True)
+        self.llm.load_state_dict(torch.load(llm_model, map_location=self.device), strict=False)
         self.llm.to(self.device).eval()
         self.flow.load_state_dict(torch.load(flow_model, map_location=self.device), strict=True)
         self.flow.to(self.device).eval()
@@ -300,7 +300,8 @@ class CosyVoice2Model(CosyVoiceModel):
             self.llm.half()
             self.flow.half()
         # import ipdb;ipdb.set_trace()
-        self.token_hop_len = 1 * self.flow.input_frame_rate #2
+        # self.token_hop_len = 2 * self.flow.input_frame_rate #2
+        self.token_hop_len = 50
         # here we fix flow encoder/decoder decoding_chunk_size, in the future we will send it as arguments, or use cache
         self.flow.encoder.static_chunk_size = 1 * self.flow.input_frame_rate #2
         self.flow.decoder.estimator.static_chunk_size = 1 * self.flow.input_frame_rate * self.flow.token_mel_ratio #2
@@ -319,7 +320,7 @@ class CosyVoice2Model(CosyVoiceModel):
         self.hift_cache_dict = {}
         self.first_chunk_size = 20
         # self.flow.pre_lookahead_len = 2
-        self.flow_context_len = int(os.environ.get('COSYVOICE2_FLOW_CONTEXT_TOKENS', '75'))
+        self.flow_context_len = int(os.environ.get('COSYVOICE2_FLOW_CONTEXT_TOKENS', '10000'))
         # self.first_chunk_size = 16
 
     def load_jit(self, flow_encoder_model):
