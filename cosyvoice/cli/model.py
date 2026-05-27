@@ -320,7 +320,7 @@ class CosyVoice2Model(CosyVoiceModel):
         self.hift_cache_dict = {}
         self.first_chunk_size = 20
         # self.flow.pre_lookahead_len = 2
-        self.flow_context_len = int(os.environ.get('COSYVOICE2_FLOW_CONTEXT_TOKENS', '10000'))
+        self.flow_context_len = int(os.environ.get('COSYVOICE2_FLOW_CONTEXT_TOKENS', '100'))
         # self.first_chunk_size = 16
 
     def load_jit(self, flow_encoder_model):

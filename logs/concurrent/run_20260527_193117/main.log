@@ -1,0 +1,69 @@
+[INFO] run_log_dir=logs/concurrent/run_20260527_193117
+[INFO] mode=dedicated_worker_process, concurrency=3
+[INFO] model_path=../weight/CosyVoice2-0.5B
+[INFO] spawned worker_id=0 pid=1172376
+[INFO] spawned worker_id=1 pid=1172377
+[INFO] spawned worker_id=2 pid=1172378
+[INFO] waiting for 3 workers to finish init...
+[INFO] worker ready 1/3, worker_id=2, pid=1172378
+[INFO] worker ready 2/3, worker_id=1, pid=1172377
+[INFO] worker ready 3/3, worker_id=0, pid=1172376
+[INFO] all 3 workers ready in 1026.922s, pids=[1172376, 1172377, 1172378]
+[INFO] round 0 start, dispatch 3 tasks (one per worker queue)
+[INFO] task r0_lane0 worker_id=0 pid=1172376 finished, elapsed=0.807s, audio=2.680s, rtf=0.301
+[INFO] task r0_lane2 worker_id=2 pid=1172378 finished, elapsed=1.275s, audio=4.280s, rtf=0.298
+[INFO] task r0_lane1 worker_id=1 pid=1172377 finished, elapsed=1.607s, audio=5.600s, rtf=0.287
+[INFO] round 0 summary: wall=1.610s, success=3/3, unique_workers=3/3, unique_pids=3/3, total_audio=12.560s, max_latency=1.607s, avg_latency=1.229s, throughput=7.800x realtime
+[INFO] round 1 start, dispatch 3 tasks (one per worker queue)
+[INFO] task r1_lane0 worker_id=0 pid=1172376 finished, elapsed=0.998s, audio=3.080s, rtf=0.324
+[INFO] task r1_lane2 worker_id=2 pid=1172378 finished, elapsed=1.128s, audio=3.640s, rtf=0.310
+[INFO] task r1_lane1 worker_id=1 pid=1172377 finished, elapsed=1.517s, audio=5.080s, rtf=0.299
+[INFO] round 1 summary: wall=1.520s, success=3/3, unique_workers=3/3, unique_pids=3/3, total_audio=11.800s, max_latency=1.517s, avg_latency=1.215s, throughput=7.763x realtime
+[INFO] round 2 start, dispatch 3 tasks (one per worker queue)
+[INFO] task r2_lane0 worker_id=0 pid=1172376 finished, elapsed=0.772s, audio=2.560s, rtf=0.301
+[INFO] task r2_lane2 worker_id=2 pid=1172378 finished, elapsed=1.211s, audio=4.160s, rtf=0.291
+[INFO] task r2_lane1 worker_id=1 pid=1172377 finished, elapsed=1.511s, audio=5.280s, rtf=0.286
+[INFO] round 2 summary: wall=1.514s, success=3/3, unique_workers=3/3, unique_pids=3/3, total_audio=12.000s, max_latency=1.511s, avg_latency=1.165s, throughput=7.927x realtime
+[INFO] round 3 start, dispatch 3 tasks (one per worker queue)
+[INFO] task r3_lane0 worker_id=0 pid=1172376 finished, elapsed=0.781s, audio=2.640s, rtf=0.296
+[INFO] task r3_lane2 worker_id=2 pid=1172378 finished, elapsed=1.213s, audio=4.160s, rtf=0.291
+[INFO] task r3_lane1 worker_id=1 pid=1172377 finished, elapsed=1.736s, audio=6.320s, rtf=0.275
+[INFO] round 3 summary: wall=1.739s, success=3/3, unique_workers=3/3, unique_pids=3/3, total_audio=13.120s, max_latency=1.736s, avg_latency=1.243s, throughput=7.545x realtime
+[INFO] round 4 start, dispatch 3 tasks (one per worker queue)
+[INFO] task r4_lane0 worker_id=0 pid=1172376 finished, elapsed=1.032s, audio=3.200s, rtf=0.323
+[INFO] task r4_lane2 worker_id=2 pid=1172378 finished, elapsed=1.271s, audio=4.320s, rtf=0.294
+[INFO] task r4_lane1 worker_id=1 pid=1172377 finished, elapsed=1.584s, audio=5.520s, rtf=0.287
+[INFO] round 4 summary: wall=1.587s, success=3/3, unique_workers=3/3, unique_pids=3/3, total_audio=13.040s, max_latency=1.584s, avg_latency=1.296s, throughput=8.218x realtime
+[INFO] round 5 start, dispatch 3 tasks (one per worker queue)
+[INFO] task r5_lane0 worker_id=0 pid=1172376 finished, elapsed=0.772s, audio=2.640s, rtf=0.292
+[INFO] task r5_lane2 worker_id=2 pid=1172378 finished, elapsed=1.544s, audio=5.160s, rtf=0.299
+[INFO] task r5_lane1 worker_id=1 pid=1172377 finished, elapsed=1.559s, audio=5.440s, rtf=0.286
+[INFO] round 5 summary: wall=1.561s, success=3/3, unique_workers=3/3, unique_pids=3/3, total_audio=13.240s, max_latency=1.559s, avg_latency=1.291s, throughput=8.481x realtime
+[INFO] round 6 start, dispatch 3 tasks (one per worker queue)
+[INFO] task r6_lane0 worker_id=0 pid=1172376 finished, elapsed=0.816s, audio=2.760s, rtf=0.296
+[INFO] task r6_lane2 worker_id=2 pid=1172378 finished, elapsed=1.353s, audio=4.680s, rtf=0.289
+[INFO] task r6_lane1 worker_id=1 pid=1172377 finished, elapsed=1.697s, audio=6.080s, rtf=0.279
+[INFO] round 6 summary: wall=1.701s, success=3/3, unique_workers=3/3, unique_pids=3/3, total_audio=13.520s, max_latency=1.697s, avg_latency=1.289s, throughput=7.949x realtime
+[INFO] round 7 start, dispatch 3 tasks (one per worker queue)
+[INFO] task r7_lane0 worker_id=0 pid=1172376 finished, elapsed=0.798s, audio=2.680s, rtf=0.298
+[INFO] task r7_lane2 worker_id=2 pid=1172378 finished, elapsed=1.324s, audio=4.680s, rtf=0.283
+[INFO] task r7_lane1 worker_id=1 pid=1172377 finished, elapsed=1.644s, audio=5.760s, rtf=0.286
+[INFO] round 7 summary: wall=1.647s, success=3/3, unique_workers=3/3, unique_pids=3/3, total_audio=13.120s, max_latency=1.644s, avg_latency=1.256s, throughput=7.965x realtime
+[INFO] round 8 start, dispatch 3 tasks (one per worker queue)
+[INFO] task r8_lane0 worker_id=0 pid=1172376 finished, elapsed=1.054s, audio=3.360s, rtf=0.314
+[INFO] task r8_lane2 worker_id=2 pid=1172378 finished, elapsed=1.307s, audio=4.400s, rtf=0.297
+[INFO] task r8_lane1 worker_id=1 pid=1172377 finished, elapsed=1.560s, audio=5.440s, rtf=0.287
+[INFO] round 8 summary: wall=1.563s, success=3/3, unique_workers=3/3, unique_pids=3/3, total_audio=13.200s, max_latency=1.560s, avg_latency=1.307s, throughput=8.446x realtime
+[INFO] round 9 start, dispatch 3 tasks (one per worker queue)
+[INFO] task r9_lane0 worker_id=0 pid=1172376 finished, elapsed=0.753s, audio=2.480s, rtf=0.304
+[INFO] task r9_lane2 worker_id=2 pid=1172378 finished, elapsed=1.266s, audio=4.240s, rtf=0.299
+[INFO] task r9_lane1 worker_id=1 pid=1172377 finished, elapsed=1.546s, audio=5.520s, rtf=0.280
+[INFO] round 9 summary: wall=1.548s, success=3/3, unique_workers=3/3, unique_pids=3/3, total_audio=12.240s, max_latency=1.546s, avg_latency=1.188s, throughput=7.905x realtime
+========================================================================
+[SUMMARY] log_dir=logs/concurrent/run_20260527_193117
+[SUMMARY] main_log=logs/concurrent/run_20260527_193117/main.log
+[SUMMARY] summary_log=logs/concurrent/run_20260527_193117/summary.log
+[SUMMARY] concurrency=3, rounds=10, total_tasks=30
+[SUMMARY] success=30, failed=0, total_wall=15.990s, total_audio=127.840s
+[SUMMARY] avg_latency=1.248s, p95_latency=1.644s, overall_throughput=7.995x realtime
+========================================================================

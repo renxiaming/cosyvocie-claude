@@ -1,0 +1,303 @@
+[INFO] run_log_dir=logs/concurrent/run_20260527_195445
+[INFO] mode=dedicated_worker_process, concurrency=5, infer_count=5, texts=7
+[INFO] model_path=../weight/CosyVoice2-0.5B
+[INFO] spawned worker_id=0 pid=1265354
+[INFO] spawned worker_id=1 pid=1265355
+[INFO] spawned worker_id=2 pid=1265356
+[INFO] spawned worker_id=3 pid=1265357
+[INFO] spawned worker_id=4 pid=1265358
+[INFO] waiting for 5 workers to finish init...
+[INFO] worker ready 1/5, worker_id=3, pid=1265357
+[INFO] worker ready 2/5, worker_id=2, pid=1265356
+[INFO] worker ready 3/5, worker_id=4, pid=1265358
+[INFO] worker ready 4/5, worker_id=0, pid=1265354
+[INFO] worker ready 5/5, worker_id=1, pid=1265355
+[INFO] all 5 workers ready in 1786.825s, pids=[1265354, 1265355, 1265356, 1265357, 1265358]
+[INFO] infer round 0, text 0: 是的，您现在还有大概1个G的流量。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r0_text0_lane1 worker_id=1 pid=1265355 finished, elapsed=0.926s, audio=2.680s, rtf=0.346
+[INFO] task r0_text0_lane4 worker_id=4 pid=1265358 finished, elapsed=0.949s, audio=2.680s, rtf=0.354
+[INFO] task r0_text0_lane0 worker_id=0 pid=1265354 finished, elapsed=0.951s, audio=2.680s, rtf=0.355
+[INFO] task r0_text0_lane2 worker_id=2 pid=1265356 finished, elapsed=0.991s, audio=2.680s, rtf=0.370
+[INFO] task r0_text0_lane3 worker_id=3 pid=1265357 finished, elapsed=0.997s, audio=2.680s, rtf=0.372
+[INFO] infer round 0 text 0 summary: wall=1.002s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=13.400s, max_latency=0.997s, avg_latency=0.963s, throughput=13.379x realtime
+[INFO] infer round 0, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r0_text1_lane1 worker_id=1 pid=1265355 finished, elapsed=1.789s, audio=5.040s, rtf=0.355
+[INFO] task r0_text1_lane4 worker_id=4 pid=1265358 finished, elapsed=1.816s, audio=5.040s, rtf=0.360
+[INFO] task r0_text1_lane0 worker_id=0 pid=1265354 finished, elapsed=1.842s, audio=5.040s, rtf=0.366
+[INFO] task r0_text1_lane3 worker_id=3 pid=1265357 finished, elapsed=1.847s, audio=5.040s, rtf=0.366
+[INFO] task r0_text1_lane2 worker_id=2 pid=1265356 finished, elapsed=1.860s, audio=5.040s, rtf=0.369
+[INFO] infer round 0 text 1 summary: wall=1.863s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=25.200s, max_latency=1.860s, avg_latency=1.831s, throughput=13.527x realtime
+[INFO] infer round 0, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r0_text2_lane4 worker_id=4 pid=1265358 finished, elapsed=1.440s, audio=4.160s, rtf=0.346
+[INFO] task r0_text2_lane3 worker_id=3 pid=1265357 finished, elapsed=1.475s, audio=4.160s, rtf=0.355
+[INFO] task r0_text2_lane1 worker_id=1 pid=1265355 finished, elapsed=1.482s, audio=4.160s, rtf=0.356
+[INFO] task r0_text2_lane0 worker_id=0 pid=1265354 finished, elapsed=1.485s, audio=4.160s, rtf=0.357
+[INFO] task r0_text2_lane2 worker_id=2 pid=1265356 finished, elapsed=1.493s, audio=4.160s, rtf=0.359
+[INFO] infer round 0 text 2 summary: wall=1.496s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=20.800s, max_latency=1.493s, avg_latency=1.475s, throughput=13.900x realtime
+[INFO] infer round 0, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r0_text3_lane4 worker_id=4 pid=1265358 finished, elapsed=2.000s, audio=6.000s, rtf=0.333
+[INFO] task r0_text3_lane1 worker_id=1 pid=1265355 finished, elapsed=2.019s, audio=6.000s, rtf=0.336
+[INFO] task r0_text3_lane0 worker_id=0 pid=1265354 finished, elapsed=2.057s, audio=6.000s, rtf=0.343
+[INFO] task r0_text3_lane2 worker_id=2 pid=1265356 finished, elapsed=2.068s, audio=6.000s, rtf=0.345
+[INFO] task r0_text3_lane3 worker_id=3 pid=1265357 finished, elapsed=2.076s, audio=6.000s, rtf=0.346
+[INFO] infer round 0 text 3 summary: wall=2.079s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=30.000s, max_latency=2.076s, avg_latency=2.044s, throughput=14.428x realtime
+[INFO] infer round 0, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r0_text4_lane1 worker_id=1 pid=1265355 finished, elapsed=1.224s, audio=3.280s, rtf=0.373
+[INFO] task r0_text4_lane4 worker_id=4 pid=1265358 finished, elapsed=1.243s, audio=3.280s, rtf=0.379
+[INFO] task r0_text4_lane2 worker_id=2 pid=1265356 finished, elapsed=1.258s, audio=3.280s, rtf=0.384
+[INFO] task r0_text4_lane0 worker_id=0 pid=1265354 finished, elapsed=1.271s, audio=3.280s, rtf=0.387
+[INFO] task r0_text4_lane3 worker_id=3 pid=1265357 finished, elapsed=1.293s, audio=3.280s, rtf=0.394
+[INFO] infer round 0 text 4 summary: wall=1.295s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=16.400s, max_latency=1.293s, avg_latency=1.258s, throughput=12.666x realtime
+[INFO] infer round 0, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r0_text5_lane4 worker_id=4 pid=1265358 finished, elapsed=2.151s, audio=6.360s, rtf=0.338
+[INFO] task r0_text5_lane1 worker_id=1 pid=1265355 finished, elapsed=2.153s, audio=6.360s, rtf=0.338
+[INFO] task r0_text5_lane2 worker_id=2 pid=1265356 finished, elapsed=2.171s, audio=6.360s, rtf=0.341
+[INFO] task r0_text5_lane0 worker_id=0 pid=1265354 finished, elapsed=2.189s, audio=6.360s, rtf=0.344
+[INFO] task r0_text5_lane3 worker_id=3 pid=1265357 finished, elapsed=2.231s, audio=6.360s, rtf=0.351
+[INFO] infer round 0 text 5 summary: wall=2.235s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=31.800s, max_latency=2.231s, avg_latency=2.179s, throughput=14.231x realtime
+[INFO] infer round 0, text 6: 好的。这款“青春畅想5G套餐”主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r0_text6_lane0 worker_id=0 pid=1265354 finished, elapsed=4.437s, audio=13.080s, rtf=0.339
+[INFO] task r0_text6_lane4 worker_id=4 pid=1265358 finished, elapsed=4.468s, audio=13.080s, rtf=0.342
+[INFO] task r0_text6_lane1 worker_id=1 pid=1265355 finished, elapsed=4.480s, audio=13.080s, rtf=0.342
+[INFO] task r0_text6_lane3 worker_id=3 pid=1265357 finished, elapsed=4.537s, audio=13.080s, rtf=0.347
+[INFO] task r0_text6_lane2 worker_id=2 pid=1265356 finished, elapsed=4.549s, audio=13.080s, rtf=0.348
+[INFO] infer round 0 text 6 summary: wall=4.556s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=65.400s, max_latency=4.549s, avg_latency=4.494s, throughput=14.354x realtime
+[INFO] infer round 1, text 0: 是的，您现在还有大概1个G的流量。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r1_text0_lane1 worker_id=1 pid=1265355 finished, elapsed=1.167s, audio=3.040s, rtf=0.384
+[INFO] task r1_text0_lane4 worker_id=4 pid=1265358 finished, elapsed=1.173s, audio=3.040s, rtf=0.386
+[INFO] task r1_text0_lane0 worker_id=0 pid=1265354 finished, elapsed=1.196s, audio=3.040s, rtf=0.394
+[INFO] task r1_text0_lane2 worker_id=2 pid=1265356 finished, elapsed=1.210s, audio=3.040s, rtf=0.398
+[INFO] task r1_text0_lane3 worker_id=3 pid=1265357 finished, elapsed=1.211s, audio=3.040s, rtf=0.398
+[INFO] infer round 1 text 0 summary: wall=1.213s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=15.200s, max_latency=1.211s, avg_latency=1.192s, throughput=12.532x realtime
+[INFO] infer round 1, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r1_text1_lane1 worker_id=1 pid=1265355 finished, elapsed=1.943s, audio=5.560s, rtf=0.349
+[INFO] task r1_text1_lane2 worker_id=2 pid=1265356 finished, elapsed=1.953s, audio=5.560s, rtf=0.351
+[INFO] task r1_text1_lane4 worker_id=4 pid=1265358 finished, elapsed=1.954s, audio=5.560s, rtf=0.351
+[INFO] task r1_text1_lane3 worker_id=3 pid=1265357 finished, elapsed=1.978s, audio=5.560s, rtf=0.356
+[INFO] task r1_text1_lane0 worker_id=0 pid=1265354 finished, elapsed=1.983s, audio=5.560s, rtf=0.357
+[INFO] infer round 1 text 1 summary: wall=1.986s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=27.800s, max_latency=1.983s, avg_latency=1.962s, throughput=13.999x realtime
+[INFO] infer round 1, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r1_text2_lane1 worker_id=1 pid=1265355 finished, elapsed=1.505s, audio=4.280s, rtf=0.352
+[INFO] task r1_text2_lane0 worker_id=0 pid=1265354 finished, elapsed=1.514s, audio=4.280s, rtf=0.354
+[INFO] task r1_text2_lane4 worker_id=4 pid=1265358 finished, elapsed=1.516s, audio=4.280s, rtf=0.354
+[INFO] task r1_text2_lane3 worker_id=3 pid=1265357 finished, elapsed=1.517s, audio=4.280s, rtf=0.354
+[INFO] task r1_text2_lane2 worker_id=2 pid=1265356 finished, elapsed=1.518s, audio=4.280s, rtf=0.355
+[INFO] infer round 1 text 2 summary: wall=1.520s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=21.400s, max_latency=1.518s, avg_latency=1.514s, throughput=14.075x realtime
+[INFO] infer round 1, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r1_text3_lane4 worker_id=4 pid=1265358 finished, elapsed=2.013s, audio=5.880s, rtf=0.342
+[INFO] task r1_text3_lane1 worker_id=1 pid=1265355 finished, elapsed=2.070s, audio=5.880s, rtf=0.352
+[INFO] task r1_text3_lane2 worker_id=2 pid=1265356 finished, elapsed=2.071s, audio=5.880s, rtf=0.352
+[INFO] task r1_text3_lane0 worker_id=0 pid=1265354 finished, elapsed=2.071s, audio=5.880s, rtf=0.352
+[INFO] task r1_text3_lane3 worker_id=3 pid=1265357 finished, elapsed=2.088s, audio=5.880s, rtf=0.355
+[INFO] infer round 1 text 3 summary: wall=2.091s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=29.400s, max_latency=2.088s, avg_latency=2.062s, throughput=14.063x realtime
+[INFO] infer round 1, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r1_text4_lane4 worker_id=4 pid=1265358 finished, elapsed=0.990s, audio=2.880s, rtf=0.344
+[INFO] task r1_text4_lane1 worker_id=1 pid=1265355 finished, elapsed=1.013s, audio=2.880s, rtf=0.352
+[INFO] task r1_text4_lane0 worker_id=0 pid=1265354 finished, elapsed=1.032s, audio=2.880s, rtf=0.358
+[INFO] task r1_text4_lane2 worker_id=2 pid=1265356 finished, elapsed=1.034s, audio=2.880s, rtf=0.359
+[INFO] task r1_text4_lane3 worker_id=3 pid=1265357 finished, elapsed=1.039s, audio=2.880s, rtf=0.361
+[INFO] infer round 1 text 4 summary: wall=1.041s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=14.400s, max_latency=1.039s, avg_latency=1.021s, throughput=13.837x realtime
+[INFO] infer round 1, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r1_text5_lane4 worker_id=4 pid=1265358 finished, elapsed=2.068s, audio=6.120s, rtf=0.338
+[INFO] task r1_text5_lane1 worker_id=1 pid=1265355 finished, elapsed=2.079s, audio=6.120s, rtf=0.340
+[INFO] task r1_text5_lane0 worker_id=0 pid=1265354 finished, elapsed=2.127s, audio=6.120s, rtf=0.348
+[INFO] task r1_text5_lane3 worker_id=3 pid=1265357 finished, elapsed=2.143s, audio=6.120s, rtf=0.350
+[INFO] task r1_text5_lane2 worker_id=2 pid=1265356 finished, elapsed=2.143s, audio=6.120s, rtf=0.350
+[INFO] infer round 1 text 5 summary: wall=2.148s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=30.600s, max_latency=2.143s, avg_latency=2.112s, throughput=14.247x realtime
+[INFO] infer round 1, text 6: 好的。这款“青春畅想5G套餐”主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r1_text6_lane4 worker_id=4 pid=1265358 finished, elapsed=5.039s, audio=15.200s, rtf=0.331
+[INFO] task r1_text6_lane1 worker_id=1 pid=1265355 finished, elapsed=5.099s, audio=15.200s, rtf=0.335
+[INFO] task r1_text6_lane0 worker_id=0 pid=1265354 finished, elapsed=5.129s, audio=15.200s, rtf=0.337
+[INFO] task r1_text6_lane2 worker_id=2 pid=1265356 finished, elapsed=5.217s, audio=15.200s, rtf=0.343
+[INFO] task r1_text6_lane3 worker_id=3 pid=1265357 finished, elapsed=5.274s, audio=15.200s, rtf=0.347
+[INFO] infer round 1 text 6 summary: wall=5.282s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=76.000s, max_latency=5.274s, avg_latency=5.151s, throughput=14.388x realtime
+[INFO] infer round 2, text 0: 是的，您现在还有大概1个G的流量。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r2_text0_lane4 worker_id=4 pid=1265358 finished, elapsed=0.887s, audio=2.440s, rtf=0.363
+[INFO] task r2_text0_lane1 worker_id=1 pid=1265355 finished, elapsed=0.887s, audio=2.440s, rtf=0.364
+[INFO] task r2_text0_lane3 worker_id=3 pid=1265357 finished, elapsed=0.900s, audio=2.440s, rtf=0.369
+[INFO] task r2_text0_lane2 worker_id=2 pid=1265356 finished, elapsed=0.920s, audio=2.440s, rtf=0.377
+[INFO] task r2_text0_lane0 worker_id=0 pid=1265354 finished, elapsed=0.921s, audio=2.440s, rtf=0.378
+[INFO] infer round 2 text 0 summary: wall=0.923s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=12.200s, max_latency=0.921s, avg_latency=0.903s, throughput=13.215x realtime
+[INFO] infer round 2, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r2_text1_lane1 worker_id=1 pid=1265355 finished, elapsed=1.734s, audio=5.080s, rtf=0.341
+[INFO] task r2_text1_lane4 worker_id=4 pid=1265358 finished, elapsed=1.751s, audio=5.080s, rtf=0.345
+[INFO] task r2_text1_lane3 worker_id=3 pid=1265357 finished, elapsed=1.768s, audio=5.080s, rtf=0.348
+[INFO] task r2_text1_lane2 worker_id=2 pid=1265356 finished, elapsed=1.769s, audio=5.080s, rtf=0.348
+[INFO] task r2_text1_lane0 worker_id=0 pid=1265354 finished, elapsed=1.773s, audio=5.080s, rtf=0.349
+[INFO] infer round 2 text 1 summary: wall=1.776s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=25.400s, max_latency=1.773s, avg_latency=1.759s, throughput=14.299x realtime
+[INFO] infer round 2, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r2_text2_lane3 worker_id=3 pid=1265357 finished, elapsed=1.412s, audio=4.240s, rtf=0.333
+[INFO] task r2_text2_lane4 worker_id=4 pid=1265358 finished, elapsed=1.438s, audio=4.240s, rtf=0.339
+[INFO] task r2_text2_lane0 worker_id=0 pid=1265354 finished, elapsed=1.444s, audio=4.240s, rtf=0.341
+[INFO] task r2_text2_lane2 worker_id=2 pid=1265356 finished, elapsed=1.460s, audio=4.240s, rtf=0.344
+[INFO] task r2_text2_lane1 worker_id=1 pid=1265355 finished, elapsed=1.465s, audio=4.240s, rtf=0.346
+[INFO] infer round 2 text 2 summary: wall=1.469s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=21.200s, max_latency=1.465s, avg_latency=1.444s, throughput=14.435x realtime
+[INFO] infer round 2, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r2_text3_lane2 worker_id=2 pid=1265356 finished, elapsed=2.040s, audio=5.800s, rtf=0.352
+[INFO] task r2_text3_lane4 worker_id=4 pid=1265358 finished, elapsed=2.048s, audio=5.800s, rtf=0.353
+[INFO] task r2_text3_lane0 worker_id=0 pid=1265354 finished, elapsed=2.059s, audio=5.800s, rtf=0.355
+[INFO] task r2_text3_lane1 worker_id=1 pid=1265355 finished, elapsed=2.064s, audio=5.800s, rtf=0.356
+[INFO] task r2_text3_lane3 worker_id=3 pid=1265357 finished, elapsed=2.075s, audio=5.800s, rtf=0.358
+[INFO] infer round 2 text 3 summary: wall=2.078s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=29.000s, max_latency=2.075s, avg_latency=2.057s, throughput=13.954x realtime
+[INFO] infer round 2, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r2_text4_lane1 worker_id=1 pid=1265355 finished, elapsed=1.328s, audio=3.800s, rtf=0.349
+[INFO] task r2_text4_lane4 worker_id=4 pid=1265358 finished, elapsed=1.363s, audio=3.800s, rtf=0.359
+[INFO] task r2_text4_lane3 worker_id=3 pid=1265357 finished, elapsed=1.379s, audio=3.800s, rtf=0.363
+[INFO] task r2_text4_lane2 worker_id=2 pid=1265356 finished, elapsed=1.383s, audio=3.800s, rtf=0.364
+[INFO] task r2_text4_lane0 worker_id=0 pid=1265354 finished, elapsed=1.386s, audio=3.800s, rtf=0.365
+[INFO] infer round 2 text 4 summary: wall=1.388s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=19.000s, max_latency=1.386s, avg_latency=1.368s, throughput=13.690x realtime
+[INFO] infer round 2, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r2_text5_lane1 worker_id=1 pid=1265355 finished, elapsed=2.220s, audio=6.800s, rtf=0.327
+[INFO] task r2_text5_lane0 worker_id=0 pid=1265354 finished, elapsed=2.282s, audio=6.800s, rtf=0.336
+[INFO] task r2_text5_lane3 worker_id=3 pid=1265357 finished, elapsed=2.297s, audio=6.800s, rtf=0.338
+[INFO] task r2_text5_lane2 worker_id=2 pid=1265356 finished, elapsed=2.297s, audio=6.800s, rtf=0.338
+[INFO] task r2_text5_lane4 worker_id=4 pid=1265358 finished, elapsed=2.321s, audio=6.800s, rtf=0.341
+[INFO] infer round 2 text 5 summary: wall=2.325s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=34.000s, max_latency=2.321s, avg_latency=2.284s, throughput=14.626x realtime
+[INFO] infer round 2, text 6: 好的。这款“青春畅想5G套餐”主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r2_text6_lane1 worker_id=1 pid=1265355 finished, elapsed=4.536s, audio=13.840s, rtf=0.328
+[INFO] task r2_text6_lane2 worker_id=2 pid=1265356 finished, elapsed=4.595s, audio=13.840s, rtf=0.332
+[INFO] task r2_text6_lane0 worker_id=0 pid=1265354 finished, elapsed=4.616s, audio=13.840s, rtf=0.334
+[INFO] task r2_text6_lane4 worker_id=4 pid=1265358 finished, elapsed=4.642s, audio=13.840s, rtf=0.335
+[INFO] task r2_text6_lane3 worker_id=3 pid=1265357 finished, elapsed=4.681s, audio=13.840s, rtf=0.338
+[INFO] infer round 2 text 6 summary: wall=4.688s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=69.200s, max_latency=4.681s, avg_latency=4.614s, throughput=14.762x realtime
+[INFO] infer round 3, text 0: 是的，您现在还有大概1个G的流量。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r3_text0_lane4 worker_id=4 pid=1265358 finished, elapsed=1.124s, audio=2.920s, rtf=0.385
+[INFO] task r3_text0_lane1 worker_id=1 pid=1265355 finished, elapsed=1.139s, audio=2.920s, rtf=0.390
+[INFO] task r3_text0_lane3 worker_id=3 pid=1265357 finished, elapsed=1.149s, audio=2.920s, rtf=0.394
+[INFO] task r3_text0_lane2 worker_id=2 pid=1265356 finished, elapsed=1.153s, audio=2.920s, rtf=0.395
+[INFO] task r3_text0_lane0 worker_id=0 pid=1265354 finished, elapsed=1.168s, audio=2.920s, rtf=0.400
+[INFO] infer round 3 text 0 summary: wall=1.170s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=14.600s, max_latency=1.168s, avg_latency=1.147s, throughput=12.473x realtime
+[INFO] infer round 3, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r3_text1_lane4 worker_id=4 pid=1265358 finished, elapsed=1.973s, audio=5.720s, rtf=0.345
+[INFO] task r3_text1_lane1 worker_id=1 pid=1265355 finished, elapsed=1.985s, audio=5.720s, rtf=0.347
+[INFO] task r3_text1_lane0 worker_id=0 pid=1265354 finished, elapsed=2.003s, audio=5.720s, rtf=0.350
+[INFO] task r3_text1_lane3 worker_id=3 pid=1265357 finished, elapsed=2.048s, audio=5.720s, rtf=0.358
+[INFO] task r3_text1_lane2 worker_id=2 pid=1265356 finished, elapsed=2.049s, audio=5.720s, rtf=0.358
+[INFO] infer round 3 text 1 summary: wall=2.053s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=28.600s, max_latency=2.049s, avg_latency=2.012s, throughput=13.934x realtime
+[INFO] infer round 3, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r3_text2_lane4 worker_id=4 pid=1265358 finished, elapsed=1.565s, audio=4.680s, rtf=0.334
+[INFO] task r3_text2_lane1 worker_id=1 pid=1265355 finished, elapsed=1.568s, audio=4.680s, rtf=0.335
+[INFO] task r3_text2_lane0 worker_id=0 pid=1265354 finished, elapsed=1.588s, audio=4.680s, rtf=0.339
+[INFO] task r3_text2_lane3 worker_id=3 pid=1265357 finished, elapsed=1.612s, audio=4.680s, rtf=0.344
+[INFO] task r3_text2_lane2 worker_id=2 pid=1265356 finished, elapsed=1.626s, audio=4.680s, rtf=0.347
+[INFO] infer round 3 text 2 summary: wall=1.629s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=23.400s, max_latency=1.626s, avg_latency=1.592s, throughput=14.368x realtime
+[INFO] infer round 3, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r3_text3_lane4 worker_id=4 pid=1265358 finished, elapsed=1.889s, audio=5.360s, rtf=0.352
+[INFO] task r3_text3_lane3 worker_id=3 pid=1265357 finished, elapsed=1.932s, audio=5.360s, rtf=0.360
+[INFO] task r3_text3_lane0 worker_id=0 pid=1265354 finished, elapsed=1.932s, audio=5.360s, rtf=0.360
+[INFO] task r3_text3_lane2 worker_id=2 pid=1265356 finished, elapsed=1.953s, audio=5.360s, rtf=0.364
+[INFO] task r3_text3_lane1 worker_id=1 pid=1265355 finished, elapsed=1.962s, audio=5.360s, rtf=0.366
+[INFO] infer round 3 text 3 summary: wall=1.965s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=26.800s, max_latency=1.962s, avg_latency=1.934s, throughput=13.636x realtime
+[INFO] infer round 3, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r3_text4_lane4 worker_id=4 pid=1265358 finished, elapsed=1.126s, audio=2.960s, rtf=0.380
+[INFO] task r3_text4_lane1 worker_id=1 pid=1265355 finished, elapsed=1.155s, audio=2.960s, rtf=0.390
+[INFO] task r3_text4_lane3 worker_id=3 pid=1265357 finished, elapsed=1.171s, audio=2.960s, rtf=0.396
+[INFO] task r3_text4_lane0 worker_id=0 pid=1265354 finished, elapsed=1.180s, audio=2.960s, rtf=0.399
+[INFO] task r3_text4_lane2 worker_id=2 pid=1265356 finished, elapsed=1.180s, audio=2.960s, rtf=0.399
+[INFO] infer round 3 text 4 summary: wall=1.182s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=14.800s, max_latency=1.180s, avg_latency=1.162s, throughput=12.518x realtime
+[INFO] infer round 3, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r3_text5_lane4 worker_id=4 pid=1265358 finished, elapsed=2.100s, audio=6.160s, rtf=0.341
+[INFO] task r3_text5_lane1 worker_id=1 pid=1265355 finished, elapsed=2.103s, audio=6.160s, rtf=0.341
+[INFO] task r3_text5_lane0 worker_id=0 pid=1265354 finished, elapsed=2.117s, audio=6.160s, rtf=0.344
+[INFO] task r3_text5_lane2 worker_id=2 pid=1265356 finished, elapsed=2.122s, audio=6.160s, rtf=0.344
+[INFO] task r3_text5_lane3 worker_id=3 pid=1265357 finished, elapsed=2.125s, audio=6.160s, rtf=0.345
+[INFO] infer round 3 text 5 summary: wall=2.129s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=30.800s, max_latency=2.125s, avg_latency=2.113s, throughput=14.465x realtime
+[INFO] infer round 3, text 6: 好的。这款“青春畅想5G套餐”主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r3_text6_lane4 worker_id=4 pid=1265358 finished, elapsed=4.025s, audio=12.400s, rtf=0.325
+[INFO] task r3_text6_lane1 worker_id=1 pid=1265355 finished, elapsed=4.045s, audio=12.400s, rtf=0.326
+[INFO] task r3_text6_lane2 worker_id=2 pid=1265356 finished, elapsed=4.122s, audio=12.400s, rtf=0.332
+[INFO] task r3_text6_lane0 worker_id=0 pid=1265354 finished, elapsed=4.124s, audio=12.400s, rtf=0.333
+[INFO] task r3_text6_lane3 worker_id=3 pid=1265357 finished, elapsed=4.179s, audio=12.400s, rtf=0.337
+[INFO] infer round 3 text 6 summary: wall=4.186s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=62.000s, max_latency=4.179s, avg_latency=4.099s, throughput=14.810x realtime
+[INFO] infer round 4, text 0: 是的，您现在还有大概1个G的流量。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r4_text0_lane0 worker_id=0 pid=1265354 finished, elapsed=0.951s, audio=2.720s, rtf=0.350
+[INFO] task r4_text0_lane3 worker_id=3 pid=1265357 finished, elapsed=0.951s, audio=2.720s, rtf=0.350
+[INFO] task r4_text0_lane1 worker_id=1 pid=1265355 finished, elapsed=0.951s, audio=2.720s, rtf=0.350
+[INFO] task r4_text0_lane2 worker_id=2 pid=1265356 finished, elapsed=0.956s, audio=2.720s, rtf=0.351
+[INFO] task r4_text0_lane4 worker_id=4 pid=1265358 finished, elapsed=0.958s, audio=2.720s, rtf=0.352
+[INFO] infer round 4 text 0 summary: wall=0.959s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=13.600s, max_latency=0.958s, avg_latency=0.953s, throughput=14.175x realtime
+[INFO] infer round 4, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r4_text1_lane1 worker_id=1 pid=1265355 finished, elapsed=1.891s, audio=5.560s, rtf=0.340
+[INFO] task r4_text1_lane2 worker_id=2 pid=1265356 finished, elapsed=1.929s, audio=5.560s, rtf=0.347
+[INFO] task r4_text1_lane3 worker_id=3 pid=1265357 finished, elapsed=1.930s, audio=5.560s, rtf=0.347
+[INFO] task r4_text1_lane4 worker_id=4 pid=1265358 finished, elapsed=1.931s, audio=5.560s, rtf=0.347
+[INFO] task r4_text1_lane0 worker_id=0 pid=1265354 finished, elapsed=1.934s, audio=5.560s, rtf=0.348
+[INFO] infer round 4 text 1 summary: wall=1.937s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=27.800s, max_latency=1.934s, avg_latency=1.923s, throughput=14.353x realtime
+[INFO] infer round 4, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r4_text2_lane1 worker_id=1 pid=1265355 finished, elapsed=1.722s, audio=4.960s, rtf=0.347
+[INFO] task r4_text2_lane0 worker_id=0 pid=1265354 finished, elapsed=1.776s, audio=4.960s, rtf=0.358
+[INFO] task r4_text2_lane3 worker_id=3 pid=1265357 finished, elapsed=1.800s, audio=4.960s, rtf=0.363
+[INFO] task r4_text2_lane4 worker_id=4 pid=1265358 finished, elapsed=1.810s, audio=4.960s, rtf=0.365
+[INFO] task r4_text2_lane2 worker_id=2 pid=1265356 finished, elapsed=1.811s, audio=4.960s, rtf=0.365
+[INFO] infer round 4 text 2 summary: wall=1.815s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=24.800s, max_latency=1.811s, avg_latency=1.784s, throughput=13.665x realtime
+[INFO] infer round 4, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r4_text3_lane4 worker_id=4 pid=1265358 finished, elapsed=1.924s, audio=5.600s, rtf=0.344
+[INFO] task r4_text3_lane1 worker_id=1 pid=1265355 finished, elapsed=1.950s, audio=5.600s, rtf=0.348
+[INFO] task r4_text3_lane0 worker_id=0 pid=1265354 finished, elapsed=1.955s, audio=5.600s, rtf=0.349
+[INFO] task r4_text3_lane3 worker_id=3 pid=1265357 finished, elapsed=1.972s, audio=5.600s, rtf=0.352
+[INFO] task r4_text3_lane2 worker_id=2 pid=1265356 finished, elapsed=1.986s, audio=5.600s, rtf=0.355
+[INFO] infer round 4 text 3 summary: wall=1.989s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=28.000s, max_latency=1.986s, avg_latency=1.957s, throughput=14.080x realtime
+[INFO] infer round 4, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r4_text4_lane4 worker_id=4 pid=1265358 finished, elapsed=1.361s, audio=4.080s, rtf=0.334
+[INFO] task r4_text4_lane0 worker_id=0 pid=1265354 finished, elapsed=1.396s, audio=4.080s, rtf=0.342
+[INFO] task r4_text4_lane3 worker_id=3 pid=1265357 finished, elapsed=1.424s, audio=4.080s, rtf=0.349
+[INFO] task r4_text4_lane1 worker_id=1 pid=1265355 finished, elapsed=1.425s, audio=4.080s, rtf=0.349
+[INFO] task r4_text4_lane2 worker_id=2 pid=1265356 finished, elapsed=1.446s, audio=4.080s, rtf=0.355
+[INFO] infer round 4 text 4 summary: wall=1.449s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=20.400s, max_latency=1.446s, avg_latency=1.410s, throughput=14.077x realtime
+[INFO] infer round 4, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r4_text5_lane4 worker_id=4 pid=1265358 finished, elapsed=2.047s, audio=6.080s, rtf=0.337
+[INFO] task r4_text5_lane0 worker_id=0 pid=1265354 finished, elapsed=2.092s, audio=6.080s, rtf=0.344
+[INFO] task r4_text5_lane1 worker_id=1 pid=1265355 finished, elapsed=2.098s, audio=6.080s, rtf=0.345
+[INFO] task r4_text5_lane2 worker_id=2 pid=1265356 finished, elapsed=2.118s, audio=6.080s, rtf=0.348
+[INFO] task r4_text5_lane3 worker_id=3 pid=1265357 finished, elapsed=2.128s, audio=6.080s, rtf=0.350
+[INFO] infer round 4 text 5 summary: wall=2.132s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=30.400s, max_latency=2.128s, avg_latency=2.096s, throughput=14.261x realtime
+[INFO] infer round 4, text 6: 好的。这款“青春畅想5G套餐”主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+[INFO] dispatch same text to 5 workers concurrently
+[INFO] task r4_text6_lane4 worker_id=4 pid=1265358 finished, elapsed=3.880s, audio=11.720s, rtf=0.331
+[INFO] task r4_text6_lane1 worker_id=1 pid=1265355 finished, elapsed=3.933s, audio=11.720s, rtf=0.336
+[INFO] task r4_text6_lane2 worker_id=2 pid=1265356 finished, elapsed=3.955s, audio=11.720s, rtf=0.337
+[INFO] task r4_text6_lane0 worker_id=0 pid=1265354 finished, elapsed=3.979s, audio=11.720s, rtf=0.340
+[INFO] task r4_text6_lane3 worker_id=3 pid=1265357 finished, elapsed=4.022s, audio=11.720s, rtf=0.343
+[INFO] infer round 4 text 6 summary: wall=4.029s, success=5/5, unique_workers=5/5, unique_pids=5/5, total_audio=58.600s, max_latency=4.022s, avg_latency=3.954s, throughput=14.545x realtime
+========================================================================
+[SUMMARY] log_dir=logs/concurrent/run_20260527_195445
+[SUMMARY] main_log=logs/concurrent/run_20260527_195445/main.log
+[SUMMARY] summary_log=logs/concurrent/run_20260527_195445/summary.log
+[SUMMARY] concurrency=5, infer_count=5, texts=7, total_tasks=175
+[SUMMARY] success=175, failed=0, total_wall=73.077s, total_audio=1032.400s
+[SUMMARY] avg_latency=2.052s, p95_latency=4.549s, overall_throughput=14.128x realtime
+========================================================================

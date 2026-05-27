@@ -1,0 +1,299 @@
+[INFO] worker_id=2 pid=1172378 process started
+[INFO] worker_id=2 pid=1172378 start init
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/lightning/fabric/__init__.py:41: Deprecated call to `pkg_resources.declare_namespace('lightning.fabric')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:88: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  parse = parser.parseString(pattern)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:92: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  parser.resetCache()
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_mathtext.py:30: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+  ParserElement.enablePackrat()
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/lightning/pytorch/__init__.py:37: Deprecated call to `pkg_resources.declare_namespace('lightning.pytorch')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
+  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/librosa/core/intervals.py:15: DeprecationWarning: path is deprecated. Use files() instead. Refer to https://importlib-resources.readthedocs.io/en/latest/using.html#migrating-from-legacy for migration advice.
+  with resources.path("librosa.core", "intervals.msgpack") as imsgpack:
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:65: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'CPUExecutionProvider'
+  warnings.warn(
+/usr/local/Ascend/ascend-toolkit/8.1.RC1/python/site-packages/tbe/tvm/contrib/ccec.py:866: DeprecationWarning: invalid escape sequence '\L'
+  if not dirpath.find("AppData\Local\Temp"):
+/usr/local/Ascend/ascend-toolkit/latest/python/site-packages/tbe/dsl/classifier/transdata/transdata_classifier.py:222: DeprecationWarning: invalid escape sequence '\B'
+  """
+/usr/local/Ascend/ascend-toolkit/latest/python/site-packages/tbe/dsl/unify_schedule/vector/transdata/common/graph/transdata_graph_info.py:143: DeprecationWarning: invalid escape sequence '\c'
+  """
+2026-05-27 19:32:18,141 WETEXT INFO building fst for zh_normalizer ...
+2026-05-27 19:33:20,759 WETEXT INFO done
+2026-05-27 19:33:20,759 WETEXT INFO fst path: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_tagger.fst
+2026-05-27 19:33:20,760 WETEXT INFO           /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_verbalizer.fst
+2026-05-27 19:33:20,768 WETEXT INFO found existing fst: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_tagger.fst
+2026-05-27 19:33:20,768 WETEXT INFO                     /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_verbalizer.fst
+2026-05-27 19:33:20,768 WETEXT INFO skip building fst for en_normalizer ...
+Removing weight norm...
+[INFO] worker_id=2 pid=1172378 model loaded in 186.785s
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py:567: UserWarning: When enable frozen_parameter, Parameters will be considered frozen.Please make sure that the Parameters data address remain the same throughout the program runtime.
+  warnings.warn(f'When enable frozen_parameter, Parameters will be considered frozen.'
+模块耗时详情: Flow=1472.89ms | Hift=48127.60ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 47923.33ms
+ > Flow+Hift 推理耗时: 49600.70ms
+flow step3
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py:567: UserWarning: When enable frozen_parameter, Parameters will be considered frozen.Please make sure that the Parameters data address remain the same throughout the program runtime.
+  warnings.warn(f'When enable frozen_parameter, Parameters will be considered frozen.'
+模块耗时详情: Flow=90.24ms | Hift=44920.20ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 383.19ms
+ > Flow+Hift 推理耗时: 45010.67ms
+flow step3
+模块耗时详情: Flow=95.25ms | Hift=30.41ms
+100%|██████████| 1/1 [02:23<00:00, 143.11s/it]100%|██████████| 1/1 [02:23<00:00, 143.11s/it]
+[INFO] worker_id=2 pid=1172378 warm up 1/5 done, elapsed=143.146s, audio=3.160s
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.20ms | Hift=29.64ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 202.01ms
+ > Flow+Hift 推理耗时: 98.95ms
+flow step3
+模块耗时详情: Flow=88.93ms | Hift=36.49ms
+100%|██████████| 1/1 [00:00<00:00,  1.30it/s]100%|██████████| 1/1 [00:00<00:00,  1.30it/s]
+[INFO] worker_id=2 pid=1172378 warm up 2/5 done, elapsed=0.780s, audio=2.640s
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=67.64ms | Hift=22.07ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 189.99ms
+ > Flow+Hift 推理耗时: 89.81ms
+flow step3
+模块耗时详情: Flow=88.15ms | Hift=46.35ms
+100%|██████████| 1/1 [00:00<00:00,  1.31it/s]100%|██████████| 1/1 [00:00<00:00,  1.31it/s]
+[INFO] worker_id=2 pid=1172378 warm up 3/5 done, elapsed=0.774s, audio=2.720s
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=67.65ms | Hift=22.23ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 190.94ms
+ > Flow+Hift 推理耗时: 89.99ms
+flow step3
+模块耗时详情: Flow=91.97ms | Hift=41.30ms
+100%|██████████| 1/1 [00:00<00:00,  1.25it/s]100%|██████████| 1/1 [00:00<00:00,  1.25it/s]
+[INFO] worker_id=2 pid=1172378 warm up 4/5 done, elapsed=0.812s, audio=2.840s
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=67.82ms | Hift=22.35ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 189.73ms
+ > Flow+Hift 推理耗时: 90.27ms
+flow step3
+模块耗时详情: Flow=79.47ms | Hift=37.17ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 390.88ms
+ > Flow+Hift 推理耗时: 116.76ms
+flow step3
+模块耗时详情: Flow=82.67ms | Hift=22.48ms
+100%|██████████| 1/1 [00:00<00:00,  1.05it/s]100%|██████████| 1/1 [00:00<00:00,  1.05it/s]
+[INFO] worker_id=2 pid=1172378 warm up 5/5 done, elapsed=0.959s, audio=3.160s
+[INFO] worker_id=2 pid=1172378 init done
+[INFO] worker_id=2 pid=1172378 waiting for tasks
+[INFO] worker_id=2 pid=1172378 task r0_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=82.04ms | Hift=28.56ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 201.72ms
+ > Flow+Hift 推理耗时: 110.72ms
+flow step3
+模块耗时详情: Flow=92.37ms | Hift=38.74ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 400.76ms
+ > Flow+Hift 推理耗时: 131.23ms
+flow step3
+模块耗时详情: Flow=98.84ms | Hift=36.09ms
+100%|██████████| 1/1 [00:01<00:00,  1.26s/it]100%|██████████| 1/1 [00:01<00:00,  1.26s/it]
+[INFO] worker_id=2 pid=1172378 task r0_lane2 done, elapsed=1.275s, audio=4.280s, rtf=0.298
+[INFO] worker_id=2 pid=1172378 task r1_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=82.45ms | Hift=22.48ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 195.01ms
+ > Flow+Hift 推理耗时: 105.04ms
+flow step3
+模块耗时详情: Flow=98.86ms | Hift=39.99ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 392.87ms
+ > Flow+Hift 推理耗时: 138.98ms
+flow step3
+模块耗时详情: Flow=99.00ms | Hift=29.42ms
+100%|██████████| 1/1 [00:01<00:00,  1.11s/it]100%|██████████| 1/1 [00:01<00:00,  1.11s/it]
+[INFO] worker_id=2 pid=1172378 task r1_lane2 done, elapsed=1.128s, audio=3.640s, rtf=0.310
+[INFO] worker_id=2 pid=1172378 task r2_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=82.45ms | Hift=23.31ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 197.34ms
+ > Flow+Hift 推理耗时: 105.89ms
+flow step3
+模块耗时详情: Flow=93.05ms | Hift=36.56ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 384.49ms
+ > Flow+Hift 推理耗时: 129.73ms
+flow step3
+模块耗时详情: Flow=97.94ms | Hift=34.19ms
+100%|██████████| 1/1 [00:01<00:00,  1.20s/it]100%|██████████| 1/1 [00:01<00:00,  1.20s/it]
+[INFO] worker_id=2 pid=1172378 task r2_lane2 done, elapsed=1.211s, audio=4.160s, rtf=0.291
+[INFO] worker_id=2 pid=1172378 task r3_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=82.65ms | Hift=22.50ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 196.26ms
+ > Flow+Hift 推理耗时: 105.26ms
+flow step3
+模块耗时详情: Flow=93.92ms | Hift=35.78ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 391.46ms
+ > Flow+Hift 推理耗时: 129.82ms
+flow step3
+模块耗时详情: Flow=91.34ms | Hift=31.24ms
+100%|██████████| 1/1 [00:01<00:00,  1.20s/it]100%|██████████| 1/1 [00:01<00:00,  1.20s/it]
+[INFO] worker_id=2 pid=1172378 task r3_lane2 done, elapsed=1.213s, audio=4.160s, rtf=0.291
+[INFO] worker_id=2 pid=1172378 task r4_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=81.78ms | Hift=22.68ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 196.80ms
+ > Flow+Hift 推理耗时: 104.59ms
+flow step3
+模块耗时详情: Flow=99.11ms | Hift=41.55ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 390.68ms
+ > Flow+Hift 推理耗时: 140.81ms
+flow step3
+模块耗时详情: Flow=98.36ms | Hift=38.24ms
+100%|██████████| 1/1 [00:01<00:00,  1.26s/it]100%|██████████| 1/1 [00:01<00:00,  1.26s/it]
+[INFO] worker_id=2 pid=1172378 task r4_lane2 done, elapsed=1.271s, audio=4.320s, rtf=0.294
+[INFO] worker_id=2 pid=1172378 task r5_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=82.02ms | Hift=22.61ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 196.75ms
+ > Flow+Hift 推理耗时: 104.73ms
+flow step3
+模块耗时详情: Flow=91.83ms | Hift=36.45ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 396.17ms
+ > Flow+Hift 推理耗时: 128.40ms
+flow step3
+模块耗时详情: Flow=97.72ms | Hift=35.72ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 386.08ms
+ > Flow+Hift 推理耗时: 133.56ms
+flow step3
+模块耗时详情: Flow=102.19ms | Hift=23.40ms
+100%|██████████| 1/1 [00:01<00:00,  1.53s/it]100%|██████████| 1/1 [00:01<00:00,  1.53s/it]
+[INFO] worker_id=2 pid=1172378 task r5_lane2 done, elapsed=1.544s, audio=5.160s, rtf=0.299
+[INFO] worker_id=2 pid=1172378 task r6_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=80.78ms | Hift=21.81ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 196.52ms
+ > Flow+Hift 推理耗时: 102.69ms
+flow step3
+模块耗时详情: Flow=99.82ms | Hift=41.30ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 400.63ms
+ > Flow+Hift 推理耗时: 141.24ms
+flow step3
+模块耗时详情: Flow=104.54ms | Hift=36.95ms
+100%|██████████| 1/1 [00:01<00:00,  1.33s/it]100%|██████████| 1/1 [00:01<00:00,  1.33s/it]
+[INFO] worker_id=2 pid=1172378 task r6_lane2 done, elapsed=1.353s, audio=4.680s, rtf=0.289
+[INFO] worker_id=2 pid=1172378 task r7_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=82.08ms | Hift=22.52ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 197.19ms
+ > Flow+Hift 推理耗时: 104.70ms
+flow step3
+模块耗时详情: Flow=96.72ms | Hift=37.76ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 390.71ms
+ > Flow+Hift 推理耗时: 134.61ms
+flow step3
+模块耗时详情: Flow=93.69ms | Hift=38.20ms
+100%|██████████| 1/1 [00:01<00:00,  1.31s/it]100%|██████████| 1/1 [00:01<00:00,  1.31s/it]
+[INFO] worker_id=2 pid=1172378 task r7_lane2 done, elapsed=1.324s, audio=4.680s, rtf=0.283
+[INFO] worker_id=2 pid=1172378 task r8_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=81.98ms | Hift=22.87ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 194.65ms
+ > Flow+Hift 推理耗时: 104.95ms
+flow step3
+模块耗时详情: Flow=97.45ms | Hift=43.35ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 397.87ms
+ > Flow+Hift 推理耗时: 140.92ms
+flow step3
+模块耗时详情: Flow=115.06ms | Hift=38.20ms
+100%|██████████| 1/1 [00:01<00:00,  1.29s/it]100%|██████████| 1/1 [00:01<00:00,  1.29s/it]
+[INFO] worker_id=2 pid=1172378 task r8_lane2 done, elapsed=1.307s, audio=4.400s, rtf=0.297
+[INFO] worker_id=2 pid=1172378 task r9_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=81.34ms | Hift=23.46ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 195.68ms
+ > Flow+Hift 推理耗时: 104.91ms
+flow step3
+模块耗时详情: Flow=91.84ms | Hift=37.08ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 402.25ms
+ > Flow+Hift 推理耗时: 129.05ms
+flow step3
+模块耗时详情: Flow=99.87ms | Hift=39.32ms
+100%|██████████| 1/1 [00:01<00:00,  1.25s/it]100%|██████████| 1/1 [00:01<00:00,  1.25s/it]
+[INFO] worker_id=2 pid=1172378 task r9_lane2 done, elapsed=1.266s, audio=4.240s, rtf=0.299
+[INFO] worker_id=2 pid=1172378 received shutdown

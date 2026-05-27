@@ -1,0 +1,125 @@
+[INFO] run_log_dir=logs/concurrent/run_20260527_164756
+[INFO] mode=multiprocess, concurrency=6, each worker loads its own model
+[INFO] model_path=../weight/CosyVoice2-0.5B
+[INFO] waiting for 6 workers to finish init...
+[INFO] worker ready 1/6, worker_id=0, pid=676879
+[INFO] worker ready 2/6, worker_id=0, pid=676879
+[INFO] worker ready 3/6, worker_id=0, pid=676879
+[INFO] worker ready 4/6, worker_id=0, pid=676879
+[INFO] worker ready 5/6, worker_id=0, pid=676879
+[INFO] worker ready 6/6, worker_id=0, pid=676879
+[INFO] all 6 workers ready in 293.456s
+[INFO] round 0 start, submit 6 concurrent tasks
+[INFO] task r0_lane0 worker_id=0 pid=676879 finished, elapsed=50.256s, audio=3.200s, rtf=15.705
+[INFO] task r0_lane1 worker_id=0 pid=676879 finished, elapsed=1.902s, audio=5.920s, rtf=0.321
+[INFO] task r0_lane2 worker_id=0 pid=676879 finished, elapsed=1.346s, audio=4.640s, rtf=0.290
+[INFO] task r0_lane3 worker_id=0 pid=676879 finished, elapsed=1.504s, audio=5.160s, rtf=0.291
+[INFO] task r0_lane4 worker_id=0 pid=676879 finished, elapsed=0.850s, audio=2.840s, rtf=0.299
+[INFO] task r0_lane5 worker_id=0 pid=676879 finished, elapsed=1.762s, audio=6.400s, rtf=0.275
+[INFO] round 0 summary: wall=57.635s, success=6/6, total_audio=28.160s, avg_latency=9.603s, avg_infer=9.603s, throughput=0.489x realtime
+[INFO] round 1 start, submit 6 concurrent tasks
+[INFO] task r1_lane0 worker_id=0 pid=676879 finished, elapsed=1.020s, audio=3.240s, rtf=0.315
+[INFO] task r1_lane1 worker_id=0 pid=676879 finished, elapsed=1.500s, audio=4.960s, rtf=0.302
+[INFO] task r1_lane2 worker_id=0 pid=676879 finished, elapsed=1.328s, audio=4.680s, rtf=0.284
+[INFO] task r1_lane3 worker_id=0 pid=676879 finished, elapsed=1.639s, audio=5.600s, rtf=0.293
+[INFO] task r1_lane4 worker_id=0 pid=676879 finished, elapsed=1.017s, audio=3.200s, rtf=0.318
+[INFO] task r1_lane5 worker_id=0 pid=676879 finished, elapsed=1.697s, audio=5.840s, rtf=0.291
+[INFO] round 1 summary: wall=8.216s, success=6/6, total_audio=27.520s, avg_latency=1.367s, avg_infer=1.367s, throughput=3.350x realtime
+[INFO] round 2 start, submit 6 concurrent tasks
+[INFO] task r2_lane0 worker_id=0 pid=676879 finished, elapsed=1.087s, audio=3.600s, rtf=0.302
+[INFO] task r2_lane1 worker_id=0 pid=676879 finished, elapsed=1.468s, audio=4.960s, rtf=0.296
+[INFO] task r2_lane2 worker_id=0 pid=676879 finished, elapsed=1.241s, audio=4.440s, rtf=0.280
+[INFO] task r2_lane3 worker_id=0 pid=676879 finished, elapsed=1.708s, audio=5.840s, rtf=0.293
+[INFO] task r2_lane4 worker_id=0 pid=676879 finished, elapsed=1.020s, audio=3.400s, rtf=0.300
+[INFO] task r2_lane5 worker_id=0 pid=676879 finished, elapsed=1.907s, audio=6.760s, rtf=0.282
+[INFO] round 2 summary: wall=8.446s, success=6/6, total_audio=29.000s, avg_latency=1.405s, avg_infer=1.405s, throughput=3.434x realtime
+[INFO] round 3 start, submit 6 concurrent tasks
+[INFO] task r3_lane0 worker_id=0 pid=676879 finished, elapsed=0.788s, audio=2.640s, rtf=0.299
+[INFO] task r3_lane1 worker_id=0 pid=676879 finished, elapsed=1.366s, audio=4.720s, rtf=0.289
+[INFO] task r3_lane2 worker_id=0 pid=676879 finished, elapsed=1.343s, audio=4.800s, rtf=0.280
+[INFO] task r3_lane3 worker_id=0 pid=676879 finished, elapsed=1.614s, audio=5.600s, rtf=0.288
+[INFO] task r3_lane4 worker_id=0 pid=676879 finished, elapsed=1.019s, audio=3.280s, rtf=0.311
+[INFO] task r3_lane5 worker_id=0 pid=676879 finished, elapsed=1.681s, audio=5.920s, rtf=0.284
+[INFO] round 3 summary: wall=7.826s, success=6/6, total_audio=26.960s, avg_latency=1.302s, avg_infer=1.302s, throughput=3.445x realtime
+[INFO] round 4 start, submit 6 concurrent tasks
+[INFO] task r4_lane0 worker_id=0 pid=676879 finished, elapsed=0.813s, audio=2.720s, rtf=0.299
+[INFO] task r4_lane1 worker_id=0 pid=676879 finished, elapsed=1.585s, audio=5.480s, rtf=0.289
+[INFO] task r4_lane2 worker_id=0 pid=676879 finished, elapsed=1.274s, audio=4.320s, rtf=0.295
+[INFO] task r4_lane3 worker_id=0 pid=676879 finished, elapsed=1.708s, audio=5.760s, rtf=0.296
+[INFO] task r4_lane4 worker_id=0 pid=676879 finished, elapsed=0.994s, audio=3.000s, rtf=0.331
+[INFO] task r4_lane5 worker_id=0 pid=676879 finished, elapsed=2.049s, audio=6.920s, rtf=0.296
+[INFO] round 4 summary: wall=8.438s, success=6/6, total_audio=28.200s, avg_latency=1.404s, avg_infer=1.404s, throughput=3.342x realtime
+[INFO] round 5 start, submit 6 concurrent tasks
+[INFO] task r5_lane0 worker_id=0 pid=676879 finished, elapsed=1.076s, audio=3.520s, rtf=0.306
+[INFO] task r5_lane1 worker_id=0 pid=676879 finished, elapsed=1.625s, audio=5.640s, rtf=0.288
+[INFO] task r5_lane2 worker_id=0 pid=676879 finished, elapsed=1.140s, audio=3.840s, rtf=0.297
+[INFO] task r5_lane3 worker_id=0 pid=676879 finished, elapsed=1.695s, audio=5.920s, rtf=0.286
+[INFO] task r5_lane4 worker_id=0 pid=676879 finished, elapsed=1.035s, audio=3.320s, rtf=0.312
+[INFO] task r5_lane5 worker_id=0 pid=676879 finished, elapsed=1.690s, audio=5.880s, rtf=0.287
+[INFO] round 5 summary: wall=8.273s, success=6/6, total_audio=28.120s, avg_latency=1.377s, avg_infer=1.377s, throughput=3.399x realtime
+[INFO] round 6 start, submit 6 concurrent tasks
+[INFO] task r6_lane0 worker_id=0 pid=676879 finished, elapsed=0.985s, audio=3.240s, rtf=0.304
+[INFO] task r6_lane1 worker_id=0 pid=676879 finished, elapsed=1.478s, audio=5.000s, rtf=0.296
+[INFO] task r6_lane2 worker_id=0 pid=676879 finished, elapsed=1.380s, audio=4.680s, rtf=0.295
+[INFO] task r6_lane3 worker_id=0 pid=676879 finished, elapsed=1.736s, audio=5.720s, rtf=0.303
+[INFO] task r6_lane4 worker_id=0 pid=676879 finished, elapsed=0.820s, audio=2.840s, rtf=0.289
+[INFO] task r6_lane5 worker_id=0 pid=676879 finished, elapsed=1.806s, audio=6.320s, rtf=0.286
+[INFO] round 6 summary: wall=8.221s, success=6/6, total_audio=27.800s, avg_latency=1.367s, avg_infer=1.367s, throughput=3.381x realtime
+[INFO] round 7 start, submit 6 concurrent tasks
+[INFO] task r7_lane0 worker_id=0 pid=676879 finished, elapsed=0.843s, audio=2.880s, rtf=0.293
+[INFO] task r7_lane1 worker_id=0 pid=676879 finished, elapsed=1.569s, audio=5.200s, rtf=0.302
+[INFO] task r7_lane2 worker_id=0 pid=676879 finished, elapsed=1.628s, audio=4.920s, rtf=0.331
+[INFO] task r7_lane3 worker_id=0 pid=676879 finished, elapsed=1.766s, audio=6.080s, rtf=0.290
+[INFO] task r7_lane4 worker_id=0 pid=676879 finished, elapsed=1.041s, audio=3.360s, rtf=0.310
+[INFO] task r7_lane5 worker_id=0 pid=676879 finished, elapsed=1.868s, audio=6.720s, rtf=0.278
+[INFO] round 7 summary: wall=8.732s, success=6/6, total_audio=29.160s, avg_latency=1.452s, avg_infer=1.452s, throughput=3.340x realtime
+[INFO] round 8 start, submit 6 concurrent tasks
+[INFO] task r8_lane0 worker_id=0 pid=676879 finished, elapsed=0.810s, audio=2.840s, rtf=0.285
+[INFO] task r8_lane1 worker_id=0 pid=676879 finished, elapsed=1.468s, audio=5.040s, rtf=0.291
+[INFO] task r8_lane2 worker_id=0 pid=676879 finished, elapsed=1.272s, audio=4.520s, rtf=0.282
+[INFO] task r8_lane3 worker_id=0 pid=676879 finished, elapsed=1.606s, audio=5.800s, rtf=0.277
+[INFO] task r8_lane4 worker_id=0 pid=676879 finished, elapsed=1.157s, audio=4.160s, rtf=0.278
+[INFO] task r8_lane5 worker_id=0 pid=676879 finished, elapsed=1.742s, audio=6.480s, rtf=0.269
+[INFO] round 8 summary: wall=8.073s, success=6/6, total_audio=28.840s, avg_latency=1.343s, avg_infer=1.343s, throughput=3.572x realtime
+[INFO] round 9 start, submit 6 concurrent tasks
+[INFO] task r9_lane0 worker_id=0 pid=676879 finished, elapsed=0.792s, audio=2.760s, rtf=0.287
+[INFO] task r9_lane1 worker_id=0 pid=676879 finished, elapsed=1.529s, audio=5.280s, rtf=0.290
+[INFO] task r9_lane2 worker_id=0 pid=676879 finished, elapsed=1.345s, audio=4.880s, rtf=0.276
+[INFO] task r9_lane3 worker_id=0 pid=676879 finished, elapsed=1.658s, audio=5.760s, rtf=0.288
+[INFO] task r9_lane4 worker_id=0 pid=676879 finished, elapsed=0.824s, audio=2.880s, rtf=0.286
+[INFO] task r9_lane5 worker_id=0 pid=676879 finished, elapsed=1.603s, audio=5.680s, rtf=0.282
+[INFO] round 9 summary: wall=7.766s, success=6/6, total_audio=27.240s, avg_latency=1.292s, avg_infer=1.292s, throughput=3.507x realtime
+Traceback (most recent call last):
+  File "/home/ma-user/work/test/model/CosyVoice-claude/infer_concurrent.py", line 450, in <module>
+    main()
+  File "/home/ma-user/work/test/model/CosyVoice-claude/infer_concurrent.py", line 398, in main
+    with ProcessPoolExecutor(
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/concurrent/futures/_base.py", line 647, in __exit__
+    self.shutdown(wait=True)
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/concurrent/futures/process.py", line 825, in shutdown
+    self._executor_manager_thread.join()
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/threading.py", line 1112, in join
+    self._wait_for_tstate_lock()
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/threading.py", line 1132, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Exception ignored in atexit callback: <bound method finalize._exitfunc of <class 'weakref.finalize'>>
+Traceback (most recent call last):
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/weakref.py", line 666, in _exitfunc
+    f()
+KeyboardInterrupt: 
+Exception ignored in atexit callback: <function _exit_function at 0xffff7ac371a0>
+Traceback (most recent call last):
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/multiprocessing/util.py", line 357, in _exit_function
+    p.join()
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/multiprocessing/process.py", line 149, in join
+    res = self._popen.wait(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/multiprocessing/popen_fork.py", line 43, in wait
+    return self.poll(os.WNOHANG if timeout == 0.0 else 0)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/multiprocessing/popen_fork.py", line 27, in poll
+    pid, sts = os.waitpid(self.pid, flag)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt: 

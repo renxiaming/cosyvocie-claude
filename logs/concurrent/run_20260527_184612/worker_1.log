@@ -1,0 +1,86 @@
+[INFO] worker_id=1 pid=1024457 start init
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/lightning/fabric/__init__.py:41: Deprecated call to `pkg_resources.declare_namespace('lightning.fabric')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:88: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  parse = parser.parseString(pattern)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:92: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  parser.resetCache()
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_mathtext.py:30: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+  ParserElement.enablePackrat()
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/lightning/pytorch/__init__.py:37: Deprecated call to `pkg_resources.declare_namespace('lightning.pytorch')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
+  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/librosa/core/intervals.py:15: DeprecationWarning: path is deprecated. Use files() instead. Refer to https://importlib-resources.readthedocs.io/en/latest/using.html#migrating-from-legacy for migration advice.
+  with resources.path("librosa.core", "intervals.msgpack") as imsgpack:
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:65: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'CPUExecutionProvider'
+  warnings.warn(
+/usr/local/Ascend/ascend-toolkit/8.1.RC1/python/site-packages/tbe/tvm/contrib/ccec.py:866: DeprecationWarning: invalid escape sequence '\L'
+  if not dirpath.find("AppData\Local\Temp"):
+/usr/local/Ascend/ascend-toolkit/latest/python/site-packages/tbe/dsl/classifier/transdata/transdata_classifier.py:222: DeprecationWarning: invalid escape sequence '\B'
+  """
+/usr/local/Ascend/ascend-toolkit/latest/python/site-packages/tbe/dsl/unify_schedule/vector/transdata/common/graph/transdata_graph_info.py:143: DeprecationWarning: invalid escape sequence '\c'
+  """
+2026-05-27 18:52:03,876 WETEXT INFO building fst for zh_normalizer ...
+2026-05-27 18:53:04,687 WETEXT INFO done
+2026-05-27 18:53:04,687 WETEXT INFO fst path: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_tagger.fst
+2026-05-27 18:53:04,687 WETEXT INFO           /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_verbalizer.fst
+2026-05-27 18:53:04,695 WETEXT INFO found existing fst: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_tagger.fst
+2026-05-27 18:53:04,695 WETEXT INFO                     /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_verbalizer.fst
+2026-05-27 18:53:04,696 WETEXT INFO skip building fst for en_normalizer ...
+Removing weight norm...
+[INFO] worker_id=1 pid=1024457 model loaded in 185.554s
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py:567: UserWarning: When enable frozen_parameter, Parameters will be considered frozen.Please make sure that the Parameters data address remain the same throughout the program runtime.
+  warnings.warn(f'When enable frozen_parameter, Parameters will be considered frozen.'
+模块耗时详情: Flow=1485.51ms | Hift=49401.24ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 50250.88ms
+ > Flow+Hift 推理耗时: 50887.01ms
+  0%|          | 0/1 [01:41<?, ?it/s]
+[INFO] worker_id=1 pid=1024457 warm up 1/5 done
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=73.04ms | Hift=27.02ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 226.77ms
+ > Flow+Hift 推理耗时: 100.22ms
+  0%|          | 0/1 [00:00<?, ?it/s]
+[INFO] worker_id=1 pid=1024457 warm up 2/5 done
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=68.35ms | Hift=22.31ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 192.66ms
+ > Flow+Hift 推理耗时: 90.76ms
+  0%|          | 0/1 [00:00<?, ?it/s]
+[INFO] worker_id=1 pid=1024457 warm up 3/5 done
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.00ms | Hift=23.37ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 195.62ms
+ > Flow+Hift 推理耗时: 93.49ms
+  0%|          | 0/1 [00:00<?, ?it/s]
+[INFO] worker_id=1 pid=1024457 warm up 4/5 done
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.11ms | Hift=22.04ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 193.39ms
+ > Flow+Hift 推理耗时: 91.25ms
+  0%|          | 0/1 [00:00<?, ?it/s]
+[INFO] worker_id=1 pid=1024457 warm up 5/5 done
+[INFO] worker_id=1 pid=1024457 init done

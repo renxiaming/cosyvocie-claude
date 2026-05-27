@@ -1,0 +1,34 @@
+[SUMMARY] log_dir=logs/concurrent/run_20260527_193117
+[SUMMARY] mode=dedicated_worker_process, concurrency=3, rounds=10, total_tasks=30
+[SUMMARY] success=30, failed=0, total_wall=15.990s, total_audio=127.840s
+[SUMMARY] avg_latency=1.248s, avg_infer=1.248s, p95_latency=1.644s, overall_throughput=7.995x realtime
+[TASK] r0_lane0 worker_id=0 pid=1172376 elapsed=0.807s audio=2.680s rtf=0.301 text=是的，您现在还有大概1个G的流量。
+[TASK] r0_lane2 worker_id=2 pid=1172378 elapsed=1.275s audio=4.280s rtf=0.298 text=查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[TASK] r0_lane1 worker_id=1 pid=1172377 elapsed=1.607s audio=5.600s rtf=0.287 text=不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[TASK] r1_lane0 worker_id=0 pid=1172376 elapsed=0.998s audio=3.080s rtf=0.324 text=是的，您现在还有大概1个G的流量。
+[TASK] r1_lane2 worker_id=2 pid=1172378 elapsed=1.128s audio=3.640s rtf=0.310 text=查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[TASK] r1_lane1 worker_id=1 pid=1172377 elapsed=1.517s audio=5.080s rtf=0.299 text=不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[TASK] r2_lane0 worker_id=0 pid=1172376 elapsed=0.772s audio=2.560s rtf=0.301 text=是的，您现在还有大概1个G的流量。
+[TASK] r2_lane2 worker_id=2 pid=1172378 elapsed=1.211s audio=4.160s rtf=0.291 text=查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[TASK] r2_lane1 worker_id=1 pid=1172377 elapsed=1.511s audio=5.280s rtf=0.286 text=不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[TASK] r3_lane0 worker_id=0 pid=1172376 elapsed=0.781s audio=2.640s rtf=0.296 text=是的，您现在还有大概1个G的流量。
+[TASK] r3_lane2 worker_id=2 pid=1172378 elapsed=1.213s audio=4.160s rtf=0.291 text=查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[TASK] r3_lane1 worker_id=1 pid=1172377 elapsed=1.736s audio=6.320s rtf=0.275 text=不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[TASK] r4_lane0 worker_id=0 pid=1172376 elapsed=1.032s audio=3.200s rtf=0.323 text=是的，您现在还有大概1个G的流量。
+[TASK] r4_lane2 worker_id=2 pid=1172378 elapsed=1.271s audio=4.320s rtf=0.294 text=查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[TASK] r4_lane1 worker_id=1 pid=1172377 elapsed=1.584s audio=5.520s rtf=0.287 text=不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[TASK] r5_lane0 worker_id=0 pid=1172376 elapsed=0.772s audio=2.640s rtf=0.292 text=是的，您现在还有大概1个G的流量。
+[TASK] r5_lane2 worker_id=2 pid=1172378 elapsed=1.544s audio=5.160s rtf=0.299 text=查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[TASK] r5_lane1 worker_id=1 pid=1172377 elapsed=1.559s audio=5.440s rtf=0.286 text=不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[TASK] r6_lane0 worker_id=0 pid=1172376 elapsed=0.816s audio=2.760s rtf=0.296 text=是的，您现在还有大概1个G的流量。
+[TASK] r6_lane2 worker_id=2 pid=1172378 elapsed=1.353s audio=4.680s rtf=0.289 text=查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[TASK] r6_lane1 worker_id=1 pid=1172377 elapsed=1.697s audio=6.080s rtf=0.279 text=不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[TASK] r7_lane0 worker_id=0 pid=1172376 elapsed=0.798s audio=2.680s rtf=0.298 text=是的，您现在还有大概1个G的流量。
+[TASK] r7_lane2 worker_id=2 pid=1172378 elapsed=1.324s audio=4.680s rtf=0.283 text=查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[TASK] r7_lane1 worker_id=1 pid=1172377 elapsed=1.644s audio=5.760s rtf=0.286 text=不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[TASK] r8_lane0 worker_id=0 pid=1172376 elapsed=1.054s audio=3.360s rtf=0.314 text=是的，您现在还有大概1个G的流量。
+[TASK] r8_lane2 worker_id=2 pid=1172378 elapsed=1.307s audio=4.400s rtf=0.297 text=查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[TASK] r8_lane1 worker_id=1 pid=1172377 elapsed=1.560s audio=5.440s rtf=0.287 text=不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+[TASK] r9_lane0 worker_id=0 pid=1172376 elapsed=0.753s audio=2.480s rtf=0.304 text=是的，您现在还有大概1个G的流量。
+[TASK] r9_lane2 worker_id=2 pid=1172378 elapsed=1.266s audio=4.240s rtf=0.299 text=查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+[TASK] r9_lane1 worker_id=1 pid=1172377 elapsed=1.546s audio=5.520s rtf=0.280 text=不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。

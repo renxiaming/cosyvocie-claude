@@ -1,0 +1,1306 @@
+[INFO] worker_id=0 pid=676879 start init
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/lightning/fabric/__init__.py:41: Deprecated call to `pkg_resources.declare_namespace('lightning.fabric')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:88: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  parse = parser.parseString(pattern)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:92: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  parser.resetCache()
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_mathtext.py:30: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+  ParserElement.enablePackrat()
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/lightning/pytorch/__init__.py:37: Deprecated call to `pkg_resources.declare_namespace('lightning.pytorch')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
+  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/librosa/core/intervals.py:15: DeprecationWarning: path is deprecated. Use files() instead. Refer to https://importlib-resources.readthedocs.io/en/latest/using.html#migrating-from-legacy for migration advice.
+  with resources.path("librosa.core", "intervals.msgpack") as imsgpack:
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:65: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'CPUExecutionProvider'
+  warnings.warn(
+/usr/local/Ascend/ascend-toolkit/8.1.RC1/python/site-packages/tbe/tvm/contrib/ccec.py:866: DeprecationWarning: invalid escape sequence '\L'
+  if not dirpath.find("AppData\Local\Temp"):
+/usr/local/Ascend/ascend-toolkit/latest/python/site-packages/tbe/dsl/classifier/transdata/transdata_classifier.py:222: DeprecationWarning: invalid escape sequence '\B'
+  """
+/usr/local/Ascend/ascend-toolkit/latest/python/site-packages/tbe/dsl/unify_schedule/vector/transdata/common/graph/transdata_graph_info.py:143: DeprecationWarning: invalid escape sequence '\c'
+  """
+2026-05-27 16:48:58,077 WETEXT INFO building fst for zh_normalizer ...
+2026-05-27 16:49:52,509 WETEXT INFO done
+2026-05-27 16:49:52,510 WETEXT INFO fst path: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_tagger.fst
+2026-05-27 16:49:52,510 WETEXT INFO           /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_verbalizer.fst
+2026-05-27 16:49:52,518 WETEXT INFO found existing fst: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_tagger.fst
+2026-05-27 16:49:52,518 WETEXT INFO                     /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_verbalizer.fst
+2026-05-27 16:49:52,518 WETEXT INFO skip building fst for en_normalizer ...
+Removing weight norm...
+[INFO] worker_id=0 pid=676879 model loaded in 177.444s
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py:567: UserWarning: When enable frozen_parameter, Parameters will be considered frozen.Please make sure that the Parameters data address remain the same throughout the program runtime.
+  warnings.warn(f'When enable frozen_parameter, Parameters will be considered frozen.'
+模块耗时详情: Flow=1480.69ms | Hift=48342.86ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 49432.49ms
+ > Flow+Hift 推理耗时: 49823.73ms
+  0%|          | 0/1 [01:39<?, ?it/s]
+[INFO] worker_id=0 pid=676879 warm up 1/5 done
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=71.44ms | Hift=29.96ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 203.36ms
+ > Flow+Hift 推理耗时: 101.52ms
+  0%|          | 0/1 [00:00<?, ?it/s]
+[INFO] worker_id=0 pid=676879 warm up 2/5 done
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.64ms | Hift=22.27ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 195.72ms
+ > Flow+Hift 推理耗时: 92.01ms
+  0%|          | 0/1 [00:00<?, ?it/s]
+[INFO] worker_id=0 pid=676879 warm up 3/5 done
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.08ms | Hift=22.27ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 195.38ms
+ > Flow+Hift 推理耗时: 92.44ms
+  0%|          | 0/1 [00:00<?, ?it/s]
+[INFO] worker_id=0 pid=676879 warm up 4/5 done
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.12ms | Hift=21.51ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 196.49ms
+ > Flow+Hift 推理耗时: 91.73ms
+  0%|          | 0/1 [00:00<?, ?it/s]
+[INFO] worker_id=0 pid=676879 warm up 5/5 done
+[INFO] worker_id=0 pid=676879 init done
+[INFO] worker_id=0 pid=676879 task r0_lane0 start: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.07ms | Hift=21.94ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 191.78ms
+ > Flow+Hift 推理耗时: 91.11ms
+flow step3
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py:567: UserWarning: When enable frozen_parameter, Parameters will be considered frozen.Please make sure that the Parameters data address remain the same throughout the program runtime.
+  warnings.warn(f'When enable frozen_parameter, Parameters will be considered frozen.'
+模块耗时详情: Flow=94.26ms | Hift=49229.23ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 414.67ms
+ > Flow+Hift 推理耗时: 49323.76ms
+flow step3
+模块耗时详情: Flow=105.40ms | Hift=33.46ms
+100%|██████████| 1/1 [00:50<00:00, 50.25s/it]100%|██████████| 1/1 [00:50<00:00, 50.25s/it]
+[INFO] worker_id=0 pid=676879 task r0_lane0 done, elapsed=50.256s, audio=3.200s, rtf=15.705
+[INFO] worker_id=0 pid=676879 task r0_lane1 start: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=73.07ms | Hift=31.89ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 235.75ms
+ > Flow+Hift 推理耗时: 105.06ms
+flow step3
+模块耗时详情: Flow=85.09ms | Hift=38.64ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 454.63ms
+ > Flow+Hift 推理耗时: 123.87ms
+flow step3
+模块耗时详情: Flow=95.02ms | Hift=38.18ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 449.44ms
+ > Flow+Hift 推理耗时: 133.34ms
+flow step3
+模块耗时详情: Flow=104.55ms | Hift=30.62ms
+100%|██████████| 1/1 [00:01<00:00,  1.89s/it]100%|██████████| 1/1 [00:01<00:00,  1.89s/it]
+[INFO] worker_id=0 pid=676879 task r0_lane1 done, elapsed=1.902s, audio=5.920s, rtf=0.321
+[INFO] worker_id=0 pid=676879 task r0_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=71.07ms | Hift=22.83ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 217.05ms
+ > Flow+Hift 推理耗时: 94.02ms
+flow step3
+模块耗时详情: Flow=83.72ms | Hift=36.71ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 415.02ms
+ > Flow+Hift 推理耗时: 120.55ms
+flow step3
+模块耗时详情: Flow=93.59ms | Hift=37.52ms
+100%|██████████| 1/1 [00:01<00:00,  1.33s/it]100%|██████████| 1/1 [00:01<00:00,  1.33s/it]
+[INFO] worker_id=0 pid=676879 task r0_lane2 done, elapsed=1.346s, audio=4.640s, rtf=0.290
+[INFO] worker_id=0 pid=676879 task r0_lane3 start: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.30ms | Hift=22.25ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 203.01ms
+ > Flow+Hift 推理耗时: 91.67ms
+flow step3
+模块耗时详情: Flow=80.96ms | Hift=35.99ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 392.26ms
+ > Flow+Hift 推理耗时: 117.08ms
+flow step3
+模块耗时详情: Flow=83.53ms | Hift=37.01ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 381.24ms
+ > Flow+Hift 推理耗时: 120.68ms
+flow step3
+模块耗时详情: Flow=92.75ms | Hift=28.00ms
+100%|██████████| 1/1 [00:01<00:00,  1.48s/it]100%|██████████| 1/1 [00:01<00:00,  1.49s/it]
+[INFO] worker_id=0 pid=676879 task r0_lane3 done, elapsed=1.504s, audio=5.160s, rtf=0.291
+[INFO] worker_id=0 pid=676879 task r0_lane4 start: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.55ms | Hift=23.38ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 207.79ms
+ > Flow+Hift 推理耗时: 94.04ms
+flow step3
+模块耗时详情: Flow=92.90ms | Hift=41.76ms
+100%|██████████| 1/1 [00:00<00:00,  1.19it/s]100%|██████████| 1/1 [00:00<00:00,  1.19it/s]
+[INFO] worker_id=0 pid=676879 task r0_lane4 done, elapsed=0.850s, audio=2.840s, rtf=0.299
+[INFO] worker_id=0 pid=676879 task r0_lane5 start: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=68.74ms | Hift=22.74ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 200.92ms
+ > Flow+Hift 推理耗时: 91.57ms
+flow step3
+模块耗时详情: Flow=80.27ms | Hift=36.41ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 397.52ms
+ > Flow+Hift 推理耗时: 116.79ms
+flow step3
+模块耗时详情: Flow=81.18ms | Hift=36.38ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 387.47ms
+ > Flow+Hift 推理耗时: 117.67ms
+flow step3
+模块耗时详情: Flow=99.86ms | Hift=37.09ms
+100%|██████████| 1/1 [00:01<00:00,  1.74s/it]100%|██████████| 1/1 [00:01<00:00,  1.74s/it]
+[INFO] worker_id=0 pid=676879 task r0_lane5 done, elapsed=1.762s, audio=6.400s, rtf=0.275
+[INFO] worker_id=0 pid=676879 task r1_lane0 start: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.01ms | Hift=31.94ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 196.15ms
+ > Flow+Hift 推理耗时: 102.08ms
+flow step3
+模块耗时详情: Flow=81.77ms | Hift=38.33ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 398.77ms
+ > Flow+Hift 推理耗时: 120.23ms
+flow step3
+模块耗时详情: Flow=91.30ms | Hift=28.54ms
+100%|██████████| 1/1 [00:01<00:00,  1.01s/it]100%|██████████| 1/1 [00:01<00:00,  1.01s/it]
+[INFO] worker_id=0 pid=676879 task r1_lane0 done, elapsed=1.020s, audio=3.240s, rtf=0.315
+[INFO] worker_id=0 pid=676879 task r1_lane1 start: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=71.13ms | Hift=23.42ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 207.34ms
+ > Flow+Hift 推理耗时: 94.65ms
+flow step3
+模块耗时详情: Flow=81.92ms | Hift=37.44ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 406.03ms
+ > Flow+Hift 推理耗时: 119.48ms
+flow step3
+模块耗时详情: Flow=82.90ms | Hift=37.79ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 395.64ms
+ > Flow+Hift 推理耗时: 120.81ms
+flow step3
+模块耗时详情: Flow=92.38ms | Hift=28.30ms
+100%|██████████| 1/1 [00:01<00:00,  1.48s/it]100%|██████████| 1/1 [00:01<00:00,  1.49s/it]
+[INFO] worker_id=0 pid=676879 task r1_lane1 done, elapsed=1.500s, audio=4.960s, rtf=0.302
+[INFO] worker_id=0 pid=676879 task r1_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.19ms | Hift=22.85ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 199.71ms
+ > Flow+Hift 推理耗时: 92.13ms
+flow step3
+模块耗时详情: Flow=81.45ms | Hift=38.79ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 403.28ms
+ > Flow+Hift 推理耗时: 120.35ms
+flow step3
+模块耗时详情: Flow=92.47ms | Hift=39.29ms
+100%|██████████| 1/1 [00:01<00:00,  1.31s/it]100%|██████████| 1/1 [00:01<00:00,  1.31s/it]
+[INFO] worker_id=0 pid=676879 task r1_lane2 done, elapsed=1.328s, audio=4.680s, rtf=0.284
+[INFO] worker_id=0 pid=676879 task r1_lane3 start: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.06ms | Hift=24.11ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 198.16ms
+ > Flow+Hift 推理耗时: 93.27ms
+flow step3
+模块耗时详情: Flow=82.14ms | Hift=39.43ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 412.05ms
+ > Flow+Hift 推理耗时: 121.69ms
+flow step3
+模块耗时详情: Flow=84.06ms | Hift=38.02ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 404.80ms
+ > Flow+Hift 推理耗时: 122.21ms
+flow step3
+模块耗时详情: Flow=90.47ms | Hift=31.00ms
+100%|██████████| 1/1 [00:01<00:00,  1.62s/it]100%|██████████| 1/1 [00:01<00:00,  1.62s/it]
+[INFO] worker_id=0 pid=676879 task r1_lane3 done, elapsed=1.639s, audio=5.600s, rtf=0.293
+[INFO] worker_id=0 pid=676879 task r1_lane4 start: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.46ms | Hift=23.63ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 210.33ms
+ > Flow+Hift 推理耗时: 94.21ms
+flow step3
+模块耗时详情: Flow=83.90ms | Hift=38.66ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 404.60ms
+ > Flow+Hift 推理耗时: 122.67ms
+flow step3
+模块耗时详情: Flow=84.16ms | Hift=23.23ms
+100%|██████████| 1/1 [00:01<00:00,  1.01s/it]100%|██████████| 1/1 [00:01<00:00,  1.01s/it]
+[INFO] worker_id=0 pid=676879 task r1_lane4 done, elapsed=1.017s, audio=3.200s, rtf=0.318
+[INFO] worker_id=0 pid=676879 task r1_lane5 start: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.48ms | Hift=22.99ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 204.84ms
+ > Flow+Hift 推理耗时: 93.57ms
+flow step3
+模块耗时详情: Flow=83.32ms | Hift=39.04ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 418.10ms
+ > Flow+Hift 推理耗时: 122.48ms
+flow step3
+模块耗时详情: Flow=83.49ms | Hift=38.16ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 395.99ms
+ > Flow+Hift 推理耗时: 121.77ms
+flow step3
+模块耗时详情: Flow=101.54ms | Hift=29.91ms
+100%|██████████| 1/1 [00:01<00:00,  1.68s/it]100%|██████████| 1/1 [00:01<00:00,  1.68s/it]
+[INFO] worker_id=0 pid=676879 task r1_lane5 done, elapsed=1.697s, audio=5.840s, rtf=0.291
+[INFO] worker_id=0 pid=676879 task r2_lane0 start: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.44ms | Hift=23.39ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 203.25ms
+ > Flow+Hift 推理耗时: 92.96ms
+flow step3
+模块耗时详情: Flow=82.41ms | Hift=39.52ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 395.66ms
+ > Flow+Hift 推理耗时: 122.07ms
+flow step3
+模块耗时详情: Flow=93.58ms | Hift=24.60ms
+100%|██████████| 1/1 [00:01<00:00,  1.08s/it]100%|██████████| 1/1 [00:01<00:00,  1.08s/it]
+[INFO] worker_id=0 pid=676879 task r2_lane0 done, elapsed=1.087s, audio=3.600s, rtf=0.302
+[INFO] worker_id=0 pid=676879 task r2_lane1 start: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.84ms | Hift=23.22ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 203.99ms
+ > Flow+Hift 推理耗时: 94.18ms
+flow step3
+模块耗时详情: Flow=80.42ms | Hift=36.53ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 405.43ms
+ > Flow+Hift 推理耗时: 117.07ms
+flow step3
+模块耗时详情: Flow=82.52ms | Hift=40.90ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 382.34ms
+ > Flow+Hift 推理耗时: 123.55ms
+flow step3
+模块耗时详情: Flow=84.10ms | Hift=22.91ms
+100%|██████████| 1/1 [00:01<00:00,  1.45s/it]100%|██████████| 1/1 [00:01<00:00,  1.45s/it]
+[INFO] worker_id=0 pid=676879 task r2_lane1 done, elapsed=1.468s, audio=4.960s, rtf=0.296
+[INFO] worker_id=0 pid=676879 task r2_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.35ms | Hift=22.94ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 199.51ms
+ > Flow+Hift 推理耗时: 93.38ms
+flow step3
+模块耗时详情: Flow=79.79ms | Hift=36.23ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 388.64ms
+ > Flow+Hift 推理耗时: 116.13ms
+flow step3
+模块耗时详情: Flow=91.34ms | Hift=36.02ms
+100%|██████████| 1/1 [00:01<00:00,  1.23s/it]100%|██████████| 1/1 [00:01<00:00,  1.23s/it]
+[INFO] worker_id=0 pid=676879 task r2_lane2 done, elapsed=1.241s, audio=4.440s, rtf=0.280
+[INFO] worker_id=0 pid=676879 task r2_lane3 start: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.36ms | Hift=22.94ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 206.77ms
+ > Flow+Hift 推理耗时: 93.40ms
+flow step3
+模块耗时详情: Flow=81.73ms | Hift=36.65ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 417.31ms
+ > Flow+Hift 推理耗时: 118.49ms
+flow step3
+模块耗时详情: Flow=82.41ms | Hift=35.55ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 407.05ms
+ > Flow+Hift 推理耗时: 118.08ms
+flow step3
+模块耗时详情: Flow=92.49ms | Hift=24.12ms
+100%|██████████| 1/1 [00:01<00:00,  1.69s/it]100%|██████████| 1/1 [00:01<00:00,  1.69s/it]
+[INFO] worker_id=0 pid=676879 task r2_lane3 done, elapsed=1.708s, audio=5.840s, rtf=0.293
+[INFO] worker_id=0 pid=676879 task r2_lane4 start: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=68.31ms | Hift=21.88ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 192.68ms
+ > Flow+Hift 推理耗时: 90.28ms
+flow step3
+模块耗时详情: Flow=79.62ms | Hift=36.18ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 381.16ms
+ > Flow+Hift 推理耗时: 115.89ms
+flow step3
+模块耗时详情: Flow=93.65ms | Hift=29.47ms
+100%|██████████| 1/1 [00:01<00:00,  1.01s/it]100%|██████████| 1/1 [00:01<00:00,  1.01s/it]
+[INFO] worker_id=0 pid=676879 task r2_lane4 done, elapsed=1.020s, audio=3.400s, rtf=0.300
+[INFO] worker_id=0 pid=676879 task r2_lane5 start: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.57ms | Hift=23.80ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 201.33ms
+ > Flow+Hift 推理耗时: 93.47ms
+flow step3
+模块耗时详情: Flow=82.33ms | Hift=36.74ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 418.86ms
+ > Flow+Hift 推理耗时: 119.18ms
+flow step3
+模块耗时详情: Flow=83.53ms | Hift=37.31ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 410.13ms
+ > Flow+Hift 推理耗时: 120.96ms
+flow step3
+模块耗时详情: Flow=101.37ms | Hift=41.71ms
+100%|██████████| 1/1 [00:01<00:00,  1.89s/it]100%|██████████| 1/1 [00:01<00:00,  1.89s/it]
+[INFO] worker_id=0 pid=676879 task r2_lane5 done, elapsed=1.907s, audio=6.760s, rtf=0.282
+[INFO] worker_id=0 pid=676879 task r3_lane0 start: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.76ms | Hift=23.63ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 198.56ms
+ > Flow+Hift 推理耗时: 93.49ms
+flow step3
+模块耗时详情: Flow=92.08ms | Hift=32.78ms
+100%|██████████| 1/1 [00:00<00:00,  1.28it/s]100%|██████████| 1/1 [00:00<00:00,  1.28it/s]
+[INFO] worker_id=0 pid=676879 task r3_lane0 done, elapsed=0.788s, audio=2.640s, rtf=0.299
+[INFO] worker_id=0 pid=676879 task r3_lane1 start: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=68.84ms | Hift=22.98ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 204.87ms
+ > Flow+Hift 推理耗时: 91.91ms
+flow step3
+模块耗时详情: Flow=82.01ms | Hift=38.00ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 415.08ms
+ > Flow+Hift 推理耗时: 120.13ms
+flow step3
+模块耗时详情: Flow=95.24ms | Hift=44.92ms
+100%|██████████| 1/1 [00:01<00:00,  1.35s/it]100%|██████████| 1/1 [00:01<00:00,  1.35s/it]
+[INFO] worker_id=0 pid=676879 task r3_lane1 done, elapsed=1.366s, audio=4.720s, rtf=0.289
+[INFO] worker_id=0 pid=676879 task r3_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.57ms | Hift=28.48ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 207.40ms
+ > Flow+Hift 推理耗时: 99.15ms
+flow step3
+模块耗时详情: Flow=82.93ms | Hift=39.15ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 400.35ms
+ > Flow+Hift 推理耗时: 122.22ms
+flow step3
+模块耗时详情: Flow=81.81ms | Hift=37.62ms
+100%|██████████| 1/1 [00:01<00:00,  1.33s/it]100%|██████████| 1/1 [00:01<00:00,  1.33s/it]
+[INFO] worker_id=0 pid=676879 task r3_lane2 done, elapsed=1.343s, audio=4.800s, rtf=0.280
+[INFO] worker_id=0 pid=676879 task r3_lane3 start: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.51ms | Hift=23.23ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 201.86ms
+ > Flow+Hift 推理耗时: 92.82ms
+flow step3
+模块耗时详情: Flow=81.25ms | Hift=37.60ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 399.17ms
+ > Flow+Hift 推理耗时: 118.96ms
+flow step3
+模块耗时详情: Flow=89.47ms | Hift=36.48ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 407.62ms
+ > Flow+Hift 推理耗时: 126.08ms
+flow step3
+模块耗时详情: Flow=82.15ms | Hift=24.48ms
+100%|██████████| 1/1 [00:01<00:00,  1.60s/it]100%|██████████| 1/1 [00:01<00:00,  1.60s/it]
+[INFO] worker_id=0 pid=676879 task r3_lane3 done, elapsed=1.614s, audio=5.600s, rtf=0.288
+[INFO] worker_id=0 pid=676879 task r3_lane4 start: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=68.86ms | Hift=22.94ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 200.80ms
+ > Flow+Hift 推理耗时: 91.89ms
+flow step3
+模块耗时详情: Flow=80.53ms | Hift=38.70ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 396.25ms
+ > Flow+Hift 推理耗时: 119.35ms
+flow step3
+模块耗时详情: Flow=90.51ms | Hift=28.49ms
+100%|██████████| 1/1 [00:01<00:00,  1.01s/it]100%|██████████| 1/1 [00:01<00:00,  1.01s/it]
+[INFO] worker_id=0 pid=676879 task r3_lane4 done, elapsed=1.019s, audio=3.280s, rtf=0.311
+[INFO] worker_id=0 pid=676879 task r3_lane5 start: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.29ms | Hift=23.28ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 202.87ms
+ > Flow+Hift 推理耗时: 92.68ms
+flow step3
+模块耗时详情: Flow=80.10ms | Hift=36.22ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 400.40ms
+ > Flow+Hift 推理耗时: 116.43ms
+flow step3
+模块耗时详情: Flow=83.25ms | Hift=37.06ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 401.86ms
+ > Flow+Hift 推理耗时: 120.43ms
+flow step3
+模块耗时详情: Flow=93.19ms | Hift=29.93ms
+100%|██████████| 1/1 [00:01<00:00,  1.67s/it]100%|██████████| 1/1 [00:01<00:00,  1.67s/it]
+[INFO] worker_id=0 pid=676879 task r3_lane5 done, elapsed=1.681s, audio=5.920s, rtf=0.284
+[INFO] worker_id=0 pid=676879 task r4_lane0 start: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.48ms | Hift=21.75ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 214.19ms
+ > Flow+Hift 推理耗时: 91.37ms
+flow step3
+模块耗时详情: Flow=92.80ms | Hift=37.07ms
+100%|██████████| 1/1 [00:00<00:00,  1.24it/s]100%|██████████| 1/1 [00:00<00:00,  1.24it/s]
+[INFO] worker_id=0 pid=676879 task r4_lane0 done, elapsed=0.813s, audio=2.720s, rtf=0.299
+[INFO] worker_id=0 pid=676879 task r4_lane1 start: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.90ms | Hift=21.84ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 203.97ms
+ > Flow+Hift 推理耗时: 91.85ms
+flow step3
+模块耗时详情: Flow=81.37ms | Hift=36.80ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 406.58ms
+ > Flow+Hift 推理耗时: 118.32ms
+flow step3
+模块耗时详情: Flow=82.59ms | Hift=35.79ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 395.80ms
+ > Flow+Hift 推理耗时: 118.52ms
+flow step3
+模块耗时详情: Flow=85.08ms | Hift=29.18ms
+100%|██████████| 1/1 [00:01<00:00,  1.57s/it]100%|██████████| 1/1 [00:01<00:00,  1.57s/it]
+[INFO] worker_id=0 pid=676879 task r4_lane1 done, elapsed=1.585s, audio=5.480s, rtf=0.289
+[INFO] worker_id=0 pid=676879 task r4_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.63ms | Hift=24.15ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 217.47ms
+ > Flow+Hift 推理耗时: 94.89ms
+flow step3
+模块耗时详情: Flow=80.16ms | Hift=35.63ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 408.02ms
+ > Flow+Hift 推理耗时: 115.89ms
+flow step3
+模块耗时详情: Flow=95.04ms | Hift=42.94ms
+100%|██████████| 1/1 [00:01<00:00,  1.26s/it]100%|██████████| 1/1 [00:01<00:00,  1.26s/it]
+[INFO] worker_id=0 pid=676879 task r4_lane2 done, elapsed=1.274s, audio=4.320s, rtf=0.295
+[INFO] worker_id=0 pid=676879 task r4_lane3 start: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.82ms | Hift=28.58ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 208.54ms
+ > Flow+Hift 推理耗时: 99.51ms
+flow step3
+模块耗时详情: Flow=83.28ms | Hift=42.26ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 399.81ms
+ > Flow+Hift 推理耗时: 125.67ms
+flow step3
+模块耗时详情: Flow=85.22ms | Hift=42.43ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 402.65ms
+ > Flow+Hift 推理耗时: 127.78ms
+flow step3
+模块耗时详情: Flow=105.51ms | Hift=37.45ms
+100%|██████████| 1/1 [00:01<00:00,  1.69s/it]100%|██████████| 1/1 [00:01<00:00,  1.69s/it]
+[INFO] worker_id=0 pid=676879 task r4_lane3 done, elapsed=1.708s, audio=5.760s, rtf=0.296
+[INFO] worker_id=0 pid=676879 task r4_lane4 start: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.34ms | Hift=28.77ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 207.46ms
+ > Flow+Hift 推理耗时: 99.22ms
+flow step3
+模块耗时详情: Flow=83.05ms | Hift=43.59ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 391.41ms
+ > Flow+Hift 推理耗时: 126.76ms
+flow step3
+模块耗时详情: Flow=94.38ms | Hift=32.48ms
+100%|██████████| 1/1 [00:00<00:00,  1.02it/s]100%|██████████| 1/1 [00:00<00:00,  1.02it/s]
+[INFO] worker_id=0 pid=676879 task r4_lane4 done, elapsed=0.994s, audio=3.000s, rtf=0.331
+[INFO] worker_id=0 pid=676879 task r4_lane5 start: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=71.14ms | Hift=29.12ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 207.05ms
+ > Flow+Hift 推理耗时: 100.36ms
+flow step3
+模块耗时详情: Flow=83.03ms | Hift=42.85ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 402.32ms
+ > Flow+Hift 推理耗时: 126.00ms
+flow step3
+模块耗时详情: Flow=85.13ms | Hift=41.93ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 392.29ms
+ > Flow+Hift 推理耗时: 127.19ms
+flow step3
+模块耗时详情: Flow=101.95ms | Hift=42.00ms
+
+[Profiling] Chunk Offset: 120
+ > LLM 累积耗时: 387.39ms
+ > Flow+Hift 推理耗时: 144.08ms
+flow step3
+模块耗时详情: Flow=95.66ms | Hift=33.88ms
+100%|██████████| 1/1 [00:02<00:00,  2.03s/it]100%|██████████| 1/1 [00:02<00:00,  2.03s/it]
+[INFO] worker_id=0 pid=676879 task r4_lane5 done, elapsed=2.049s, audio=6.920s, rtf=0.296
+[INFO] worker_id=0 pid=676879 task r5_lane0 start: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.70ms | Hift=23.58ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 204.51ms
+ > Flow+Hift 推理耗时: 93.41ms
+flow step3
+模块耗时详情: Flow=82.33ms | Hift=39.40ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 397.22ms
+ > Flow+Hift 推理耗时: 121.87ms
+flow step3
+模块耗时详情: Flow=92.92ms | Hift=29.33ms
+100%|██████████| 1/1 [00:01<00:00,  1.07s/it]100%|██████████| 1/1 [00:01<00:00,  1.07s/it]
+[INFO] worker_id=0 pid=676879 task r5_lane0 done, elapsed=1.076s, audio=3.520s, rtf=0.306
+[INFO] worker_id=0 pid=676879 task r5_lane1 start: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.34ms | Hift=22.06ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 203.53ms
+ > Flow+Hift 推理耗时: 92.51ms
+flow step3
+模块耗时详情: Flow=81.90ms | Hift=39.05ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 400.01ms
+ > Flow+Hift 推理耗时: 121.08ms
+flow step3
+模块耗时详情: Flow=83.24ms | Hift=38.03ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 391.86ms
+ > Flow+Hift 推理耗时: 121.39ms
+flow step3
+模块耗时详情: Flow=100.08ms | Hift=29.40ms
+100%|██████████| 1/1 [00:01<00:00,  1.61s/it]100%|██████████| 1/1 [00:01<00:00,  1.61s/it]
+[INFO] worker_id=0 pid=676879 task r5_lane1 done, elapsed=1.625s, audio=5.640s, rtf=0.288
+[INFO] worker_id=0 pid=676879 task r5_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=72.25ms | Hift=29.56ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 203.13ms
+ > Flow+Hift 推理耗时: 101.93ms
+flow step3
+模块耗时详情: Flow=80.81ms | Hift=38.79ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 396.70ms
+ > Flow+Hift 推理耗时: 119.73ms
+flow step3
+模块耗时详情: Flow=91.47ms | Hift=23.95ms
+100%|██████████| 1/1 [00:01<00:00,  1.13s/it]100%|██████████| 1/1 [00:01<00:00,  1.13s/it]
+[INFO] worker_id=0 pid=676879 task r5_lane2 done, elapsed=1.140s, audio=3.840s, rtf=0.297
+[INFO] worker_id=0 pid=676879 task r5_lane3 start: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.00ms | Hift=23.20ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 206.88ms
+ > Flow+Hift 推理耗时: 92.30ms
+flow step3
+模块耗时详情: Flow=81.57ms | Hift=39.33ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 410.26ms
+ > Flow+Hift 推理耗时: 121.06ms
+flow step3
+模块耗时详情: Flow=82.56ms | Hift=37.62ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 400.08ms
+ > Flow+Hift 推理耗时: 120.29ms
+flow step3
+模块耗时详情: Flow=93.21ms | Hift=23.89ms
+100%|██████████| 1/1 [00:01<00:00,  1.68s/it]100%|██████████| 1/1 [00:01<00:00,  1.68s/it]
+[INFO] worker_id=0 pid=676879 task r5_lane3 done, elapsed=1.695s, audio=5.920s, rtf=0.286
+[INFO] worker_id=0 pid=676879 task r5_lane4 start: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.01ms | Hift=22.38ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 202.97ms
+ > Flow+Hift 推理耗时: 91.48ms
+flow step3
+模块耗时详情: Flow=80.50ms | Hift=38.50ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 401.34ms
+ > Flow+Hift 推理耗时: 119.11ms
+flow step3
+模块耗时详情: Flow=90.83ms | Hift=28.58ms
+100%|██████████| 1/1 [00:01<00:00,  1.02s/it]100%|██████████| 1/1 [00:01<00:00,  1.02s/it]
+[INFO] worker_id=0 pid=676879 task r5_lane4 done, elapsed=1.035s, audio=3.320s, rtf=0.312
+[INFO] worker_id=0 pid=676879 task r5_lane5 start: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.16ms | Hift=22.71ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 200.46ms
+ > Flow+Hift 推理耗时: 91.95ms
+flow step3
+模块耗时详情: Flow=81.37ms | Hift=37.80ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 405.47ms
+ > Flow+Hift 推理耗时: 119.29ms
+flow step3
+模块耗时详情: Flow=82.78ms | Hift=37.59ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 400.84ms
+ > Flow+Hift 推理耗时: 120.48ms
+flow step3
+模块耗时详情: Flow=100.88ms | Hift=30.56ms
+100%|██████████| 1/1 [00:01<00:00,  1.67s/it]100%|██████████| 1/1 [00:01<00:00,  1.67s/it]
+[INFO] worker_id=0 pid=676879 task r5_lane5 done, elapsed=1.690s, audio=5.880s, rtf=0.287
+[INFO] worker_id=0 pid=676879 task r6_lane0 start: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=71.74ms | Hift=22.81ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 195.38ms
+ > Flow+Hift 推理耗时: 94.65ms
+flow step3
+模块耗时详情: Flow=80.47ms | Hift=38.38ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 387.52ms
+ > Flow+Hift 推理耗时: 118.97ms
+flow step3
+模块耗时详情: Flow=83.40ms | Hift=22.99ms
+100%|██████████| 1/1 [00:00<00:00,  1.02it/s]100%|██████████| 1/1 [00:00<00:00,  1.02it/s]
+[INFO] worker_id=0 pid=676879 task r6_lane0 done, elapsed=0.985s, audio=3.240s, rtf=0.304
+[INFO] worker_id=0 pid=676879 task r6_lane1 start: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.43ms | Hift=22.70ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 200.47ms
+ > Flow+Hift 推理耗时: 92.24ms
+flow step3
+模块耗时详情: Flow=80.42ms | Hift=38.54ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 400.19ms
+ > Flow+Hift 推理耗时: 119.08ms
+flow step3
+模块耗时详情: Flow=81.87ms | Hift=39.01ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 389.81ms
+ > Flow+Hift 推理耗时: 121.01ms
+flow step3
+模块耗时详情: Flow=90.86ms | Hift=22.15ms
+100%|██████████| 1/1 [00:01<00:00,  1.46s/it]100%|██████████| 1/1 [00:01<00:00,  1.46s/it]
+[INFO] worker_id=0 pid=676879 task r6_lane1 done, elapsed=1.478s, audio=5.000s, rtf=0.296
+[INFO] worker_id=0 pid=676879 task r6_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.73ms | Hift=28.70ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 211.42ms
+ > Flow+Hift 推理耗时: 99.53ms
+flow step3
+模块耗时详情: Flow=85.43ms | Hift=44.85ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 409.03ms
+ > Flow+Hift 推理耗时: 130.40ms
+flow step3
+模块耗时详情: Flow=88.14ms | Hift=42.49ms
+100%|██████████| 1/1 [00:01<00:00,  1.37s/it]100%|██████████| 1/1 [00:01<00:00,  1.37s/it]
+[INFO] worker_id=0 pid=676879 task r6_lane2 done, elapsed=1.380s, audio=4.680s, rtf=0.295
+[INFO] worker_id=0 pid=676879 task r6_lane3 start: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.98ms | Hift=29.63ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 208.93ms
+ > Flow+Hift 推理耗时: 100.71ms
+flow step3
+模块耗时详情: Flow=83.46ms | Hift=44.45ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 422.84ms
+ > Flow+Hift 推理耗时: 128.05ms
+flow step3
+模块耗时详情: Flow=84.29ms | Hift=40.02ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 413.09ms
+ > Flow+Hift 推理耗时: 124.47ms
+flow step3
+模块耗时详情: Flow=99.31ms | Hift=37.99ms
+100%|██████████| 1/1 [00:01<00:00,  1.72s/it]100%|██████████| 1/1 [00:01<00:00,  1.72s/it]
+[INFO] worker_id=0 pid=676879 task r6_lane3 done, elapsed=1.736s, audio=5.720s, rtf=0.303
+[INFO] worker_id=0 pid=676879 task r6_lane4 start: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.90ms | Hift=22.57ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 202.40ms
+ > Flow+Hift 推理耗时: 92.59ms
+flow step3
+模块耗时详情: Flow=84.78ms | Hift=39.56ms
+100%|██████████| 1/1 [00:00<00:00,  1.24it/s]100%|██████████| 1/1 [00:00<00:00,  1.24it/s]
+[INFO] worker_id=0 pid=676879 task r6_lane4 done, elapsed=0.820s, audio=2.840s, rtf=0.289
+[INFO] worker_id=0 pid=676879 task r6_lane5 start: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.32ms | Hift=22.93ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 205.13ms
+ > Flow+Hift 推理耗时: 93.36ms
+flow step3
+模块耗时详情: Flow=82.41ms | Hift=40.43ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 408.86ms
+ > Flow+Hift 推理耗时: 122.97ms
+flow step3
+模块耗时详情: Flow=81.97ms | Hift=38.11ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 410.80ms
+ > Flow+Hift 推理耗时: 120.19ms
+flow step3
+模块耗时详情: Flow=100.10ms | Hift=33.96ms
+100%|██████████| 1/1 [00:01<00:00,  1.79s/it]100%|██████████| 1/1 [00:01<00:00,  1.79s/it]
+[INFO] worker_id=0 pid=676879 task r6_lane5 done, elapsed=1.806s, audio=6.320s, rtf=0.286
+[INFO] worker_id=0 pid=676879 task r7_lane0 start: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.01ms | Hift=22.32ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 211.61ms
+ > Flow+Hift 推理耗时: 92.44ms
+flow step3
+模块耗时详情: Flow=92.15ms | Hift=43.49ms
+100%|██████████| 1/1 [00:00<00:00,  1.20it/s]100%|██████████| 1/1 [00:00<00:00,  1.20it/s]
+[INFO] worker_id=0 pid=676879 task r7_lane0 done, elapsed=0.843s, audio=2.880s, rtf=0.293
+[INFO] worker_id=0 pid=676879 task r7_lane1 start: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=75.55ms | Hift=37.03ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 201.35ms
+ > Flow+Hift 推理耗时: 112.68ms
+flow step3
+模块耗时详情: Flow=80.04ms | Hift=36.66ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 397.29ms
+ > Flow+Hift 推理耗时: 122.93ms
+flow step3
+模块耗时详情: Flow=83.43ms | Hift=38.25ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 415.22ms
+ > Flow+Hift 推理耗时: 121.82ms
+flow step3
+模块耗时详情: Flow=91.17ms | Hift=22.61ms
+100%|██████████| 1/1 [00:01<00:00,  1.56s/it]100%|██████████| 1/1 [00:01<00:00,  1.56s/it]
+[INFO] worker_id=0 pid=676879 task r7_lane1 done, elapsed=1.569s, audio=5.200s, rtf=0.302
+[INFO] worker_id=0 pid=676879 task r7_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.26ms | Hift=23.23ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 199.01ms
+ > Flow+Hift 推理耗时: 93.60ms
+flow step3
+模块耗时详情: Flow=91.29ms | Hift=51.81ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 488.54ms
+ > Flow+Hift 推理耗时: 143.27ms
+flow step3
+模块耗时详情: Flow=84.17ms | Hift=41.31ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 441.68ms
+ > Flow+Hift 推理耗时: 125.62ms
+flow step3
+模块耗时详情: Flow=86.29ms | Hift=24.08ms
+100%|██████████| 1/1 [00:01<00:00,  1.61s/it]100%|██████████| 1/1 [00:01<00:00,  1.62s/it]
+[INFO] worker_id=0 pid=676879 task r7_lane2 done, elapsed=1.628s, audio=4.920s, rtf=0.331
+[INFO] worker_id=0 pid=676879 task r7_lane3 start: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.14ms | Hift=24.54ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 206.59ms
+ > Flow+Hift 推理耗时: 94.80ms
+flow step3
+模块耗时详情: Flow=81.75ms | Hift=39.03ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 414.11ms
+ > Flow+Hift 推理耗时: 120.91ms
+flow step3
+模块耗时详情: Flow=83.14ms | Hift=40.64ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 403.29ms
+ > Flow+Hift 推理耗时: 123.94ms
+flow step3
+模块耗时详情: Flow=100.00ms | Hift=39.43ms
+100%|██████████| 1/1 [00:01<00:00,  1.75s/it]100%|██████████| 1/1 [00:01<00:00,  1.75s/it]
+[INFO] worker_id=0 pid=676879 task r7_lane3 done, elapsed=1.766s, audio=6.080s, rtf=0.290
+[INFO] worker_id=0 pid=676879 task r7_lane4 start: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.02ms | Hift=22.87ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 205.47ms
+ > Flow+Hift 推理耗时: 92.01ms
+flow step3
+模块耗时详情: Flow=80.96ms | Hift=38.22ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 396.38ms
+ > Flow+Hift 推理耗时: 119.30ms
+flow step3
+模块耗时详情: Flow=90.74ms | Hift=28.48ms
+100%|██████████| 1/1 [00:01<00:00,  1.03s/it]100%|██████████| 1/1 [00:01<00:00,  1.03s/it]
+[INFO] worker_id=0 pid=676879 task r7_lane4 done, elapsed=1.041s, audio=3.360s, rtf=0.310
+[INFO] worker_id=0 pid=676879 task r7_lane5 start: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=68.99ms | Hift=22.62ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 198.51ms
+ > Flow+Hift 推理耗时: 91.69ms
+flow step3
+模块耗时详情: Flow=81.34ms | Hift=39.81ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 400.76ms
+ > Flow+Hift 推理耗时: 121.26ms
+flow step3
+模块耗时详情: Flow=82.00ms | Hift=37.97ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 391.87ms
+ > Flow+Hift 推理耗时: 120.08ms
+flow step3
+模块耗时详情: Flow=106.27ms | Hift=44.94ms
+100%|██████████| 1/1 [00:01<00:00,  1.85s/it]100%|██████████| 1/1 [00:01<00:00,  1.85s/it]
+[INFO] worker_id=0 pid=676879 task r7_lane5 done, elapsed=1.868s, audio=6.720s, rtf=0.278
+[INFO] worker_id=0 pid=676879 task r8_lane0 start: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.24ms | Hift=24.51ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 201.01ms
+ > Flow+Hift 推理耗时: 93.86ms
+flow step3
+模块耗时详情: Flow=84.42ms | Hift=38.41ms
+100%|██████████| 1/1 [00:00<00:00,  1.25it/s]100%|██████████| 1/1 [00:00<00:00,  1.25it/s]
+[INFO] worker_id=0 pid=676879 task r8_lane0 done, elapsed=0.810s, audio=2.840s, rtf=0.285
+[INFO] worker_id=0 pid=676879 task r8_lane1 start: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.27ms | Hift=22.18ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 194.88ms
+ > Flow+Hift 推理耗时: 91.55ms
+flow step3
+模块耗时详情: Flow=81.19ms | Hift=39.23ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 391.92ms
+ > Flow+Hift 推理耗时: 120.54ms
+flow step3
+模块耗时详情: Flow=81.84ms | Hift=38.14ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 381.64ms
+ > Flow+Hift 推理耗时: 120.10ms
+flow step3
+模块耗时详情: Flow=91.12ms | Hift=27.36ms
+100%|██████████| 1/1 [00:01<00:00,  1.45s/it]100%|██████████| 1/1 [00:01<00:00,  1.45s/it]
+[INFO] worker_id=0 pid=676879 task r8_lane1 done, elapsed=1.468s, audio=5.040s, rtf=0.291
+[INFO] worker_id=0 pid=676879 task r8_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.81ms | Hift=21.88ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 198.73ms
+ > Flow+Hift 推理耗时: 91.79ms
+flow step3
+模块耗时详情: Flow=82.05ms | Hift=39.37ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 402.40ms
+ > Flow+Hift 推理耗时: 121.53ms
+flow step3
+模块耗时详情: Flow=91.76ms | Hift=40.06ms
+100%|██████████| 1/1 [00:01<00:00,  1.26s/it]100%|██████████| 1/1 [00:01<00:00,  1.26s/it]
+[INFO] worker_id=0 pid=676879 task r8_lane2 done, elapsed=1.272s, audio=4.520s, rtf=0.282
+[INFO] worker_id=0 pid=676879 task r8_lane3 start: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=68.24ms | Hift=21.36ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 193.18ms
+ > Flow+Hift 推理耗时: 89.70ms
+flow step3
+模块耗时详情: Flow=80.16ms | Hift=37.48ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 381.44ms
+ > Flow+Hift 推理耗时: 117.76ms
+flow step3
+模块耗时详情: Flow=81.52ms | Hift=37.05ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 384.15ms
+ > Flow+Hift 推理耗时: 118.69ms
+flow step3
+模块耗时详情: Flow=99.43ms | Hift=27.01ms
+100%|██████████| 1/1 [00:01<00:00,  1.59s/it]100%|██████████| 1/1 [00:01<00:00,  1.59s/it]
+[INFO] worker_id=0 pid=676879 task r8_lane3 done, elapsed=1.606s, audio=5.800s, rtf=0.277
+[INFO] worker_id=0 pid=676879 task r8_lane4 start: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.05ms | Hift=21.80ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 194.65ms
+ > Flow+Hift 推理耗时: 90.95ms
+flow step3
+模块耗时详情: Flow=80.24ms | Hift=37.54ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 382.04ms
+ > Flow+Hift 推理耗时: 117.89ms
+flow step3
+模块耗时详情: Flow=84.11ms | Hift=36.47ms
+100%|██████████| 1/1 [00:01<00:00,  1.15s/it]100%|██████████| 1/1 [00:01<00:00,  1.15s/it]
+[INFO] worker_id=0 pid=676879 task r8_lane4 done, elapsed=1.157s, audio=4.160s, rtf=0.278
+[INFO] worker_id=0 pid=676879 task r8_lane5 start: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=68.92ms | Hift=22.32ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 190.58ms
+ > Flow+Hift 推理耗时: 91.34ms
+flow step3
+模块耗时详情: Flow=80.76ms | Hift=38.62ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 388.45ms
+ > Flow+Hift 推理耗时: 119.50ms
+flow step3
+模块耗时详情: Flow=82.04ms | Hift=39.25ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 374.61ms
+ > Flow+Hift 推理耗时: 121.41ms
+flow step3
+模块耗时详情: Flow=98.16ms | Hift=38.29ms
+100%|██████████| 1/1 [00:01<00:00,  1.73s/it]100%|██████████| 1/1 [00:01<00:00,  1.73s/it]
+[INFO] worker_id=0 pid=676879 task r8_lane5 done, elapsed=1.742s, audio=6.480s, rtf=0.269
+[INFO] worker_id=0 pid=676879 task r9_lane0 start: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.02ms | Hift=22.52ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 197.00ms
+ > Flow+Hift 推理耗时: 92.64ms
+flow step3
+模块耗时详情: Flow=88.29ms | Hift=41.65ms
+100%|██████████| 1/1 [00:00<00:00,  1.27it/s]100%|██████████| 1/1 [00:00<00:00,  1.27it/s]
+[INFO] worker_id=0 pid=676879 task r9_lane0 done, elapsed=0.792s, audio=2.760s, rtf=0.287
+[INFO] worker_id=0 pid=676879 task r9_lane1 start: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=71.23ms | Hift=22.35ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 204.80ms
+ > Flow+Hift 推理耗时: 93.69ms
+flow step3
+模块耗时详情: Flow=82.45ms | Hift=37.47ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 394.84ms
+ > Flow+Hift 推理耗时: 120.04ms
+flow step3
+模块耗时详情: Flow=82.44ms | Hift=37.84ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 386.71ms
+ > Flow+Hift 推理耗时: 120.40ms
+flow step3
+模块耗时详情: Flow=91.90ms | Hift=22.60ms
+100%|██████████| 1/1 [00:01<00:00,  1.51s/it]100%|██████████| 1/1 [00:01<00:00,  1.52s/it]
+[INFO] worker_id=0 pid=676879 task r9_lane1 done, elapsed=1.529s, audio=5.280s, rtf=0.290
+[INFO] worker_id=0 pid=676879 task r9_lane2 start: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=73.28ms | Hift=25.97ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 196.36ms
+ > Flow+Hift 推理耗时: 99.37ms
+flow step3
+模块耗时详情: Flow=81.34ms | Hift=37.65ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 386.99ms
+ > Flow+Hift 推理耗时: 119.12ms
+flow step3
+模块耗时详情: Flow=101.00ms | Hift=39.81ms
+100%|██████████| 1/1 [00:01<00:00,  1.33s/it]100%|██████████| 1/1 [00:01<00:00,  1.33s/it]
+[INFO] worker_id=0 pid=676879 task r9_lane2 done, elapsed=1.345s, audio=4.880s, rtf=0.276
+[INFO] worker_id=0 pid=676879 task r9_lane3 start: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.39ms | Hift=23.50ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 208.56ms
+ > Flow+Hift 推理耗时: 94.01ms
+flow step3
+模块耗时详情: Flow=81.38ms | Hift=38.30ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 401.39ms
+ > Flow+Hift 推理耗时: 119.81ms
+flow step3
+模块耗时详情: Flow=82.98ms | Hift=38.45ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 404.15ms
+ > Flow+Hift 推理耗时: 121.55ms
+flow step3
+模块耗时详情: Flow=93.21ms | Hift=23.70ms
+100%|██████████| 1/1 [00:01<00:00,  1.64s/it]100%|██████████| 1/1 [00:01<00:00,  1.64s/it]
+[INFO] worker_id=0 pid=676879 task r9_lane3 done, elapsed=1.658s, audio=5.760s, rtf=0.288
+[INFO] worker_id=0 pid=676879 task r9_lane4 start: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=69.95ms | Hift=24.97ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 199.17ms
+ > Flow+Hift 推理耗时: 95.03ms
+flow step3
+模块耗时详情: Flow=85.22ms | Hift=37.94ms
+100%|██████████| 1/1 [00:00<00:00,  1.23it/s]100%|██████████| 1/1 [00:00<00:00,  1.23it/s]
+[INFO] worker_id=0 pid=676879 task r9_lane4 done, elapsed=0.824s, audio=2.880s, rtf=0.286
+[INFO] worker_id=0 pid=676879 task r9_lane5 start: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s]首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.05ms | Hift=22.06ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 195.14ms
+ > Flow+Hift 推理耗时: 92.20ms
+flow step3
+模块耗时详情: Flow=81.42ms | Hift=37.17ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 391.75ms
+ > Flow+Hift 推理耗时: 118.69ms
+flow step3
+模块耗时详情: Flow=82.56ms | Hift=38.19ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 388.13ms
+ > Flow+Hift 推理耗时: 120.86ms
+flow step3
+模块耗时详情: Flow=93.72ms | Hift=27.49ms
+100%|██████████| 1/1 [00:01<00:00,  1.59s/it]100%|██████████| 1/1 [00:01<00:00,  1.59s/it]
+[INFO] worker_id=0 pid=676879 task r9_lane5 done, elapsed=1.603s, audio=5.680s, rtf=0.282

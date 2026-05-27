@@ -1,0 +1,105 @@
+[INFO] run_log_dir=logs/concurrent/run_20260527_184612
+[INFO] mode=multiprocess, concurrency=2, each worker loads its own model
+[INFO] model_path=../weight/CosyVoice2-0.5B
+[INFO] waiting for 2 workers to finish init...
+[INFO] worker ready 1/2, worker_id=0, pid=1024454
+[INFO] worker ready 2/2, worker_id=0, pid=1024454
+[INFO] all 2 workers ready in 304.257s
+[INFO] round 0 start, submit 2 concurrent tasks
+[INFO] task r0_lane0 worker_id=0 pid=1024454 finished, elapsed=49.276s, audio=3.200s, rtf=15.399
+[INFO] task r0_lane1 worker_id=0 pid=1024454 finished, elapsed=1.766s, audio=5.920s, rtf=0.298
+[INFO] round 0 summary: wall=51.047s, success=2/2, total_audio=9.120s, avg_latency=25.521s, avg_infer=25.521s, throughput=0.179x realtime
+[INFO] round 1 start, submit 2 concurrent tasks
+[INFO] task r1_lane0 worker_id=0 pid=1024454 finished, elapsed=1.031s, audio=3.000s, rtf=0.344
+[INFO] task r1_lane1 worker_id=0 pid=1024454 finished, elapsed=1.373s, audio=4.880s, rtf=0.281
+[INFO] round 1 summary: wall=2.409s, success=2/2, total_audio=7.880s, avg_latency=1.202s, avg_infer=1.202s, throughput=3.271x realtime
+[INFO] round 2 start, submit 2 concurrent tasks
+[INFO] task r2_lane0 worker_id=0 pid=1024454 finished, elapsed=0.980s, audio=3.240s, rtf=0.302
+[INFO] task r2_lane1 worker_id=0 pid=1024454 finished, elapsed=1.583s, audio=5.880s, rtf=0.269
+[INFO] round 2 summary: wall=2.568s, success=2/2, total_audio=9.120s, avg_latency=1.281s, avg_infer=1.281s, throughput=3.552x realtime
+[INFO] round 3 start, submit 2 concurrent tasks
+[INFO] task r3_lane0 worker_id=0 pid=1024454 finished, elapsed=0.736s, audio=2.440s, rtf=0.301
+[INFO] task r3_lane1 worker_id=0 pid=1024454 finished, elapsed=1.460s, audio=5.160s, rtf=0.283
+[INFO] round 3 summary: wall=2.200s, success=2/2, total_audio=7.600s, avg_latency=1.098s, avg_infer=1.098s, throughput=3.454x realtime
+[INFO] round 4 start, submit 2 concurrent tasks
+[INFO] task r4_lane0 worker_id=0 pid=1024454 finished, elapsed=1.089s, audio=3.720s, rtf=0.293
+[INFO] task r4_lane1 worker_id=0 pid=1024454 finished, elapsed=1.516s, audio=5.400s, rtf=0.281
+[INFO] round 4 summary: wall=2.609s, success=2/2, total_audio=9.120s, avg_latency=1.302s, avg_infer=1.302s, throughput=3.495x realtime
+[INFO] round 5 start, submit 2 concurrent tasks
+[INFO] task r5_lane0 worker_id=0 pid=1024454 finished, elapsed=0.785s, audio=2.680s, rtf=0.293
+[INFO] task r5_lane1 worker_id=0 pid=1024454 finished, elapsed=1.552s, audio=5.480s, rtf=0.283
+[INFO] round 5 summary: wall=2.341s, success=2/2, total_audio=8.160s, avg_latency=1.168s, avg_infer=1.168s, throughput=3.485x realtime
+[INFO] round 6 start, submit 2 concurrent tasks
+[INFO] task r6_lane0 worker_id=0 pid=1024454 finished, elapsed=1.020s, audio=3.280s, rtf=0.311
+[INFO] task r6_lane1 worker_id=0 pid=1024454 finished, elapsed=1.610s, audio=5.920s, rtf=0.272
+[INFO] round 6 summary: wall=2.635s, success=2/2, total_audio=9.200s, avg_latency=1.315s, avg_infer=1.315s, throughput=3.492x realtime
+[INFO] round 7 start, submit 2 concurrent tasks
+[INFO] task r7_lane0 worker_id=0 pid=1024454 finished, elapsed=1.004s, audio=3.320s, rtf=0.302
+[INFO] task r7_lane1 worker_id=0 pid=1024454 finished, elapsed=1.515s, audio=5.240s, rtf=0.289
+[INFO] round 7 summary: wall=2.524s, success=2/2, total_audio=8.560s, avg_latency=1.260s, avg_infer=1.260s, throughput=3.391x realtime
+[INFO] round 8 start, submit 2 concurrent tasks
+[INFO] task r8_lane0 worker_id=0 pid=1024454 finished, elapsed=0.762s, audio=2.600s, rtf=0.293
+[INFO] task r8_lane1 worker_id=0 pid=1024454 finished, elapsed=1.680s, audio=6.120s, rtf=0.275
+[INFO] round 8 summary: wall=2.448s, success=2/2, total_audio=8.720s, avg_latency=1.221s, avg_infer=1.221s, throughput=3.562x realtime
+[INFO] round 9 start, submit 2 concurrent tasks
+[INFO] task r9_lane0 worker_id=0 pid=1024454 finished, elapsed=0.925s, audio=3.000s, rtf=0.308
+[INFO] task r9_lane1 worker_id=0 pid=1024454 finished, elapsed=1.697s, audio=6.120s, rtf=0.277
+[INFO] round 9 summary: wall=2.628s, success=2/2, total_audio=9.120s, avg_latency=1.311s, avg_infer=1.311s, throughput=3.470x realtime
+Traceback (most recent call last):
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/threading.py", line 1132, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ma-user/work/test/model/CosyVoice-claude/infer_concurrent.py", line 450, in <module>
+    init_lock,
+^^
+  File "/home/ma-user/work/test/model/CosyVoice-claude/infer_concurrent.py", line 398, in main
+    ))
+^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/concurrent/futures/_base.py", line 647, in __exit__
+    self.shutdown(wait=True)
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/concurrent/futures/process.py", line 825, in shutdown
+    self._executor_manager_thread.join()
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/threading.py", line 1112, in join
+    self._wait_for_tstate_lock()
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/threading.py", line 1136, in _wait_for_tstate_lock
+    if lock.locked():
+       ^^^^^^^^^^^^^
+KeyboardInterrupt
+Exception ignored in: <module 'threading' from '/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/threading.py'>
+Traceback (most recent call last):
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/threading.py", line 1553, in _shutdown
+    atexit_call()
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/concurrent/futures/process.py", line 95, in _python_exit
+    t.join()
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/threading.py", line 1112, in join
+    self._wait_for_tstate_lock()
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/threading.py", line 1132, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt: 
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/tempfile.py:895: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/tmp/tmpax71g932'>
+  _warnings.warn(warn_message, ResourceWarning)
+Exception ignored in atexit callback: <function _exit_function at 0xffff8d9e31a0>
+Traceback (most recent call last):
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/multiprocessing/util.py", line 357, in _exit_function
+    p.join()
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/multiprocessing/process.py", line 149, in join
+    res = self._popen.wait(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/multiprocessing/popen_fork.py", line 43, in wait
+    return self.poll(os.WNOHANG if timeout == 0.0 else 0)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/multiprocessing/popen_fork.py", line 27, in poll
+    pid, sts = os.waitpid(self.pid, flag)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt: 
+Traceback (most recent call last):
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/concurrent/futures/process.py", line 300, in weakref_cb
+    def weakref_cb(_,
+
+OSError: Signal 2 ignored due to race condition
