@@ -1,0 +1,272 @@
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch/cuda/__init__.py:58: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/latest owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/8.1.RC1/aarch64-linux/ascend_toolkit_install.info owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:291: ImportWarning: 
+    *************************************************************************************************************
+    The torch.Tensor.cuda and torch.nn.Module.cuda are replaced with torch.Tensor.npu and torch.nn.Module.npu now..
+    The torch.cuda.DoubleTensor is replaced with torch.npu.FloatTensor cause the double type is not supported now..
+    The backend in torch.distributed.init_process_group set to hccl now..
+    The torch.cuda.* and torch.cuda.amp.* are replaced with torch.npu.* and torch.npu.amp.* now..
+    The device parameters have been replaced with npu in the function below:
+    torch.logspace, torch.randint, torch.hann_window, torch.rand, torch.full_like, torch.ones_like, torch.rand_like, torch.randperm, torch.arange, torch.frombuffer, torch.normal, torch._empty_per_channel_affine_quantized, torch.empty_strided, torch.empty_like, torch.scalar_tensor, torch.tril_indices, torch.bartlett_window, torch.ones, torch.sparse_coo_tensor, torch.randn, torch.kaiser_window, torch.tensor, torch.triu_indices, torch.as_tensor, torch.zeros, torch.randint_like, torch.full, torch.eye, torch._sparse_csr_tensor_unsafe, torch.empty, torch._sparse_coo_tensor_unsafe, torch.blackman_window, torch.zeros_like, torch.range, torch.sparse_csr_tensor, torch.randn_like, torch.from_file, torch._cudnn_init_dropout_state, torch._empty_affine_quantized, torch.linspace, torch.hamming_window, torch.empty_quantized, torch._pin_memory, torch.autocast, torch.load, torch.Generator, torch.set_default_device, torch.Tensor.new_empty, torch.Tensor.new_empty_strided, torch.Tensor.new_full, torch.Tensor.new_ones, torch.Tensor.new_tensor, torch.Tensor.new_zeros, torch.Tensor.to, torch.nn.Module.to, torch.nn.Module.to_empty
+    *************************************************************************************************************
+    
+  warnings.warn(msg, ImportWarning)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:246: RuntimeWarning: torch.jit.script and torch.jit.script_method will be disabled by transfer_to_npu, which currently does not support them, if you need to enable them, please do not use transfer_to_npu.
+  warnings.warn(msg, RuntimeWarning)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/__init__.py:3: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+  import pkg_resources
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2832: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('mpl_toolkits')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(pkg)
+2026-05-27 22:43:55,687 - modelscope - INFO - PyTorch version 2.4.0 Found.
+2026-05-27 22:43:55,689 - modelscope - INFO - Loading ast index from /home/ma-user/.cache/modelscope/ast_indexer
+2026-05-27 22:43:55,689 - modelscope - INFO - No valid ast index found from /home/ma-user/.cache/modelscope/ast_indexer, generating ast index from prebuilt!
+2026-05-27 22:43:55,939 - modelscope - INFO - Loading done! Current index file version is 1.15.0, with md5 b3bd0645b104eb172f470bc7fdf20731 and a total number of 980 components indexed
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/lightning/fabric/__init__.py:41: Deprecated call to `pkg_resources.declare_namespace('lightning.fabric')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:88: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  parse = parser.parseString(pattern)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:92: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  parser.resetCache()
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_mathtext.py:30: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+  ParserElement.enablePackrat()
+failed to import ttsfrd, use WeTextProcessing instead
+[WARNING] In /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+[WARNING] In /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/lightning/pytorch/__init__.py:37: Deprecated call to `pkg_resources.declare_namespace('lightning.pytorch')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
+  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
+[INFO] input frame rate=25
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/librosa/core/intervals.py:15: DeprecationWarning: path is deprecated. Use files() instead. Refer to https://importlib-resources.readthedocs.io/en/latest/using.html#migrating-from-legacy for migration advice.
+  with resources.path("librosa.core", "intervals.msgpack") as imsgpack:
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:65: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'CPUExecutionProvider'
+  warnings.warn(
+/usr/local/Ascend/ascend-toolkit/8.1.RC1/python/site-packages/tbe/tvm/contrib/ccec.py:866: DeprecationWarning: invalid escape sequence '\L'
+  if not dirpath.find("AppData\Local\Temp"):
+/usr/local/Ascend/ascend-toolkit/latest/python/site-packages/tbe/dsl/classifier/transdata/transdata_classifier.py:222: DeprecationWarning: invalid escape sequence '\B'
+  """
+/usr/local/Ascend/ascend-toolkit/latest/python/site-packages/tbe/dsl/unify_schedule/vector/transdata/common/graph/transdata_graph_info.py:143: DeprecationWarning: invalid escape sequence '\c'
+  """
+2026-05-27 22:44:58,432 WETEXT INFO building fst for zh_normalizer ...
+[INFO] building fst for zh_normalizer ...
+2026-05-27 22:46:41,090 WETEXT INFO done
+[INFO] done
+2026-05-27 22:46:41,090 WETEXT INFO fst path: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_tagger.fst
+[INFO] fst path: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_tagger.fst
+2026-05-27 22:46:41,090 WETEXT INFO           /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_verbalizer.fst
+[INFO]           /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_verbalizer.fst
+2026-05-27 22:46:41,098 WETEXT INFO found existing fst: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_tagger.fst
+[INFO] found existing fst: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_tagger.fst
+2026-05-27 22:46:41,099 WETEXT INFO                     /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_verbalizer.fst
+[INFO]                     /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_verbalizer.fst
+2026-05-27 22:46:41,099 WETEXT INFO skip building fst for en_normalizer ...
+[INFO] skip building fst for en_normalizer ...
+[WARN] acl repeat initialize
+[INFO] acl init success
+[INFO] open device 0 success
+[INFO] get current context
+[INFO] load model ../weight/CosyVoice2-0.5B/flow_linux_aarch64.om success
+[INFO] create model description success
+[INFO] create new context
+[INFO] load model ../weight/CosyVoice2-0.5B/flow_static.om success
+[INFO] create model description success
+[INFO] create new context
+[INFO] load model ../weight/CosyVoice2-0.5B/speech_linux_aarch64.om success
+[INFO] create model description success
+Removing weight norm...
+warm up start
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+./home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py:567: UserWarning: When enable frozen_parameter, Parameters will be considered frozen.Please make sure that the Parameters data address remain the same throughout the program runtime.
+  warnings.warn(f'When enable frozen_parameter, Parameters will be considered frozen.'
+..[W527 22:49:34.384738799 compiler_depend.ts:51] Warning: CAUTION: The operator 'aten::unfold_backward' is not currently supported on the NPU backend and will fall back to run on the CPU. This may have performance implications. (function npu_cpu_fallback)
+首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=1485.82ms | Hift=50987.48ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 47509.57ms
+ > Flow+Hift 推理耗时: 52473.49ms
+[INFO] yield speech len 0.64, rtf 156.22578375041485
+  0%|          | 0/1 [01:39<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=75.57ms | Hift=29.95ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 234.91ms
+ > Flow+Hift 推理耗时: 105.60ms
+[INFO] yield speech len 0.64, rtf 0.5327548831701279
+  0%|          | 0/1 [00:00<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=71.43ms | Hift=24.74ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 212.68ms
+ > Flow+Hift 推理耗时: 96.25ms
+[INFO] yield speech len 0.64, rtf 0.48324093222618103
+  0%|          | 0/1 [00:00<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=74.29ms | Hift=25.04ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 207.07ms
+ > Flow+Hift 推理耗时: 99.40ms
+[INFO] yield speech len 0.64, rtf 0.4794027656316757
+  0%|          | 0/1 [00:00<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=80.62ms | Hift=27.91ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 224.42ms
+ > Flow+Hift 推理耗时: 108.59ms
+[INFO] yield speech len 0.64, rtf 0.5208816379308701
+  0%|          | 0/1 [00:00<?, ?it/s]
+warm up end
+[INFO] infer round 0, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 100
+flow step3
+模块耗时详情: Flow=70.80ms | Hift=25.47ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 221.94ms
+ > Flow+Hift 推理耗时: 96.33ms
+[INFO] yield speech len 0.64, rtf 0.49867331981658936
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py:567: UserWarning: When enable frozen_parameter, Parameters will be considered frozen.Please make sure that the Parameters data address remain the same throughout the program runtime.
+  warnings.warn(f'When enable frozen_parameter, Parameters will be considered frozen.'
+..  0%|          | 0/1 [00:47<?, ?it/s]
+flow step3
+Traceback (most recent call last):
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_utils/error_code.py", line 43, in wapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/core/_backend.py", line 133, in run
+    return super(TorchNpuGraph, self).run((inputs, assigned_outputs, stream))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: EL0006: [PID: 1912738] 2026-05-27-22:50:22.189.960 The resources are insufficient.
+        Solution: Close applications not in use.
+        TraceBack (most recent call last):
+        [SqCqManage]Alloc sq cq fail, stream_id=1984, retCode=0x7020023.[FUNC:AllocStreamSqCq][FILE:stream_sqcq_manage.cc][LINE:44]
+        [SqCqManage]Alloc sq cq fail, stream_id=1984, retCode=0x7020023.[FUNC:Setup][FILE:stream.cc][LINE:623]
+        rtStreamCreateWithFlags execute failed, reason=[driver error:resource alloc fail][FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:53]
+        Assert ((rtStreamCreateWithFlags(&stream, priority, stream_flag)) == 0) failed[FUNC:CreateNewStream][FILE:reusable_stream_allocator.cc][LINE:72]
+        Assert ((stream_status) != nullptr) failed[FUNC:GetOrCreateRtStream][FILE:reusable_stream_allocator.cc][LINE:88]
+        Assert ((reusable_stream_allocator_->GetOrCreateRtStream(stream, runtime_model_id_, priority_, stream_flags, task_num)) == ge::SUCCESS) failed[FUNC:InitRuntimeResource][FILE:davinci_model.cc][LINE:1193]
+        Failed to execute init graph[FUNC:Load][FILE:model_v2_executor.cc][LINE:192]
+        Failed load rt v2 model for graph graph_2_3[FUNC:Init][FILE:hybrid_model_rt_v2_executor.cc][LINE:866]
+        Load graph failed, error code:1343225857, session_id:1, graph_id:3.[FUNC:LoadGraph][FILE:ge_api.cc][LINE:981]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ma-user/work/test/model/CosyVoice-claude/infer.py", line 71, in <module>
+    for _, j in enumerate(cosyvoice.inference_sft(prompt_txt, '03729', stream=args.stream)):
+  File "/home/ma-user/work/test/model/CosyVoice-claude/cosyvoice/cli/cosyvoice.py", line 73, in inference_sft
+    for model_output in self.model.tts(**model_input, stream=stream, speed=speed):
+  File "/home/ma-user/work/test/model/CosyVoice-claude/cosyvoice/cli/model.py", line 433, in tts
+    this_tts_speech = self.token2wav(token=this_tts_speech_token,
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/work/test/model/CosyVoice-claude/cosyvoice/cli/model.py", line 362, in token2wav
+    tts_speech, tts_source = self.hift.inference(speech_feat=tts_mel, cache_source=hift_cache_source)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/work/test/model/CosyVoice-claude/cosyvoice/hifigan/generator.py", line 408, in inference
+    magnitude, phase = self.decode(x=speech_feat, s_stft=s_stft, index=index)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py", line 433, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/work/test/model/CosyVoice-claude/cosyvoice/hifigan/generator.py", line 347, in decode
+    def decode(self, x: torch.Tensor, s_stft: torch.Tensor, index: torch.int) -> torch.Tensor:
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py", line 600, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch/_functorch/aot_autograd.py", line 987, in forward
+    return compiled_fn(full_args)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 217, in runtime_wrapper
+    all_outs = call_func_at_runtime_with_args(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/utils.py", line 120, in call_func_at_runtime_with_args
+    out = normalize_as_list(f(args))
+                            ^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 451, in wrapper
+    return compiled_fn(runtime_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/utils.py", line 94, in g
+    return f(*args)
+           ^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/npu_fx_compiler.py", line 295, in __call__
+    gm_result = self.runner(*args, **kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py", line 537, in __call__
+    ge_outputs = self.graph.run(inputs)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/ge/_ge_graph.py", line 659, in run
+    return self._executor.run(inputs, assigned_outputs, stream)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_utils/error_code.py", line 46, in wapper
+    raise type(e)("\n".join(msg))
+RuntimeError: EL0006: [PID: 1912738] 2026-05-27-22:50:22.189.960 The resources are insufficient.
+        Solution: Close applications not in use.
+        TraceBack (most recent call last):
+        [SqCqManage]Alloc sq cq fail, stream_id=1984, retCode=0x7020023.[FUNC:AllocStreamSqCq][FILE:stream_sqcq_manage.cc][LINE:44]
+        [SqCqManage]Alloc sq cq fail, stream_id=1984, retCode=0x7020023.[FUNC:Setup][FILE:stream.cc][LINE:623]
+        rtStreamCreateWithFlags execute failed, reason=[driver error:resource alloc fail][FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:53]
+        Assert ((rtStreamCreateWithFlags(&stream, priority, stream_flag)) == 0) failed[FUNC:CreateNewStream][FILE:reusable_stream_allocator.cc][LINE:72]
+        Assert ((stream_status) != nullptr) failed[FUNC:GetOrCreateRtStream][FILE:reusable_stream_allocator.cc][LINE:88]
+        Assert ((reusable_stream_allocator_->GetOrCreateRtStream(stream, runtime_model_id_, priority_, stream_flags, task_num)) == ge::SUCCESS) failed[FUNC:InitRuntimeResource][FILE:davinci_model.cc][LINE:1193]
+        Failed to execute init graph[FUNC:Load][FILE:model_v2_executor.cc][LINE:192]
+        Failed load rt v2 model for graph graph_2_3[FUNC:Init][FILE:hybrid_model_rt_v2_executor.cc][LINE:866]
+        Load graph failed, error code:1343225857, session_id:1, graph_id:3.[FUNC:LoadGraph][FILE:ge_api.cc][LINE:981]
+
+Traceback (most recent call last):
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_utils/error_code.py", line 43, in wapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/core/_backend.py", line 133, in run
+    return super(TorchNpuGraph, self).run((inputs, assigned_outputs, stream))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: EL0006: [PID: 1912738] 2026-05-27-22:50:22.189.960 The resources are insufficient.
+        Solution: Close applications not in use.
+        TraceBack (most recent call last):
+        [SqCqManage]Alloc sq cq fail, stream_id=1984, retCode=0x7020023.[FUNC:AllocStreamSqCq][FILE:stream_sqcq_manage.cc][LINE:44]
+        [SqCqManage]Alloc sq cq fail, stream_id=1984, retCode=0x7020023.[FUNC:Setup][FILE:stream.cc][LINE:623]
+        rtStreamCreateWithFlags execute failed, reason=[driver error:resource alloc fail][FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:53]
+        Assert ((rtStreamCreateWithFlags(&stream, priority, stream_flag)) == 0) failed[FUNC:CreateNewStream][FILE:reusable_stream_allocator.cc][LINE:72]
+        Assert ((stream_status) != nullptr) failed[FUNC:GetOrCreateRtStream][FILE:reusable_stream_allocator.cc][LINE:88]
+        Assert ((reusable_stream_allocator_->GetOrCreateRtStream(stream, runtime_model_id_, priority_, stream_flags, task_num)) == ge::SUCCESS) failed[FUNC:InitRuntimeResource][FILE:davinci_model.cc][LINE:1193]
+        Failed to execute init graph[FUNC:Load][FILE:model_v2_executor.cc][LINE:192]
+        Failed load rt v2 model for graph graph_2_3[FUNC:Init][FILE:hybrid_model_rt_v2_executor.cc][LINE:866]
+        Load graph failed, error code:1343225857, session_id:1, graph_id:3.[FUNC:LoadGraph][FILE:ge_api.cc][LINE:981]
+
+
+
+[ERROR] 2026-05-27-22:50:22 (PID:1912738, Device:0, RankID:-1) ERR03005 GRAPH internal error
+[INFO] unload model success, model Id is 2147483649
+[INFO] unload model success, model Id is 2147483648
+[INFO] unload model success, model Id is 2
+[WARN] acl repeat destroy

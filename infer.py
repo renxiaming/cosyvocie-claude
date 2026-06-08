@@ -27,7 +27,7 @@ if __name__ == '__main__':
     parser.add_argument("--model_path", type=str, help="model path")
     parser.add_argument('--warm_up_times', default=5, type=int, help='warm up times')
     parser.add_argument('--infer_count', default=5, type=int, help='infer loop count')
-    parser.add_argument('--output_dir', default='/home/ma-user/work/test/model/CosyVoice-claude/testout/demo2',
+    parser.add_argument('--output_dir', default='/home/ma-user/work/test/model/CosyVoice-claude/testout/demo4',
                         type=str, help='output dir')
     parser.add_argument('--stream', action="store_true", help='stream infer')
     args = parser.parse_args()

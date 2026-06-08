@@ -6,8 +6,9 @@ export PYTHONPATH=transformers/src:$PYTHONPATH
 # export ASCEND_GEO_W8A16=1
 # export DYNAMIC_QUANT=1
 
-
-
+# export ACLNN_CACHE_LIMIT="${ACLNN_CACHE_LIMIT:-100000}"
+# export ENABLE_DYNAMIC_SHAPE_MULTI_STREAM=1
+export TASK_QUEUE_ENABLE=2
 # 使能环境变量
 source /usr/local/Ascend/ascend-toolkit/set_env.sh
 # 规避找不到ttsfrd
@@ -23,7 +24,7 @@ rm -rf ~/.cache/modelscope/
 python3 infer_manual_concurrent.py \
   --model_path=../weight/CosyVoice2-0.5B \
   --stream \
-  --concurrency="${CONCURRENCY:-1}" \
+  --concurrency="${CONCURRENCY:-6}" \
   --infer_count=5 \
   --warm_up_times=5 \
   --log_dir="${LOG_DIR:-logs/manual}"
