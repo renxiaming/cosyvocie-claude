@@ -59,10 +59,10 @@ if __name__ == '__main__':
 
     with torch.no_grad():
         # import ipdb;ipdb.set_trace()
-        print('warm up start')
-        for _ in range(args.warm_up_times):
-            next(cosyvoice.inference_sft(prompt_texts[0], '03729', stream=args.stream))
-        print('warm up end')
+        # print('warm up start')
+        # for _ in range(args.warm_up_times):
+        #     next(cosyvoice.inference_sft(prompt_texts[0], '03729', stream=args.stream))
+        # print('warm up end')
         # import ipdb;ipdb.set_trace()
         for infer_idx in range(args.infer_count):
             for text_idx, prompt_txt in enumerate(prompt_texts):

@@ -24,7 +24,7 @@ rm -rf ~/.cache/modelscope/
 python3 infer_manual_concurrent.py \
   --model_path=../weight/CosyVoice2-0.5B \
   --stream \
-  --concurrency="${CONCURRENCY:-10}" \
+  --concurrency="${CONCURRENCY:-6}" \
   --infer_count=5 \
   --warm_up_times=5 \
   --log_dir="${LOG_DIR:-logs/manual}"
