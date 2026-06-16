@@ -301,7 +301,9 @@ class CosyVoice2Model(CosyVoiceModel):
             self.flow.half()
         # import ipdb;ipdb.set_trace()
         # self.token_hop_len = 2 * self.flow.input_frame_rate #2
-        self.token_hop_len = 50
+        # token_hop_len: 每轮流式推理推进的 token 数。值越大则 Flow+Hift 调用越少，
+        # 推理总延迟越低；但首包延迟会略增。可根据并发路数动态调整。
+        self.token_hop_len = int(os.environ.get('COSYVOICE2_TOKEN_HOP_LEN', '50'))
         # here we fix flow encoder/decoder decoding_chunk_size, in the future we will send it as arguments, or use cache
         self.flow.encoder.static_chunk_size = 1 * self.flow.input_frame_rate #2
         self.flow.decoder.estimator.static_chunk_size = 1 * self.flow.input_frame_rate * self.flow.token_mel_ratio #2
@@ -318,33 +320,51 @@ class CosyVoice2Model(CosyVoiceModel):
         self.tts_speech_token_dict = {}
         self.llm_end_dict = {}
         self.hift_cache_dict = {}
-        self.first_chunk_size = 20
+        self.first_chunk_size = int(os.environ.get('COSYVOICE2_FIRST_CHUNK_SIZE', '20'))
         # self.flow.pre_lookahead_len = 2
-        self.flow_context_len = int(os.environ.get('COSYVOICE2_FLOW_CONTEXT_TOKENS', '50'))
+        self.flow_context_len = int(os.environ.get('COSYVOICE2_FLOW_CONTEXT_TOKENS', '25'))
         # self.first_chunk_size = 16
+
+        # ---- NPU Stream 隔离 & 调试控制 ----
+        # 使用独立 NPU Stream 使 Flow+Hift 与 LLM 的算子队列隔离，
+        # 减少多进程场景下不同模块间的算子排队竞争
+        self.flow_hift_stream = torch.npu.Stream() if torch.npu.is_available() else None
+        # 通过环境变量控制 debug 打印（多进程并发时关闭以减少 stdout 锁竞争）
+        self._debug_timing = os.environ.get('COSYVOICE2_DEBUG_TIMING', '0') == '1'
 
     def load_jit(self, flow_encoder_model):
         flow_encoder = torch.jit.load(flow_encoder_model, map_location=self.device)
         self.flow.encoder = flow_encoder
 
     def token2wav(self, token, prompt_token, prompt_feat, embedding, uuid, token_offset, finalize=False, speed=1.0):
-        
         import time
-        # --- Flow 模块计步 ---
-        # torch.npu.synchronize() # 确保之前的操作完成
-        start_flow = time.time()
-        
-        tts_mel, _ = self.flow.inference(token=token.to(self.device),
-                                         token_len=torch.tensor([token.shape[1]], dtype=torch.int32).to(self.device),
-                                         prompt_token=prompt_token.to(self.device),
-                                         prompt_token_len=torch.tensor([prompt_token.shape[1]], dtype=torch.int32).to(self.device),
-                                         prompt_feat=prompt_feat.to(self.device),
-                                         prompt_feat_len=torch.tensor([prompt_feat.shape[1]], dtype=torch.int32).to(self.device),
-                                         embedding=embedding.to(self.device),
-                                         finalize=finalize)
-        
-        # torch.npu.synchronize()
-        flow_time = (time.time() - start_flow) * 1000 # 毫秒
+
+        # 确保 flow_om context 已被设置（多进程安全：InferSession 需要正确的上下文）
+        if torch.npu.is_available() and hasattr(self.flow.decoder, 'flow_om') and self.flow.decoder.flow_om is not None:
+            self.flow.decoder.flow_om.set_context()
+
+        # 使用独立 NPU Stream 隔离 Flow+Hift 算子提交，减少与 LLM 的排队竞争
+        stream_ctx = torch.npu.stream(self.flow_hift_stream) if self.flow_hift_stream is not None else nullcontext()
+
+        with stream_ctx:
+            # --- Flow 模块计步 ---
+            # sync 仅在 debug 时启用：生产环境去掉全局 barrier，让 NPU 自由调度
+            if self._debug_timing:
+                torch.npu.synchronize()
+            start_flow = time.time()
+
+            tts_mel, _ = self.flow.inference(token=token.to(self.device),
+                                             token_len=torch.tensor([token.shape[1]], dtype=torch.int32).to(self.device),
+                                             prompt_token=prompt_token.to(self.device),
+                                             prompt_token_len=torch.tensor([prompt_token.shape[1]], dtype=torch.int32).to(self.device),
+                                             prompt_feat=prompt_feat.to(self.device),
+                                             prompt_feat_len=torch.tensor([prompt_feat.shape[1]], dtype=torch.int32).to(self.device),
+                                             embedding=embedding.to(self.device),
+                                             finalize=finalize)
+
+            if self._debug_timing:
+                torch.npu.synchronize()
+            flow_time = (time.time() - start_flow) * 1000  # 毫秒
 
         tts_mel = tts_mel[:, :, token_offset * self.flow.token_mel_ratio:]
 
@@ -373,11 +393,14 @@ class CosyVoice2Model(CosyVoiceModel):
             tts_speech, tts_source = self.hift.inference(speech_feat=tts_mel, cache_source=hift_cache_source)
             if self.hift_cache_dict[uuid] is not None:
                 tts_speech = fade_in_out(tts_speech, self.hift_cache_dict[uuid]['speech'], self.speech_window)
-        
-        # torch.npu.synchronize()
-        hift_time = (time.time() - start_hift) * 1000 # 毫秒
-        print(f"模块耗时详情: Flow={flow_time:.2f}ms | Hift={hift_time:.2f}ms")
-        
+
+        if self._debug_timing:
+            torch.npu.synchronize()
+        hift_time = (time.time() - start_hift) * 1000  # 毫秒
+
+        if self._debug_timing:
+            print(f"模块耗时详情: Flow={flow_time:.2f}ms | Hift={hift_time:.2f}ms")
+
         return tts_speech
 
     def tts(self, text, flow_embedding, llm_embedding=torch.zeros(0, 192),
@@ -385,10 +408,10 @@ class CosyVoice2Model(CosyVoiceModel):
             llm_prompt_speech_token=torch.zeros(1, 0, dtype=torch.int32),
             flow_prompt_speech_token=torch.zeros(1, 0, dtype=torch.int32),
             prompt_speech_feat=torch.zeros(1, 0, 80), stream=False, speed=1.0, **kwargs):
-        
-        import time # 确保导入了 time
+
+        import time  # 确保导入了 time
         import torch_npu
-        
+
         # this_uuid is used to track variables related to this inference thread
         this_uuid = str(uuid.uuid1())
         with self.lock:
@@ -397,7 +420,8 @@ class CosyVoice2Model(CosyVoiceModel):
         # import ipdb;ipdb.set_trace()
         if stream is True:
             token_offset = 0
-            print("首保大小为：", self.first_chunk_size, "Flow上下文大小为：", self.flow_context_len)
+            if self._debug_timing:
+                print("首保大小为：", self.first_chunk_size, "Flow上下文大小为：", self.flow_context_len)
             # 1. 记录 LLM 开始迭代的时间
             llm_start_time = time.time()
 
@@ -413,23 +437,24 @@ class CosyVoice2Model(CosyVoiceModel):
                 if (token_offset == 0 and len(self.tts_speech_token_dict[this_uuid]) >= self.first_chunk_size + self.flow.pre_lookahead_len) or (token_offset > 0 and len(self.tts_speech_token_dict[this_uuid]) - token_offset >= self.token_hop_len + self.flow.pre_lookahead_len):
                 #if len(self.tts_speech_token_dict[this_uuid]) - token_offset >= self.token_hop_len + self.flow.pre_lookahead_len:
                     #this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid][:token_offset + self.token_hop_len + self.flow.pre_lookahead_len]).unsqueeze(dim=0)
-                    
+
                     # --- 计算 LLM 攒够这一包 token 的耗时 ---
-                    # torch_npu.npu.synchronize()
+                    if self._debug_timing:
+                        torch_npu.npu.synchronize()
                     llm_duration = (time.time() - llm_start_time) * 1000
-                    
+
                     if token_offset == 0:
                         this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid][:self.first_chunk_size + self.flow.pre_lookahead_len]).unsqueeze(dim=0)
                         flow_token_offset = 0
-                    else: 
+                    else:
                         flow_token_start = max(0, token_offset - self.flow_context_len)
                         flow_token_end = token_offset + self.token_hop_len + self.flow.pre_lookahead_len
                         this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid][flow_token_start:flow_token_end]).unsqueeze(dim=0)
                         flow_token_offset = token_offset - flow_token_start
-                    
+
                     # --- 2. 测量 token2wav (包含 Flow 和 Hift) 的耗时 ---
                     start_t2w = time.time()
-                    
+
                     this_tts_speech = self.token2wav(token=this_tts_speech_token,
                                                         prompt_token=flow_prompt_speech_token,
                                                         prompt_feat=prompt_speech_feat,
@@ -437,15 +462,17 @@ class CosyVoice2Model(CosyVoiceModel):
                                                         uuid=this_uuid,
                                                         token_offset=flow_token_offset,
                                                         finalize=False)
-                    
-                    # torch_npu.npu.synchronize()
+
+                    if self._debug_timing:
+                        torch_npu.npu.synchronize()
                     t2w_duration = (time.time() - start_t2w) * 1000
-                    
-                    # 打印当前分包的详细耗时
-                    print(f"\n[Profiling] Chunk Offset: {token_offset}")
-                    print(f" > LLM 累积耗时: {llm_duration:.2f}ms")
-                    print(f" > Flow+Hift 推理耗时: {t2w_duration:.2f}ms")
-                    
+
+                    # 打印当前分包的详细耗时（仅在 debug 模式下）
+                    if self._debug_timing:
+                        print(f"\n[Profiling] Chunk Offset: {token_offset}")
+                        print(f" > LLM 累积耗时: {llm_duration:.2f}ms")
+                        print(f" > Flow+Hift 推理耗时: {t2w_duration:.2f}ms")
+
                     #token_offset += self.token_hop_len
                     if token_offset == 0:
                         token_offset += self.first_chunk_size
@@ -457,7 +484,7 @@ class CosyVoice2Model(CosyVoiceModel):
                     # 重置 LLM 计时器，准备下一包
                     llm_start_time = time.time()
 
-            # --- 2. 结尾 Finalize 处理 (此处即为你问的“结尾”) ---
+            # --- 2. 结尾 Finalize 处理 (此处即为你问的"结尾") ---
             start_final = time.time()
 
             flow_token_start = max(0, token_offset - self.flow_context_len)
@@ -469,10 +496,12 @@ class CosyVoice2Model(CosyVoiceModel):
                                                 uuid=this_uuid,
                                                 token_offset=token_offset - flow_token_start,
                                                 finalize=True)
-            
-            # torch_npu.npu.synchronize()
+
+            if self._debug_timing:
+                torch_npu.npu.synchronize()
             final_duration = (time.time() - start_final) * 1000
-            # print(f"[Profiling Final] Tail Logic Time: {final_duration:.1f}ms")
+            if self._debug_timing:
+                print(f"[Profiling Final] Tail Logic Time: {final_duration:.1f}ms")
 
             yield {'tts_speech': this_tts_speech.cpu()}
         else:

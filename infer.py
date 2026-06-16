@@ -10,6 +10,8 @@
 
 import argparse
 import os
+import sys
+import time
 import torch
 import torchaudio
 import torch_npu
@@ -20,31 +22,88 @@ from cosyvoice.cli.cosyvoice import CosyVoice2
 from cosyvoice.utils.file_utils import load_wav
 
 
+def apply_cpu_affinity():
+    """从环境变量读取 CPU 亲和性范围并应用"""
+    if 'CPU_AFFINITY_START' in os.environ and 'CPU_AFFINITY_END' in os.environ:
+        try:
+            start = int(os.environ['CPU_AFFINITY_START'])
+            end = int(os.environ['CPU_AFFINITY_END'])
+            os.sched_setaffinity(0, range(start, end + 1))
+            client_id = os.environ.get('CPU_AFFINITY_CLIENT_ID', '?')
+            print('[INFO] CPU affinity set: cores {}-{} (client_{})'.format(
+                start, end, client_id), flush=True)
+        except Exception as e:
+            print('[WARN] Failed to set CPU affinity: {}'.format(e), flush=True)
+
+
+def configure_threads():
+    """限制 PyTorch CPU 线程数，减少多进程下 CPU 竞争"""
+    omp_threads = int(os.environ.get('OMP_NUM_THREADS', 8))
+    mkl_threads = int(os.environ.get('MKL_NUM_THREADS', 8))
+
+    # 设置环境变量（对底层 BLAS / MKL 生效）
+    os.environ.setdefault('OMP_NUM_THREADS', str(omp_threads))
+    os.environ.setdefault('MKL_NUM_THREADS', str(mkl_threads))
+    os.environ.setdefault('OPENBLAS_NUM_THREADS', str(mkl_threads))
+    os.environ.setdefault('NUMEXPR_NUM_THREADS', str(mkl_threads))
+
+    # 设置 PyTorch 原生线程数
+    torch.set_num_threads(omp_threads)
+    try:
+        torch.set_num_interop_threads(min(4, omp_threads))
+    except Exception:
+        pass  # 某些 torch 版本可能不支持
+
+    print('[INFO] CPU threads configured: OMP={}, MKL={}, torch={}'.format(
+        omp_threads, mkl_threads, torch.get_num_threads()), flush=True)
+
+
 if __name__ == '__main__':
+    # ================================================================
+    # 启动时立即设置 CPU 亲和性和线程数（在其他 import 之前尽可能早）
+    # ================================================================
+    apply_cpu_affinity()
+    configure_threads()
+
+    # print("go go go!")
+    # torch.set_num_threads(8)
     torch_npu.npu.set_compile_mode(jit_compile=False)
-    
+
     parser = argparse.ArgumentParser(description="CosyVoice infer")
     parser.add_argument("--model_path", type=str, help="model path")
-    parser.add_argument('--warm_up_times', default=5, type=int, help='warm up times')
-    parser.add_argument('--infer_count', default=5, type=int, help='infer loop count')
-    parser.add_argument('--output_dir', default='/home/ma-user/work/test/model/CosyVoice-claude/testout/demo4',
+    parser.add_argument('--warm_up_times', default=5, type=int,
+                        help='warm up times')
+    parser.add_argument('--infer_count', default=5, type=int,
+                        help='infer loop count')
+    parser.add_argument('--output_dir',
+                        default='/home/ma-user/work/test/model/CosyVoice-claude/testout/demo10',
                         type=str, help='output dir')
     parser.add_argument('--stream', action="store_true", help='stream infer')
     args = parser.parse_args()
-    os.makedirs(args.output_dir, exist_ok=True)
 
+    # 检查是否跳过 warmup（由 infer_manual_concurrent 的 serial_warmup 模式控制）
+    skip_warmup = os.environ.get('SKIP_WARMUP', '0') == '1'
+    client_id = os.environ.get('CPU_AFFINITY_CLIENT_ID', 'main')
+
+    os.makedirs(args.output_dir, exist_ok=True)
+    print('[INFO] client_id={} skip_warmup={} '.format(client_id, skip_warmup),
+          flush=True)
+
+    # ---- 模型加载 ----
+    print('[INFO] loading model...', flush=True)
     cosyvoice = CosyVoice2(args.model_path, load_om=True, fp16=True)
     cosyvoice.model.llm.eval()
     cosyvoice.model.llm.llm.model.model.half()
 
     # 对hift模型结构进行torchair图模式适配
-    cosyvoice.model.hift.remove_weight_norm() #删除推理过程中的weight_norm
+    cosyvoice.model.hift.remove_weight_norm()  # 删除推理过程中的weight_norm
     config = CompilerConfig()
     config.experimental_config.frozen_parameter = True
     config.experimental_config.tiling_schedule_optimize = True
     npu_backend = tng.get_npu_backend(compiler_config=config)
-    cosyvoice.model.hift.decode = torch.compile(cosyvoice.model.hift.decode, dynamic=True, fullgraph=True, backend=npu_backend)
-
+    cosyvoice.model.hift.decode = torch.compile(
+        cosyvoice.model.hift.decode, dynamic=True, fullgraph=True,
+        backend=npu_backend)
 
     # 输入数据加载
     prompt_texts = [
@@ -54,24 +113,37 @@ if __name__ == '__main__':
         '好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！',
         '您好，中国移动，很高兴为您服务。请问有什么可以帮您？',
         '好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？',
-        '好的。这款“青春畅想5G套餐”主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？',
+        '好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？',
     ]
 
     with torch.no_grad():
-        # import ipdb;ipdb.set_trace()
-        # print('warm up start')
-        # for _ in range(args.warm_up_times):
-        #     next(cosyvoice.inference_sft(prompt_texts[0], '03729', stream=args.stream))
-        # print('warm up end')
-        # import ipdb;ipdb.set_trace()
+        if args.warm_up_times > 0 and not skip_warmup:
+            print('warm up start', flush=True)
+            warmup_start = time.time()
+            for _ in range(args.warm_up_times):
+                next(cosyvoice.inference_sft(prompt_texts[0], '03729',
+                                              stream=args.stream))
+            print('warm up end, elapsed={:.1f}s'.format(
+                time.time() - warmup_start), flush=True)
+
+        # 如果 infer_count=0 表示仅 warmup，直接返回
+        if args.infer_count <= 0:
+            print('[INFO] infer_count=0, exiting after warmup', flush=True)
+            sys.exit(0)
+
         for infer_idx in range(args.infer_count):
             for text_idx, prompt_txt in enumerate(prompt_texts):
-                print('[INFO] infer round {}, text {}: {}'.format(infer_idx, text_idx, prompt_txt))
+                print('[INFO] infer round {}, text {}: {}'.format(
+                    infer_idx, text_idx, prompt_txt))
                 speech_chunks = []
-                for _, j in enumerate(cosyvoice.inference_sft(prompt_txt, '03729', stream=args.stream)):
+                for _, j in enumerate(cosyvoice.inference_sft(
+                        prompt_txt, '03729', stream=args.stream)):
                     speech_chunks.append(j['tts_speech'])
                 if speech_chunks:
                     full_speech = torch.cat(speech_chunks, dim=1)
-                    output_path = os.path.join(args.output_dir, 'sft_full_{}_{}.wav'.format(infer_idx, text_idx))
-                    torchaudio.save(output_path, full_speech, cosyvoice.sample_rate)
+                    output_path = os.path.join(
+                        args.output_dir,
+                        'sft_full_{}_{}.wav'.format(infer_idx, text_idx))
+                    torchaudio.save(output_path, full_speech,
+                                    cosyvoice.sample_rate)
                     print('[INFO] save full speech to {}'.format(output_path))

@@ -1,0 +1,1224 @@
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch/cuda/__init__.py:58: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/latest owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/8.1.RC1/aarch64-linux/ascend_toolkit_install.info owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:291: ImportWarning: 
+    *************************************************************************************************************
+    The torch.Tensor.cuda and torch.nn.Module.cuda are replaced with torch.Tensor.npu and torch.nn.Module.npu now..
+    The torch.cuda.DoubleTensor is replaced with torch.npu.FloatTensor cause the double type is not supported now..
+    The backend in torch.distributed.init_process_group set to hccl now..
+    The torch.cuda.* and torch.cuda.amp.* are replaced with torch.npu.* and torch.npu.amp.* now..
+    The device parameters have been replaced with npu in the function below:
+    torch.logspace, torch.randint, torch.hann_window, torch.rand, torch.full_like, torch.ones_like, torch.rand_like, torch.randperm, torch.arange, torch.frombuffer, torch.normal, torch._empty_per_channel_affine_quantized, torch.empty_strided, torch.empty_like, torch.scalar_tensor, torch.tril_indices, torch.bartlett_window, torch.ones, torch.sparse_coo_tensor, torch.randn, torch.kaiser_window, torch.tensor, torch.triu_indices, torch.as_tensor, torch.zeros, torch.randint_like, torch.full, torch.eye, torch._sparse_csr_tensor_unsafe, torch.empty, torch._sparse_coo_tensor_unsafe, torch.blackman_window, torch.zeros_like, torch.range, torch.sparse_csr_tensor, torch.randn_like, torch.from_file, torch._cudnn_init_dropout_state, torch._empty_affine_quantized, torch.linspace, torch.hamming_window, torch.empty_quantized, torch._pin_memory, torch.autocast, torch.load, torch.Generator, torch.set_default_device, torch.Tensor.new_empty, torch.Tensor.new_empty_strided, torch.Tensor.new_full, torch.Tensor.new_ones, torch.Tensor.new_tensor, torch.Tensor.new_zeros, torch.Tensor.to, torch.nn.Module.to, torch.nn.Module.to_empty
+    *************************************************************************************************************
+    
+  warnings.warn(msg, ImportWarning)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:246: RuntimeWarning: torch.jit.script and torch.jit.script_method will be disabled by transfer_to_npu, which currently does not support them, if you need to enable them, please do not use transfer_to_npu.
+  warnings.warn(msg, RuntimeWarning)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/__init__.py:3: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+  import pkg_resources
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2832: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('mpl_toolkits')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(pkg)
+2026-06-15 16:39:35,227 - modelscope - INFO - PyTorch version 2.4.0 Found.
+2026-06-15 16:39:35,228 - modelscope - INFO - Loading ast index from /home/ma-user/.cache/modelscope/ast_indexer
+2026-06-15 16:39:35,302 - modelscope - INFO - Loading done! Current index file version is 1.15.0, with md5 ba02a9e8b787c76889d15c575a4429cf and a total number of 980 components indexed
+failed to import ttsfrd, use WeTextProcessing instead
+[INFO] CPU affinity set: cores 32-63 (client_1)
+[INFO] CPU threads configured: OMP=16, MKL=8, torch=16
+[INFO] client_id=1 skip_warmup=False 
+[INFO] loading model...
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/lightning/fabric/__init__.py:41: Deprecated call to `pkg_resources.declare_namespace('lightning.fabric')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:88: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  parse = parser.parseString(pattern)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:92: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  parser.resetCache()
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_mathtext.py:30: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+  ParserElement.enablePackrat()
+[WARNING] In /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+[WARNING] In /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/lightning/pytorch/__init__.py:37: Deprecated call to `pkg_resources.declare_namespace('lightning.pytorch')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
+  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
+[INFO] input frame rate=25
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/librosa/core/intervals.py:15: DeprecationWarning: path is deprecated. Use files() instead. Refer to https://importlib-resources.readthedocs.io/en/latest/using.html#migrating-from-legacy for migration advice.
+  with resources.path("librosa.core", "intervals.msgpack") as imsgpack:
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:65: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'CPUExecutionProvider'
+  warnings.warn(
+/usr/local/Ascend/ascend-toolkit/8.1.RC1/python/site-packages/tbe/tvm/contrib/ccec.py:866: DeprecationWarning: invalid escape sequence '\L'
+  if not dirpath.find("AppData\Local\Temp"):
+/usr/local/Ascend/ascend-toolkit/latest/python/site-packages/tbe/dsl/classifier/transdata/transdata_classifier.py:222: DeprecationWarning: invalid escape sequence '\B'
+  """
+/usr/local/Ascend/ascend-toolkit/latest/python/site-packages/tbe/dsl/unify_schedule/vector/transdata/common/graph/transdata_graph_info.py:143: DeprecationWarning: invalid escape sequence '\c'
+  """
+2026-06-15 16:40:09,072 WETEXT INFO building fst for zh_normalizer ...
+[INFO] building fst for zh_normalizer ...
+2026-06-15 16:41:03,338 WETEXT INFO done
+[INFO] done
+2026-06-15 16:41:03,338 WETEXT INFO fst path: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_tagger.fst
+[INFO] fst path: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_tagger.fst
+2026-06-15 16:41:03,338 WETEXT INFO           /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_verbalizer.fst
+[INFO]           /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_verbalizer.fst
+2026-06-15 16:41:03,346 WETEXT INFO found existing fst: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_tagger.fst
+[INFO] found existing fst: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_tagger.fst
+2026-06-15 16:41:03,346 WETEXT INFO                     /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_verbalizer.fst
+[INFO]                     /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_verbalizer.fst
+2026-06-15 16:41:03,346 WETEXT INFO skip building fst for en_normalizer ...
+[INFO] skip building fst for en_normalizer ...
+[WARN] acl repeat initialize
+[INFO] acl init success
+[INFO] open device 0 success
+[INFO] get current context
+[INFO] load model ../weight/CosyVoice2-0.5B_sft_shenhu/flow_linux_aarch64.om success
+[INFO] create model description success
+[INFO] create new context
+[INFO] load model ../weight/CosyVoice2-0.5B_sft_shenhu/flow_static.om success
+[INFO] create model description success
+[INFO] create new context
+[INFO] load model ../weight/CosyVoice2-0.5B_sft_shenhu/speech_linux_aarch64.om success
+[INFO] create model description success
+Removing weight norm...
+warm up start
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+./home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py:567: UserWarning: When enable frozen_parameter, Parameters will be considered frozen.Please make sure that the Parameters data address remain the same throughout the program runtime.
+  warnings.warn(f'When enable frozen_parameter, Parameters will be considered frozen.'
+..[W615 16:43:53.758929572 compiler_depend.ts:51] Warning: CAUTION: The operator 'aten::unfold_backward' is not currently supported on the NPU backend and will fall back to run on the CPU. This may have performance implications. (function npu_cpu_fallback)
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=1459.80ms | Hift=47369.82ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 43926.92ms
+ > Flow+Hift 推理耗时: 48830.22ms
+[INFO] yield speech len 0.64, rtf 144.93501111865044
+  0%|          | 0/1 [01:32<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=48.85ms | Hift=23.91ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 194.40ms
+ > Flow+Hift 推理耗时: 73.20ms
+[INFO] yield speech len 0.64, rtf 0.4187922924757004
+  0%|          | 0/1 [00:00<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=46.76ms | Hift=22.22ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 183.53ms
+ > Flow+Hift 推理耗时: 69.33ms
+[INFO] yield speech len 0.64, rtf 0.39561353623867035
+  0%|          | 0/1 [00:00<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=51.83ms | Hift=21.59ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 178.80ms
+ > Flow+Hift 推理耗时: 73.77ms
+[INFO] yield speech len 0.64, rtf 0.39517469704151154
+  0%|          | 0/1 [00:00<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=50.32ms | Hift=24.82ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 190.43ms
+ > Flow+Hift 推理耗时: 75.50ms
+[INFO] yield speech len 0.64, rtf 0.41605159640312195
+  0%|          | 0/1 [00:00<?, ?it/s]
+warm up end, elapsed=93.9s
+[INFO] infer round 0, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=50.03ms | Hift=23.04ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 190.19ms
+ > Flow+Hift 推理耗时: 73.46ms
+[INFO] yield speech len 0.64, rtf 0.4124816507101059
+/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py:567: UserWarning: When enable frozen_parameter, Parameters will be considered frozen.Please make sure that the Parameters data address remain the same throughout the program runtime.
+  warnings.warn(f'When enable frozen_parameter, Parameters will be considered frozen.'
+..flow step2
+模块耗时详情: Flow=66.82ms | Hift=44386.21ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 367.84ms
+ > Flow+Hift 推理耗时: 44453.46ms
+[INFO] yield speech len 2.0, rtf 22.410788536071777
+flow step2
+模块耗时详情: Flow=66.13ms | Hift=31.44ms
+[Profiling Final] Tail Logic Time: 98.2ms
+[INFO] yield speech len 0.56, rtf 0.28795259339468815
+100%|██████████| 1/1 [00:45<00:00, 45.25s/it]100%|██████████| 1/1 [00:45<00:00, 45.25s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_0_0.wav
+[INFO] infer round 0, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=52.49ms | Hift=30.41ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 257.85ms
+ > Flow+Hift 推理耗时: 83.24ms
+[INFO] yield speech len 0.64, rtf 0.5335226655006409
+flow step2
+模块耗时详情: Flow=61.85ms | Hift=32.05ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 412.71ms
+ > Flow+Hift 推理耗时: 94.27ms
+[INFO] yield speech len 2.0, rtf 0.2535935640335083
+flow step2
+模块耗时详情: Flow=69.36ms | Hift=30.87ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 400.78ms
+ > Flow+Hift 推理耗时: 100.59ms
+[INFO] yield speech len 2.0, rtf 0.25078272819519043
+flow step2
+模块耗时详情: Flow=70.97ms | Hift=32.63ms
+[Profiling Final] Tail Logic Time: 104.1ms
+[INFO] yield speech len 1.28, rtf 0.2545112743973732
+100%|██████████| 1/1 [00:01<00:00,  1.68s/it]100%|██████████| 1/1 [00:01<00:00,  1.68s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_0_1.wav
+[INFO] infer round 0, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=56.73ms | Hift=24.10ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 219.08ms
+ > Flow+Hift 推理耗时: 81.20ms
+[INFO] yield speech len 0.64, rtf 0.46973712742328644
+flow step2
+模块耗时详情: Flow=74.43ms | Hift=32.48ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 427.54ms
+ > Flow+Hift 推理耗时: 107.26ms
+[INFO] yield speech len 2.0, rtf 0.2674992084503174
+flow step2
+模块耗时详情: Flow=69.68ms | Hift=31.01ms
+[Profiling Final] Tail Logic Time: 101.1ms
+[INFO] yield speech len 2.0, rtf 0.23565447330474854
+100%|██████████| 1/1 [00:01<00:00,  1.31s/it]100%|██████████| 1/1 [00:01<00:00,  1.31s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_0_2.wav
+[INFO] infer round 0, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=51.13ms | Hift=27.62ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 196.52ms
+ > Flow+Hift 推理耗时: 79.08ms
+[INFO] yield speech len 0.64, rtf 0.4311494529247284
+flow step2
+模块耗时详情: Flow=64.26ms | Hift=47.41ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 403.90ms
+ > Flow+Hift 推理耗时: 112.00ms
+[INFO] yield speech len 2.0, rtf 0.2580453157424927
+flow step2
+模块耗时详情: Flow=70.50ms | Hift=32.70ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 418.09ms
+ > Flow+Hift 推理耗时: 103.55ms
+[INFO] yield speech len 2.0, rtf 0.26091766357421875
+flow step2
+模块耗时详情: Flow=65.56ms | Hift=26.71ms
+[Profiling Final] Tail Logic Time: 92.7ms
+[INFO] yield speech len 0.52, rtf 0.29460466825045073
+100%|██████████| 1/1 [00:01<00:00,  1.47s/it]100%|██████████| 1/1 [00:01<00:00,  1.47s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_0_3.wav
+[INFO] infer round 0, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=54.84ms | Hift=26.50ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 206.79ms
+ > Flow+Hift 推理耗时: 81.66ms
+[INFO] yield speech len 0.64, rtf 0.4512321203947067
+flow step2
+模块耗时详情: Flow=77.07ms | Hift=44.19ms
+[Profiling Final] Tail Logic Time: 121.7ms
+[INFO] yield speech len 2.2, rtf 0.24545593695207074
+100%|██████████| 1/1 [00:00<00:00,  1.20it/s]100%|██████████| 1/1 [00:00<00:00,  1.20it/s]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_0_4.wav
+[INFO] infer round 0, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=56.25ms | Hift=26.20ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 225.95ms
+ > Flow+Hift 推理耗时: 82.81ms
+[INFO] yield speech len 0.64, rtf 0.4829719662666321
+flow step2
+模块耗时详情: Flow=74.90ms | Hift=48.08ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 450.54ms
+ > Flow+Hift 推理耗时: 123.34ms
+[INFO] yield speech len 2.0, rtf 0.28703761100769043
+flow step2
+模块耗时详情: Flow=75.40ms | Hift=35.07ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 459.08ms
+ > Flow+Hift 推理耗时: 110.83ms
+[INFO] yield speech len 2.0, rtf 0.2850630283355713
+flow step2
+模块耗时详情: Flow=82.02ms | Hift=38.67ms
+[Profiling Final] Tail Logic Time: 121.2ms
+[INFO] yield speech len 1.76, rtf 0.2758955413644964
+100%|██████████| 1/1 [00:01<00:00,  1.94s/it]100%|██████████| 1/1 [00:01<00:00,  1.94s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_0_5.wav
+[INFO] infer round 0, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=72.31ms | Hift=33.61ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 245.37ms
+ > Flow+Hift 推理耗时: 106.25ms
+[INFO] yield speech len 0.64, rtf 0.549953430891037
+flow step2
+模块耗时详情: Flow=92.24ms | Hift=48.95ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 465.96ms
+ > Flow+Hift 推理耗时: 141.53ms
+[INFO] yield speech len 2.0, rtf 0.3038438558578491
+flow step2
+模块耗时详情: Flow=74.88ms | Hift=34.11ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 483.09ms
+ > Flow+Hift 推理耗时: 109.34ms
+[INFO] yield speech len 2.0, rtf 0.29631006717681885
+flow step2
+模块耗时详情: Flow=76.30ms | Hift=35.49ms
+
+[Profiling] Chunk Offset: 120
+ > LLM 累积耗时: 463.40ms
+ > Flow+Hift 推理耗时: 112.12ms
+[INFO] yield speech len 2.0, rtf 0.28785789012908936
+flow step2
+模块耗时详情: Flow=72.78ms | Hift=43.33ms
+
+[Profiling] Chunk Offset: 170
+ > LLM 累积耗时: 485.83ms
+ > Flow+Hift 推理耗时: 116.45ms
+[INFO] yield speech len 2.0, rtf 0.30123424530029297
+flow step2
+模块耗时详情: Flow=73.23ms | Hift=37.76ms
+
+[Profiling] Chunk Offset: 220
+ > LLM 累积耗时: 483.13ms
+ > Flow+Hift 推理耗时: 111.37ms
+[INFO] yield speech len 2.0, rtf 0.2973541021347046
+flow step2
+模块耗时详情: Flow=73.64ms | Hift=51.19ms
+
+[Profiling] Chunk Offset: 270
+ > LLM 累积耗时: 464.14ms
+ > Flow+Hift 推理耗时: 125.19ms
+[INFO] yield speech len 2.0, rtf 0.2947657108306885
+flow step2
+模块耗时详情: Flow=78.73ms | Hift=28.98ms
+[Profiling Final] Tail Logic Time: 108.2ms
+[INFO] yield speech len 1.0, rtf 0.28696680068969727
+100%|██████████| 1/1 [00:04<00:00,  4.21s/it]100%|██████████| 1/1 [00:04<00:00,  4.21s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_0_6.wav
+[INFO] infer round 1, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=57.94ms | Hift=26.86ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 240.92ms
+ > Flow+Hift 推理耗时: 85.18ms
+[INFO] yield speech len 0.64, rtf 0.5100715905427933
+flow step2
+模块耗时详情: Flow=83.26ms | Hift=33.53ms
+[Profiling Final] Tail Logic Time: 117.3ms
+[INFO] yield speech len 1.92, rtf 0.26629480222860974
+100%|██████████| 1/1 [00:00<00:00,  1.19it/s]100%|██████████| 1/1 [00:00<00:00,  1.19it/s]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_1_0.wav
+[INFO] infer round 1, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=57.58ms | Hift=22.62ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 236.90ms
+ > Flow+Hift 推理耗时: 80.52ms
+[INFO] yield speech len 0.64, rtf 0.49651600420475006
+flow step2
+模块耗时详情: Flow=73.36ms | Hift=42.69ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 488.04ms
+ > Flow+Hift 推理耗时: 116.39ms
+[INFO] yield speech len 2.0, rtf 0.30230486392974854
+flow step2
+模块耗时详情: Flow=80.45ms | Hift=37.75ms
+[Profiling Final] Tail Logic Time: 118.7ms
+[INFO] yield speech len 2.16, rtf 0.26300439128169306
+100%|██████████| 1/1 [00:01<00:00,  1.49s/it]100%|██████████| 1/1 [00:01<00:00,  1.49s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_1_1.wav
+[INFO] infer round 1, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=62.33ms | Hift=23.86ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 234.80ms
+ > Flow+Hift 推理耗时: 86.50ms
+[INFO] yield speech len 0.64, rtf 0.5025457590818405
+flow step2
+模块耗时详情: Flow=72.86ms | Hift=43.61ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 471.17ms
+ > Flow+Hift 推理耗时: 116.83ms
+[INFO] yield speech len 2.0, rtf 0.2940945625305176
+flow step2
+模块耗时详情: Flow=84.09ms | Hift=39.50ms
+[Profiling Final] Tail Logic Time: 124.1ms
+[INFO] yield speech len 2.08, rtf 0.2675207761617807
+100%|██████████| 1/1 [00:01<00:00,  1.48s/it]100%|██████████| 1/1 [00:01<00:00,  1.48s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_1_2.wav
+[INFO] infer round 1, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=68.21ms | Hift=24.77ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 232.89ms
+ > Flow+Hift 推理耗时: 93.32ms
+[INFO] yield speech len 0.64, rtf 0.5102518945932388
+flow step2
+模块耗时详情: Flow=78.43ms | Hift=45.14ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 453.84ms
+ > Flow+Hift 推理耗时: 123.91ms
+[INFO] yield speech len 2.0, rtf 0.2889699935913086
+flow step2
+模块耗时详情: Flow=82.15ms | Hift=39.60ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 459.04ms
+ > Flow+Hift 推理耗时: 122.13ms
+[INFO] yield speech len 2.0, rtf 0.29068708419799805
+flow step2
+模块耗时详情: Flow=68.76ms | Hift=30.65ms
+[Profiling Final] Tail Logic Time: 99.9ms
+[INFO] yield speech len 0.96, rtf 0.2674199640750885
+100%|██████████| 1/1 [00:01<00:00,  1.75s/it]100%|██████████| 1/1 [00:01<00:00,  1.75s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_1_3.wav
+[INFO] infer round 1, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=63.99ms | Hift=24.81ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 232.31ms
+ > Flow+Hift 推理耗时: 89.12ms
+[INFO] yield speech len 0.64, rtf 0.5027666687965393
+flow step2
+模块耗时详情: Flow=69.65ms | Hift=40.96ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 468.12ms
+ > Flow+Hift 推理耗时: 110.96ms
+[INFO] yield speech len 2.0, rtf 0.28963804244995117
+flow step2
+模块耗时详情: Flow=69.86ms | Hift=27.75ms
+[Profiling Final] Tail Logic Time: 98.0ms
+[INFO] yield speech len 0.36, rtf 0.36824279361301
+100%|██████████| 1/1 [00:01<00:00,  1.04s/it]100%|██████████| 1/1 [00:01<00:00,  1.04s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_1_4.wav
+[INFO] infer round 1, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=60.04ms | Hift=23.51ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 240.57ms
+ > Flow+Hift 推理耗时: 83.89ms
+[INFO] yield speech len 0.64, rtf 0.5074862390756607
+flow step2
+模块耗时详情: Flow=69.06ms | Hift=37.93ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 461.96ms
+ > Flow+Hift 推理耗时: 107.35ms
+[INFO] yield speech len 2.0, rtf 0.28475165367126465
+flow step2
+模块耗时详情: Flow=75.60ms | Hift=42.49ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 472.07ms
+ > Flow+Hift 推理耗时: 118.45ms
+[INFO] yield speech len 2.0, rtf 0.29536187648773193
+flow step2
+模块耗时详情: Flow=82.49ms | Hift=34.91ms
+
+[Profiling] Chunk Offset: 120
+ > LLM 累积耗时: 477.30ms
+ > Flow+Hift 推理耗时: 117.77ms
+[INFO] yield speech len 2.0, rtf 0.2976419925689697
+flow step2
+模块耗时详情: Flow=72.82ms | Hift=27.67ms
+[Profiling Final] Tail Logic Time: 100.9ms
+[INFO] yield speech len 0.32, rtf 0.38276389241218567
+100%|██████████| 1/1 [00:02<00:00,  2.21s/it]100%|██████████| 1/1 [00:02<00:00,  2.21s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_1_5.wav
+[INFO] infer round 1, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=65.48ms | Hift=28.18ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 239.34ms
+ > Flow+Hift 推理耗时: 94.02ms
+[INFO] yield speech len 0.64, rtf 0.5214467644691467
+flow step2
+模块耗时详情: Flow=78.00ms | Hift=44.51ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 476.59ms
+ > Flow+Hift 推理耗时: 122.85ms
+[INFO] yield speech len 2.0, rtf 0.29982173442840576
+flow step2
+模块耗时详情: Flow=78.11ms | Hift=42.45ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 470.82ms
+ > Flow+Hift 推理耗时: 120.93ms
+[INFO] yield speech len 2.0, rtf 0.2959773540496826
+flow step2
+模块耗时详情: Flow=78.34ms | Hift=38.05ms
+
+[Profiling] Chunk Offset: 120
+ > LLM 累积耗时: 491.70ms
+ > Flow+Hift 推理耗时: 116.76ms
+[INFO] yield speech len 2.0, rtf 0.3043330907821655
+flow step2
+模块耗时详情: Flow=89.20ms | Hift=47.87ms
+
+[Profiling] Chunk Offset: 170
+ > LLM 累积耗时: 480.85ms
+ > Flow+Hift 推理耗时: 137.44ms
+[INFO] yield speech len 2.0, rtf 0.3092433214187622
+flow step2
+模块耗时详情: Flow=75.51ms | Hift=33.70ms
+
+[Profiling] Chunk Offset: 220
+ > LLM 累积耗时: 482.47ms
+ > Flow+Hift 推理耗时: 109.59ms
+[INFO] yield speech len 2.0, rtf 0.29613518714904785
+flow step2
+模块耗时详情: Flow=76.76ms | Hift=47.18ms
+
+[Profiling] Chunk Offset: 270
+ > LLM 累积耗时: 486.74ms
+ > Flow+Hift 推理耗时: 124.29ms
+[INFO] yield speech len 2.0, rtf 0.3056222200393677
+flow step2
+模块耗时详情: Flow=78.56ms | Hift=46.96ms
+
+[Profiling] Chunk Offset: 320
+ > LLM 累积耗时: 476.20ms
+ > Flow+Hift 推理耗时: 125.88ms
+[INFO] yield speech len 2.0, rtf 0.3011528253555298
+flow step2
+模块耗时详情: Flow=73.07ms | Hift=28.71ms
+[Profiling Final] Tail Logic Time: 102.2ms
+[INFO] yield speech len 1.28, rtf 0.27292706072330475
+100%|██████████| 1/1 [00:04<00:00,  4.91s/it]100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_1_6.wav
+[INFO] infer round 2, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=58.40ms | Hift=28.63ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 239.74ms
+ > Flow+Hift 推理耗时: 87.35ms
+[INFO] yield speech len 0.64, rtf 0.5115974694490433
+flow step2
+模块耗时详情: Flow=76.01ms | Hift=41.26ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 467.31ms
+ > Flow+Hift 推理耗时: 117.61ms
+[INFO] yield speech len 2.0, rtf 0.2925562858581543
+flow step2
+模块耗时详情: Flow=77.06ms | Hift=29.16ms
+[Profiling Final] Tail Logic Time: 106.6ms
+[INFO] yield speech len 0.52, rtf 0.31673358036921573
+100%|██████████| 1/1 [00:01<00:00,  1.08s/it]100%|██████████| 1/1 [00:01<00:00,  1.08s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_2_0.wav
+[INFO] infer round 2, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=70.85ms | Hift=24.62ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 237.94ms
+ > Flow+Hift 推理耗时: 95.81ms
+[INFO] yield speech len 0.64, rtf 0.521991029381752
+flow step2
+模块耗时详情: Flow=85.83ms | Hift=45.05ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 455.91ms
+ > Flow+Hift 推理耗时: 131.23ms
+[INFO] yield speech len 2.0, rtf 0.29367196559906006
+flow step2
+模块耗时详情: Flow=84.53ms | Hift=41.33ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 472.93ms
+ > Flow+Hift 推理耗时: 126.20ms
+[INFO] yield speech len 2.0, rtf 0.29966723918914795
+flow step2
+模块耗时详情: Flow=84.89ms | Hift=31.00ms
+[Profiling Final] Tail Logic Time: 116.3ms
+[INFO] yield speech len 1.32, rtf 0.2845740679538611
+100%|██████████| 1/1 [00:01<00:00,  1.90s/it]100%|██████████| 1/1 [00:01<00:00,  1.90s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_2_1.wav
+[INFO] infer round 2, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=64.71ms | Hift=28.13ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 249.40ms
+ > Flow+Hift 推理耗时: 93.22ms
+[INFO] yield speech len 0.64, rtf 0.5359034985303879
+flow step2
+模块耗时详情: Flow=69.78ms | Hift=46.07ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 472.62ms
+ > Flow+Hift 推理耗时: 116.24ms
+[INFO] yield speech len 2.0, rtf 0.29453063011169434
+flow step2
+模块耗时详情: Flow=80.88ms | Hift=32.89ms
+[Profiling Final] Tail Logic Time: 114.3ms
+[INFO] yield speech len 1.92, rtf 0.2591032534837723
+100%|██████████| 1/1 [00:01<00:00,  1.43s/it]100%|██████████| 1/1 [00:01<00:00,  1.43s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_2_2.wav
+[INFO] infer round 2, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=62.33ms | Hift=25.44ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 236.00ms
+ > Flow+Hift 推理耗时: 88.12ms
+[INFO] yield speech len 0.64, rtf 0.5070261657238007
+flow step2
+模块耗时详情: Flow=76.43ms | Hift=44.69ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 467.98ms
+ > Flow+Hift 推理耗时: 121.46ms
+[INFO] yield speech len 2.0, rtf 0.2948155403137207
+flow step2
+模块耗时详情: Flow=83.72ms | Hift=41.62ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 464.19ms
+ > Flow+Hift 推理耗时: 125.70ms
+[INFO] yield speech len 2.0, rtf 0.295046329498291
+flow step2
+模块耗时详情: Flow=75.59ms | Hift=29.49ms
+[Profiling Final] Tail Logic Time: 105.5ms
+[INFO] yield speech len 1.16, rtf 0.28191681565909554
+100%|██████████| 1/1 [00:01<00:00,  1.83s/it]100%|██████████| 1/1 [00:01<00:00,  1.83s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_2_3.wav
+[INFO] infer round 2, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=54.47ms | Hift=26.69ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 247.96ms
+ > Flow+Hift 推理耗时: 81.48ms
+[INFO] yield speech len 0.64, rtf 0.5152560770511627
+flow step2
+模块耗时详情: Flow=82.87ms | Hift=37.53ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 504.94ms
+ > Flow+Hift 推理耗时: 120.76ms
+[INFO] yield speech len 2.0, rtf 0.3129490613937378
+flow step2
+模块耗时详情: Flow=80.43ms | Hift=27.10ms
+[Profiling Final] Tail Logic Time: 108.0ms
+[INFO] yield speech len 0.6, rtf 0.3114918867746989
+100%|██████████| 1/1 [00:01<00:00,  1.15s/it]100%|██████████| 1/1 [00:01<00:00,  1.15s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_2_4.wav
+[INFO] infer round 2, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=57.01ms | Hift=22.80ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 231.95ms
+ > Flow+Hift 推理耗时: 80.16ms
+[INFO] yield speech len 0.64, rtf 0.4881918430328369
+flow step2
+模块耗时详情: Flow=68.14ms | Hift=41.90ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 486.00ms
+ > Flow+Hift 推理耗时: 110.38ms
+[INFO] yield speech len 2.0, rtf 0.29828572273254395
+flow step2
+模块耗时详情: Flow=73.95ms | Hift=51.43ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 474.66ms
+ > Flow+Hift 推理耗时: 125.73ms
+[INFO] yield speech len 2.0, rtf 0.3002896308898926
+flow step2
+模块耗时详情: Flow=81.52ms | Hift=44.96ms
+[Profiling Final] Tail Logic Time: 127.0ms
+[INFO] yield speech len 2.12, rtf 0.27704688737977223
+100%|██████████| 1/1 [00:02<00:00,  2.10s/it]100%|██████████| 1/1 [00:02<00:00,  2.10s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_2_5.wav
+[INFO] infer round 2, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=60.65ms | Hift=28.23ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 236.81ms
+ > Flow+Hift 推理耗时: 89.21ms
+[INFO] yield speech len 0.64, rtf 0.5099568516016006
+flow step2
+模块耗时详情: Flow=71.13ms | Hift=43.21ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 501.40ms
+ > Flow+Hift 推理耗时: 114.70ms
+[INFO] yield speech len 2.0, rtf 0.3081473112106323
+flow step2
+模块耗时详情: Flow=82.50ms | Hift=33.70ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 516.82ms
+ > Flow+Hift 推理耗时: 116.56ms
+[INFO] yield speech len 2.0, rtf 0.3167874813079834
+flow step2
+模块耗时详情: Flow=79.85ms | Hift=35.67ms
+
+[Profiling] Chunk Offset: 120
+ > LLM 累积耗时: 487.27ms
+ > Flow+Hift 推理耗时: 115.88ms
+[INFO] yield speech len 2.0, rtf 0.30168116092681885
+flow step2
+模块耗时详情: Flow=86.38ms | Hift=43.02ms
+
+[Profiling] Chunk Offset: 170
+ > LLM 累积耗时: 472.61ms
+ > Flow+Hift 推理耗时: 129.76ms
+[INFO] yield speech len 2.0, rtf 0.30128681659698486
+flow step2
+模块耗时详情: Flow=89.26ms | Hift=48.48ms
+
+[Profiling] Chunk Offset: 220
+ > LLM 累积耗时: 452.87ms
+ > Flow+Hift 推理耗时: 138.11ms
+[INFO] yield speech len 2.0, rtf 0.29559123516082764
+flow step2
+模块耗时详情: Flow=86.14ms | Hift=50.17ms
+
+[Profiling] Chunk Offset: 270
+ > LLM 累积耗时: 453.18ms
+ > Flow+Hift 推理耗时: 136.65ms
+[INFO] yield speech len 2.0, rtf 0.29501867294311523
+flow step2
+模块耗时详情: Flow=76.39ms | Hift=35.87ms
+[Profiling Final] Tail Logic Time: 112.7ms
+[INFO] yield speech len 1.4, rtf 0.27782440185546875
+100%|██████████| 1/1 [00:04<00:00,  4.36s/it]100%|██████████| 1/1 [00:04<00:00,  4.36s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_2_6.wav
+[INFO] infer round 3, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=57.72ms | Hift=28.42ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 241.74ms
+ > Flow+Hift 推理耗时: 86.48ms
+[INFO] yield speech len 0.64, rtf 0.5133874714374542
+flow step2
+模块耗时详情: Flow=81.01ms | Hift=47.49ms
+[Profiling Final] Tail Logic Time: 129.1ms
+[INFO] yield speech len 2.16, rtf 0.2813422017627292
+100%|██████████| 1/1 [00:00<00:00,  1.07it/s]100%|██████████| 1/1 [00:00<00:00,  1.06it/s]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_3_0.wav
+[INFO] infer round 3, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=69.65ms | Hift=30.40ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 234.99ms
+ > Flow+Hift 推理耗时: 100.39ms
+[INFO] yield speech len 0.64, rtf 0.5245842039585114
+flow step2
+模块耗时详情: Flow=80.25ms | Hift=35.29ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 513.71ms
+ > Flow+Hift 推理耗时: 115.89ms
+[INFO] yield speech len 2.0, rtf 0.3149033784866333
+flow step2
+模块耗时详情: Flow=75.37ms | Hift=37.79ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 473.10ms
+ > Flow+Hift 推理耗时: 113.61ms
+[INFO] yield speech len 2.0, rtf 0.29346704483032227
+flow step2
+模块耗时详情: Flow=68.72ms | Hift=23.90ms
+[Profiling Final] Tail Logic Time: 93.0ms
+[INFO] yield speech len 0.52, rtf 0.2985862585214468
+100%|██████████| 1/1 [00:01<00:00,  1.71s/it]100%|██████████| 1/1 [00:01<00:00,  1.71s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_3_1.wav
+[INFO] infer round 3, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=71.42ms | Hift=27.78ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 259.15ms
+ > Flow+Hift 推理耗时: 99.53ms
+[INFO] yield speech len 0.64, rtf 0.5609594285488129
+flow step2
+模块耗时详情: Flow=68.12ms | Hift=42.88ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 497.57ms
+ > Flow+Hift 推理耗时: 111.37ms
+[INFO] yield speech len 2.0, rtf 0.30457794666290283
+flow step2
+模块耗时详情: Flow=74.00ms | Hift=42.90ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 483.95ms
+ > Flow+Hift 推理耗时: 117.25ms
+[INFO] yield speech len 2.0, rtf 0.3006974458694458
+flow step2
+模块耗时详情: Flow=68.50ms | Hift=22.56ms
+[Profiling Final] Tail Logic Time: 91.5ms
+[INFO] yield speech len 0.6, rtf 0.32605012257893884
+100%|██████████| 1/1 [00:01<00:00,  1.77s/it]100%|██████████| 1/1 [00:01<00:00,  1.77s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_3_2.wav
+[INFO] infer round 3, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=67.97ms | Hift=25.69ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 243.42ms
+ > Flow+Hift 推理耗时: 94.00ms
+[INFO] yield speech len 0.64, rtf 0.5277622491121292
+flow step2
+模块耗时详情: Flow=80.38ms | Hift=58.02ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 502.53ms
+ > Flow+Hift 推理耗时: 138.75ms
+[INFO] yield speech len 2.0, rtf 0.32074642181396484
+flow step2
+模块耗时详情: Flow=83.80ms | Hift=40.50ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 467.90ms
+ > Flow+Hift 推理耗时: 124.67ms
+[INFO] yield speech len 2.0, rtf 0.29639530181884766
+flow step2
+模块耗时详情: Flow=83.46ms | Hift=32.85ms
+[Profiling Final] Tail Logic Time: 116.8ms
+[INFO] yield speech len 1.12, rtf 0.28891307967049734
+100%|██████████| 1/1 [00:01<00:00,  1.90s/it]100%|██████████| 1/1 [00:01<00:00,  1.90s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_3_3.wav
+[INFO] infer round 3, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=63.81ms | Hift=27.98ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 217.28ms
+ > Flow+Hift 推理耗时: 92.15ms
+[INFO] yield speech len 0.64, rtf 0.4840761423110962
+flow step2
+模块耗时详情: Flow=71.10ms | Hift=46.52ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 472.25ms
+ > Flow+Hift 推理耗时: 118.01ms
+[INFO] yield speech len 2.0, rtf 0.29523491859436035
+flow step2
+模块耗时详情: Flow=70.98ms | Hift=31.62ms
+[Profiling Final] Tail Logic Time: 103.0ms
+[INFO] yield speech len 1.16, rtf 0.27005220281666725
+100%|██████████| 1/1 [00:01<00:00,  1.22s/it]100%|██████████| 1/1 [00:01<00:00,  1.22s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_3_4.wav
+[INFO] infer round 3, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=62.33ms | Hift=27.22ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 237.77ms
+ > Flow+Hift 推理耗时: 89.89ms
+[INFO] yield speech len 0.64, rtf 0.5125477910041809
+flow step2
+模块耗时详情: Flow=76.07ms | Hift=44.78ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 467.94ms
+ > Flow+Hift 推理耗时: 121.20ms
+[INFO] yield speech len 2.0, rtf 0.29466867446899414
+flow step2
+模块耗时详情: Flow=79.79ms | Hift=34.94ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 481.88ms
+ > Flow+Hift 推理耗时: 115.08ms
+[INFO] yield speech len 2.0, rtf 0.29858481884002686
+flow step2
+模块耗时详情: Flow=80.57ms | Hift=32.71ms
+[Profiling Final] Tail Logic Time: 113.7ms
+[INFO] yield speech len 1.36, rtf 0.2823603503844317
+100%|██████████| 1/1 [00:01<00:00,  1.90s/it]100%|██████████| 1/1 [00:01<00:00,  1.90s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_3_5.wav
+[INFO] infer round 3, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=61.22ms | Hift=27.43ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 254.34ms
+ > Flow+Hift 推理耗时: 88.99ms
+[INFO] yield speech len 0.64, rtf 0.5370274186134338
+flow step2
+模块耗时详情: Flow=71.74ms | Hift=46.43ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 487.87ms
+ > Flow+Hift 推理耗时: 118.51ms
+[INFO] yield speech len 2.0, rtf 0.3032875061035156
+flow step2
+模块耗时详情: Flow=88.70ms | Hift=38.92ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 495.62ms
+ > Flow+Hift 推理耗时: 127.98ms
+[INFO] yield speech len 2.0, rtf 0.3119007349014282
+flow step2
+模块耗时详情: Flow=85.86ms | Hift=41.00ms
+
+[Profiling] Chunk Offset: 120
+ > LLM 累积耗时: 485.69ms
+ > Flow+Hift 推理耗时: 127.19ms
+[INFO] yield speech len 2.0, rtf 0.30653488636016846
+flow step2
+模块耗时详情: Flow=87.22ms | Hift=45.24ms
+
+[Profiling] Chunk Offset: 170
+ > LLM 累积耗时: 456.81ms
+ > Flow+Hift 推理耗时: 132.82ms
+[INFO] yield speech len 2.0, rtf 0.2949172258377075
+flow step2
+模块耗时详情: Flow=84.18ms | Hift=46.29ms
+
+[Profiling] Chunk Offset: 220
+ > LLM 累积耗时: 440.43ms
+ > Flow+Hift 推理耗时: 130.82ms
+[INFO] yield speech len 2.0, rtf 0.28572869300842285
+flow step2
+模块耗时详情: Flow=82.67ms | Hift=46.03ms
+
+[Profiling] Chunk Offset: 270
+ > LLM 累积耗时: 446.01ms
+ > Flow+Hift 推理耗时: 129.04ms
+[INFO] yield speech len 2.0, rtf 0.28762519359588623
+flow step2
+模块耗时详情: Flow=84.66ms | Hift=28.00ms
+[Profiling Final] Tail Logic Time: 113.1ms
+[INFO] yield speech len 1.32, rtf 0.2817805969353878
+100%|██████████| 1/1 [00:04<00:00,  4.30s/it]100%|██████████| 1/1 [00:04<00:00,  4.30s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_3_6.wav
+[INFO] infer round 4, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=67.59ms | Hift=29.09ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 240.41ms
+ > Flow+Hift 推理耗时: 97.01ms
+[INFO] yield speech len 0.64, rtf 0.5277302116155624
+flow step2
+模块耗时详情: Flow=82.99ms | Hift=47.25ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 444.60ms
+ > Flow+Hift 推理耗时: 130.58ms
+[INFO] yield speech len 2.0, rtf 0.2876906394958496
+flow step2
+模块耗时详情: Flow=69.27ms | Hift=27.31ms
+[Profiling Final] Tail Logic Time: 97.0ms
+[INFO] yield speech len 0.64, rtf 0.3234501928091049
+100%|██████████| 1/1 [00:01<00:00,  1.12s/it]100%|██████████| 1/1 [00:01<00:00,  1.12s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_4_0.wav
+[INFO] infer round 4, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=67.03ms | Hift=30.66ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 227.22ms
+ > Flow+Hift 推理耗时: 98.04ms
+[INFO] yield speech len 0.64, rtf 0.5087252706289291
+flow step2
+模块耗时详情: Flow=70.74ms | Hift=39.76ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 462.99ms
+ > Flow+Hift 推理耗时: 110.83ms
+[INFO] yield speech len 2.0, rtf 0.2870093584060669
+flow step2
+模块耗时详情: Flow=75.35ms | Hift=45.34ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 456.11ms
+ > Flow+Hift 推理耗时: 121.05ms
+[INFO] yield speech len 2.0, rtf 0.28869855403900146
+flow step2
+模块耗时详情: Flow=80.33ms | Hift=25.01ms
+[Profiling Final] Tail Logic Time: 105.8ms
+[INFO] yield speech len 0.64, rtf 0.3142599016427994
+100%|██████████| 1/1 [00:01<00:00,  1.68s/it]100%|██████████| 1/1 [00:01<00:00,  1.68s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_4_1.wav
+[INFO] infer round 4, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=57.37ms | Hift=26.52ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 246.92ms
+ > Flow+Hift 推理耗时: 84.21ms
+[INFO] yield speech len 0.64, rtf 0.5178894847631454
+flow step2
+模块耗时详情: Flow=78.93ms | Hift=45.80ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 505.44ms
+ > Flow+Hift 推理耗时: 125.06ms
+[INFO] yield speech len 2.0, rtf 0.31536972522735596
+flow step2
+模块耗时详情: Flow=81.92ms | Hift=34.56ms
+[Profiling Final] Tail Logic Time: 116.9ms
+[INFO] yield speech len 1.84, rtf 0.27435577434042224
+100%|██████████| 1/1 [00:01<00:00,  1.47s/it]100%|██████████| 1/1 [00:01<00:00,  1.47s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_4_2.wav
+[INFO] infer round 4, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=68.69ms | Hift=30.77ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 253.27ms
+ > Flow+Hift 推理耗时: 99.78ms
+[INFO] yield speech len 0.64, rtf 0.5521573126316071
+flow step2
+模块耗时详情: Flow=84.45ms | Hift=37.91ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 479.96ms
+ > Flow+Hift 推理耗时: 122.70ms
+[INFO] yield speech len 2.0, rtf 0.30142760276794434
+flow step2
+模块耗时详情: Flow=86.03ms | Hift=45.13ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 483.54ms
+ > Flow+Hift 推理耗时: 131.51ms
+[INFO] yield speech len 2.0, rtf 0.30762434005737305
+flow step2
+模块耗时详情: Flow=87.21ms | Hift=36.24ms
+[Profiling Final] Tail Logic Time: 123.9ms
+[INFO] yield speech len 1.2, rtf 0.29278814792633057
+100%|██████████| 1/1 [00:01<00:00,  1.93s/it]100%|██████████| 1/1 [00:01<00:00,  1.93s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_4_3.wav
+[INFO] infer round 4, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=62.18ms | Hift=29.10ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 262.24ms
+ > Flow+Hift 推理耗时: 91.61ms
+[INFO] yield speech len 0.64, rtf 0.5534160882234573
+flow step2
+模块耗时详情: Flow=80.16ms | Hift=48.65ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 498.98ms
+ > Flow+Hift 推理耗时: 129.16ms
+[INFO] yield speech len 2.0, rtf 0.3141648769378662
+flow step2
+模块耗时详情: Flow=84.28ms | Hift=29.03ms
+[Profiling Final] Tail Logic Time: 113.7ms
+[INFO] yield speech len 0.68, rtf 0.3214240074157715
+100%|██████████| 1/1 [00:01<00:00,  1.20s/it]100%|██████████| 1/1 [00:01<00:00,  1.20s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_4_4.wav
+[INFO] infer round 4, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=66.48ms | Hift=25.09ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 227.66ms
+ > Flow+Hift 推理耗时: 91.90ms
+[INFO] yield speech len 0.64, rtf 0.4998374730348587
+flow step2
+模块耗时详情: Flow=83.68ms | Hift=39.11ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 483.83ms
+ > Flow+Hift 推理耗时: 123.12ms
+[INFO] yield speech len 2.0, rtf 0.30357468128204346
+flow step2
+模块耗时详情: Flow=87.64ms | Hift=51.84ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 486.97ms
+ > Flow+Hift 推理耗时: 139.83ms
+[INFO] yield speech len 2.0, rtf 0.3135051727294922
+flow step2
+模块耗时详情: Flow=86.05ms | Hift=25.86ms
+[Profiling Final] Tail Logic Time: 112.3ms
+[INFO] yield speech len 1.0, rtf 0.29396820068359375
+100%|██████████| 1/1 [00:01<00:00,  1.85s/it]100%|██████████| 1/1 [00:01<00:00,  1.85s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_4_5.wav
+[INFO] infer round 4, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+首保大小为： 20 Flow上下文大小为： 25
+flow step2
+模块耗时详情: Flow=63.97ms | Hift=26.02ms
+
+[Profiling] Chunk Offset: 0
+ > LLM 累积耗时: 235.86ms
+ > Flow+Hift 推理耗时: 90.32ms
+[INFO] yield speech len 0.64, rtf 0.5101587623357773
+flow step2
+模块耗时详情: Flow=83.76ms | Hift=38.67ms
+
+[Profiling] Chunk Offset: 20
+ > LLM 累积耗时: 474.20ms
+ > Flow+Hift 推理耗时: 122.79ms
+[INFO] yield speech len 2.0, rtf 0.2986260652542114
+flow step2
+模块耗时详情: Flow=80.85ms | Hift=48.14ms
+
+[Profiling] Chunk Offset: 70
+ > LLM 累积耗时: 444.22ms
+ > Flow+Hift 推理耗时: 129.36ms
+[INFO] yield speech len 2.0, rtf 0.2868906259536743
+flow step2
+模块耗时详情: Flow=75.99ms | Hift=40.43ms
+
+[Profiling] Chunk Offset: 120
+ > LLM 累积耗时: 436.59ms
+ > Flow+Hift 推理耗时: 116.80ms
+[INFO] yield speech len 2.0, rtf 0.2767995595932007
+flow step2
+模块耗时详情: Flow=77.45ms | Hift=35.52ms
+
+[Profiling] Chunk Offset: 170
+ > LLM 累积耗时: 435.16ms
+ > Flow+Hift 推理耗时: 113.34ms
+[INFO] yield speech len 2.0, rtf 0.274367094039917
+flow step2
+模块耗时详情: Flow=80.48ms | Hift=38.41ms
+
+[Profiling] Chunk Offset: 220
+ > LLM 累积耗时: 447.82ms
+ > Flow+Hift 推理耗时: 119.23ms
+[INFO] yield speech len 2.0, rtf 0.28362345695495605
+flow step2
+模块耗时详情: Flow=70.81ms | Hift=35.37ms
+[Profiling Final] Tail Logic Time: 106.7ms
+[INFO] yield speech len 1.88, rtf 0.24545268809541745
+100%|██████████| 1/1 [00:03<00:00,  3.63s/it]100%|██████████| 1/1 [00:03<00:00,  3.63s/it]
+[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_1/sft_full_4_6.wav
+[INFO] unload model success, model Id is 2147483649
+[INFO] unload model success, model Id is 2147483648
+[INFO] unload model success, model Id is 2
+[WARN] acl repeat destroy

@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 import threading
 import torch
 import torch.nn.functional as F
@@ -110,11 +111,15 @@ class ConditionalCFM(BASECFM):
             cond_in[0] = cond
             # --- 修改开始：增加 Padding 对齐档位 ---
             curr_len = x.size(2)
-            # print(curr_len)
-            # 定义你在 ATC 转换时设置的所有档位
-            gears = [40, 90, 140, 190, 240, 290, 340, 390, 440, 490, 540, 590, 640, 690]
+            # 定义你在 ATC 转换时设置的所有档位（可通过 COSYVOICE2_FLOW_GEARS 环境变量覆盖）
+            _gears_env = os.environ.get('COSYVOICE2_FLOW_GEARS', '')
+            if _gears_env:
+                gears = [int(g.strip()) for g in _gears_env.split(',') if g.strip()]
+            else:
+                gears = [40, 90, 140, 190, 240, 290, 340, 390, 440, 490, 540, 590, 640, 690]
             # 找到第一个大于等于当前长度的档位
             target_len = next((g for g in gears if g >= curr_len), None)
+            print(f"[Flow Gear] curr_len={curr_len} → gear={target_len} (pad={target_len - curr_len if target_len else 'N/A'})")
 
             if torch.npu.is_available() and self.flow_om_static and target_len is not None:
                 # 1. 准备 feed 数据

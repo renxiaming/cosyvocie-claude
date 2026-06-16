@@ -1,0 +1,6 @@
+[SUMMARY] log_dir=logs/manual/run_20260610_172053
+[SUMMARY] mode=manual_terminal_spawn, concurrency=1, infer_count=5
+[SUMMARY] each_client=infer.py (same as run.sh), stream=True
+[SUMMARY] success=1, failed=0, batch_wall=420.836s
+[SUMMARY] avg_client_elapsed=420.836s, p95_client_elapsed=420.836s
+[CLIENT] client_0 pid=3087301 success=True exit_code=0 elapsed=420.836s log=logs/manual/run_20260610_172053/client_0.log

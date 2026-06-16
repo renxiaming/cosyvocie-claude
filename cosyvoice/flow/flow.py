@@ -227,7 +227,7 @@ class CausalMaskedDiffWithXvec(torch.nn.Module):
         conds = conds.transpose(1, 2)
 
         mask = (~make_pad_mask(torch.tensor([mel_len1 + mel_len2]))).to(h)
-        print("flow step3")
+        print("flow step2")
         feat, _ = self.decoder(
             mu=h.transpose(1, 2).contiguous(),
             mask=mask.unsqueeze(1),
@@ -235,7 +235,7 @@ class CausalMaskedDiffWithXvec(torch.nn.Module):
             cond=conds,
             #n_timesteps=10
             # n_timesteps=6
-            n_timesteps=3
+            n_timesteps=2
         )
         feat = feat[:, :, mel_len1:]
         assert feat.shape[2] == mel_len2
