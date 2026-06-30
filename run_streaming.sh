@@ -18,4 +18,4 @@ export CPLUS_INCLUDE_PATH=/usr/local/Ascend/ascend-toolkit/8.1.RC1/toolkit/toolc
 # 清理modelscope缓存
 rm -rf ~/.cache/modelscope/
 
-python3 infer_streaming.py --model_path=../weight/CosyVoice2-0.5B --stream
+python3 infer_streaming.py --model_path=../weight/CosyVoice2-0.5B_sft_shenhu_25_60 --stream

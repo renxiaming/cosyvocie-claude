@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CosyVoice Chunk Stream Probe</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #20242c;
+      --muted: #69717d;
+      --line: #d9dee6;
+      --good: #147d52;
+      --good-bg: #e7f6ed;
+      --warn: #9a5b00;
+      --warn-bg: #fff3d9;
+      --bad: #b42318;
+      --bad-bg: #fde8e5;
+      --accent: #2357c6;
+      --accent-bg: #e8eefc;
+      --shadow: 0 10px 28px rgba(26, 34, 51, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .pill.good {
+      color: var(--good);
+      background: var(--good-bg);
+      border-color: #bfe6cd;
+    }
+
+    .pill.warn {
+      color: var(--warn);
+      background: var(--warn-bg);
+      border-color: #f4d797;
+    }
+
+    .pill.bad {
+      color: var(--bad);
+      background: var(--bad-bg);
+      border-color: #f4beb8;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+      min-height: calc(100vh - 65px);
+    }
+
+    aside {
+      padding: 20px;
+      background: #fff;
+      border-right: 1px solid var(--line);
+    }
+
+    section {
+      min-width: 0;
+      padding: 20px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .form {
+      display: grid;
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    textarea,
+    input,
+    select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      letter-spacing: 0;
+    }
+
+    textarea {
+      min-height: 160px;
+      padding: 10px 12px;
+      resize: vertical;
+    }
+
+    input,
+    select {
+      height: 38px;
+      padding: 0 10px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 112px;
+      gap: 10px;
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .check input {
+      width: 18px;
+      height: 18px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    button {
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button.primary {
+      border-color: #1e4eb2;
+      background: var(--accent);
+      color: #fff;
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .metric {
+      padding: 14px;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 24px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .timeline {
+      display: flex;
+      align-items: stretch;
+      gap: 4px;
+      min-height: 56px;
+      padding: 12px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+    }
+
+    .bar {
+      flex: 0 0 32px;
+      min-height: 32px;
+      border-radius: 5px;
+      background: var(--accent-bg);
+      border: 1px solid #cbd8f8;
+      position: relative;
+    }
+
+    .bar.good {
+      background: var(--good-bg);
+      border-color: #bfe6cd;
+    }
+
+    .bar.warn {
+      background: var(--warn-bg);
+      border-color: #f4d797;
+    }
+
+    .bar.bad {
+      background: var(--bad-bg);
+      border-color: #f4beb8;
+    }
+
+    .table-wrap {
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 880px;
+    }
+
+    th,
+    td {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    th:first-child,
+    td:first-child,
+    th:last-child,
+    td:last-child {
+      text-align: left;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      background: #fafbfc;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .result {
+      font-weight: 700;
+    }
+
+    .result.good {
+      color: var(--good);
+    }
+
+    .result.warn {
+      color: var(--warn);
+    }
+
+    .result.bad {
+      color: var(--bad);
+    }
+
+    .log {
+      margin-top: 14px;
+      min-height: 42px;
+      padding: 10px 12px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    @media (max-width: 920px) {
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .status {
+        justify-content: flex-start;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 540px) {
+      header,
+      aside,
+      section {
+        padding: 14px;
+      }
+
+      .row,
+      .buttons,
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .metric strong {
+        font-size: 21px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CosyVoice Chunk Stream Probe</h1>
+    <div class="status">
+      <span class="pill" id="readyPill">loading</span>
+      <span class="pill" id="sampleRatePill">sample rate --</span>
+      <span class="pill" id="modelPill">model --</span>
+    </div>
+  </header>
+
+  <main>
+    <aside>
+      <div class="form">
+        <label>
+          文本
+          <textarea id="textInput">好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？</textarea>
+        </label>
+
+        <div class="row">
+          <label>
+            音色
+            <input id="spkInput" value="03729" list="spkList">
+            <datalist id="spkList"></datalist>
+          </label>
+          <label>
+            语速
+            <input id="speedInput" type="number" value="1.0" min="0.25" max="4" step="0.05">
+          </label>
+        </div>
+
+        <label class="check">
+          <input id="frontendInput" type="checkbox" checked>
+          text frontend
+        </label>
+
+        <div class="buttons">
+          <button class="primary" id="startButton">Start</button>
+          <button id="stopButton" disabled>Stop</button>
+        </div>
+        <button id="clearButton">Clear</button>
+      </div>
+    </aside>
+
+    <section>
+      <div class="metrics">
+        <div class="panel metric">
+          <span>chunks</span>
+          <strong id="chunkMetric">0</strong>
+        </div>
+        <div class="panel metric">
+          <span>queued</span>
+          <strong id="queueMetric">0.00s</strong>
+        </div>
+        <div class="panel metric">
+          <span>worst gap</span>
+          <strong id="gapMetric">0ms</strong>
+        </div>
+        <div class="panel metric">
+          <span>server rtf</span>
+          <strong id="rtfMetric">--</strong>
+        </div>
+      </div>
+
+      <div class="panel timeline" id="timeline"></div>
+
+      <div class="panel table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>server ready</th>
+              <th>server delta</th>
+              <th>audio</th>
+              <th>client recv</th>
+              <th>queue before</th>
+              <th>play gap</th>
+              <th>server</th>
+              <th>playback</th>
+            </tr>
+          </thead>
+          <tbody id="chunkRows"></tbody>
+        </table>
+        <div class="log" id="logLine">idle</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    const state = {
+      audioCtx: null,
+      controller: null,
+      nextStartTime: 0,
+      streamStartPerf: 0,
+      chunkCount: 0,
+      totalAudio: 0,
+      worstGap: 0,
+      lastDuration: 0,
+      maxServerRtf: 0,
+      sources: [],
+      timer: null
+    };
+
+    function formatSec(value) {
+      if (!Number.isFinite(value)) return "--";
+      return `${value.toFixed(2)}s`;
+    }
+
+    function formatMs(value) {
+      if (!Number.isFinite(value)) return "--";
+      return `${Math.round(value * 1000)}ms`;
+    }
+
+    function setLog(text) {
+      $("logLine").textContent = text;
+    }
+
+    function setRunning(running) {
+      $("startButton").disabled = running;
+      $("stopButton").disabled = !running;
+      $("readyPill").textContent = running ? "streaming" : "ready";
+      $("readyPill").className = running ? "pill warn" : "pill good";
+    }
+
+    function resetView() {
+      state.nextStartTime = 0;
+      state.chunkCount = 0;
+      state.totalAudio = 0;
+      state.worstGap = 0;
+      state.lastDuration = 0;
+      state.maxServerRtf = 0;
+      state.sources.forEach((source) => {
+        try { source.stop(); } catch (_) {}
+      });
+      state.sources = [];
+      $("chunkMetric").textContent = "0";
+      $("queueMetric").textContent = "0.00s";
+      $("gapMetric").textContent = "0ms";
+      $("rtfMetric").textContent = "--";
+      $("timeline").innerHTML = "";
+      $("chunkRows").innerHTML = "";
+      setLog("idle");
+    }
+
+    function bytesFromBase64(text) {
+      const binary = atob(text);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i += 1) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      return bytes;
+    }
+
+    function pcm16ToBuffer(pcm16B64, samples, sampleRate) {
+      const bytes = bytesFromBase64(pcm16B64);
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      const audio = new Float32Array(samples);
+      for (let i = 0; i < samples; i += 1) {
+        audio[i] = view.getInt16(i * 2, true) / 32768;
+      }
+      const buffer = state.audioCtx.createBuffer(1, samples, sampleRate);
+      buffer.copyToChannel(audio, 0);
+      return buffer;
+    }
+
+    function scheduleChunk(event) {
+      const now = state.audioCtx.currentTime;
+      const previousEnd = state.nextStartTime;
+      const queueBefore = Math.max(0, previousEnd - now);
+      const arrivedBeforePreviousEnd = event.index === 0 ? true : previousEnd > now;
+      let gap = 0;
+
+      if (event.index === 0 || state.nextStartTime <= 0) {
+        state.nextStartTime = now + 0.04;
+      } else if (state.nextStartTime < now) {
+        gap = now - state.nextStartTime;
+        state.nextStartTime = now + 0.02;
+      }
+
+      const buffer = pcm16ToBuffer(event.pcm16_b64, event.samples, event.sample_rate);
+      const source = state.audioCtx.createBufferSource();
+      source.buffer = buffer;
+      source.connect(state.audioCtx.destination);
+      source.start(state.nextStartTime);
+      state.sources.push(source);
+      state.nextStartTime += buffer.duration;
+
+      const serverOk = event.index === 0 || event.server_delta_s <= state.lastDuration;
+      const playbackOk = event.index === 0 || arrivedBeforePreviousEnd;
+      const serverRtf = event.duration_s > 0 ? event.server_delta_s / event.duration_s : 0;
+
+      state.chunkCount += 1;
+      state.totalAudio += event.duration_s;
+      state.worstGap = Math.max(state.worstGap, gap);
+      state.maxServerRtf = Math.max(state.maxServerRtf, serverRtf);
+      state.lastDuration = event.duration_s;
+
+      appendChunkRow(event, queueBefore, gap, serverOk, playbackOk);
+      appendBar(serverOk, playbackOk, gap);
+      updateMetrics();
+    }
+
+    function appendBar(serverOk, playbackOk, gap) {
+      const bar = document.createElement("div");
+      bar.className = "bar";
+      if (gap > 0.001) {
+        bar.classList.add("bad");
+      } else if (!serverOk || !playbackOk) {
+        bar.classList.add("warn");
+      } else {
+        bar.classList.add("good");
+      }
+      $("timeline").appendChild(bar);
+      $("timeline").scrollLeft = $("timeline").scrollWidth;
+    }
+
+    function appendChunkRow(event, queueBefore, gap, serverOk, playbackOk) {
+      const tr = document.createElement("tr");
+      const receivedAt = (performance.now() - state.streamStartPerf) / 1000;
+      const playbackClass = gap > 0.001 ? "bad" : playbackOk ? "good" : "warn";
+      tr.innerHTML = `
+        <td>${event.index}</td>
+        <td>${formatSec(event.server_elapsed_s)}</td>
+        <td>${formatSec(event.server_delta_s)}</td>
+        <td>${formatSec(event.duration_s)}</td>
+        <td>${formatSec(receivedAt)}</td>
+        <td>${formatSec(queueBefore)}</td>
+        <td>${formatMs(gap)}</td>
+        <td class="result ${serverOk ? "good" : "warn"}">${serverOk ? "ahead" : "late"}</td>
+        <td class="result ${playbackClass}">${gap > 0.001 ? "gap" : playbackOk ? "ahead" : "late"}</td>
+      `;
+      $("chunkRows").appendChild(tr);
+    }
+
+    function updateMetrics() {
+      const queued = state.audioCtx ? Math.max(0, state.nextStartTime - state.audioCtx.currentTime) : 0;
+      $("chunkMetric").textContent = String(state.chunkCount);
+      $("queueMetric").textContent = formatSec(queued);
+      $("gapMetric").textContent = formatMs(state.worstGap);
+      $("rtfMetric").textContent = state.maxServerRtf > 0 ? state.maxServerRtf.toFixed(2) : "--";
+    }
+
+    async function loadConfig() {
+      try {
+        const res = await fetch("/api/config", { cache: "no-store" });
+        const cfg = await res.json();
+        if (!cfg.ready) throw new Error("model not ready");
+        $("readyPill").textContent = "ready";
+        $("readyPill").className = "pill good";
+        $("sampleRatePill").textContent = `sample rate ${cfg.sample_rate}`;
+        $("modelPill").textContent = cfg.model_path ? cfg.model_path.split("/").pop() : "model";
+        $("spkInput").value = cfg.default_spk || "03729";
+        $("spkList").innerHTML = "";
+        (cfg.spks || []).forEach((spk) => {
+          const option = document.createElement("option");
+          option.value = spk;
+          $("spkList").appendChild(option);
+        });
+      } catch (err) {
+        $("readyPill").textContent = "offline";
+        $("readyPill").className = "pill bad";
+        setLog(err.message);
+      }
+    }
+
+    async function ensureAudioContext() {
+      if (!state.audioCtx || state.audioCtx.state === "closed") {
+        state.audioCtx = new AudioContext();
+      }
+      if (state.audioCtx.state !== "running") {
+        await state.audioCtx.resume();
+      }
+    }
+
+    async function startStream() {
+      resetView();
+      await ensureAudioContext();
+      state.controller = new AbortController();
+      state.streamStartPerf = performance.now();
+      setRunning(true);
+      setLog("requesting");
+      state.timer = window.setInterval(updateMetrics, 200);
+
+      const payload = {
+        text: $("textInput").value.trim(),
+        spk_id: $("spkInput").value.trim(),
+        speed: Number($("speedInput").value || 1),
+        text_frontend: $("frontendInput").checked
+      };
+
+      try {
+        const response = await fetch("/api/stream", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          signal: state.controller.signal
+        });
+        if (!response.ok || !response.body) {
+          throw new Error(`http ${response.status}`);
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let pending = "";
+
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          pending += decoder.decode(value, { stream: true });
+          const lines = pending.split("\n");
+          pending = lines.pop();
+          for (const line of lines) {
+            if (!line.trim()) continue;
+            const event = JSON.parse(line);
+            if (event.event === "start") {
+              setLog(`started ${event.sample_rate}Hz`);
+              $("sampleRatePill").textContent = `sample rate ${event.sample_rate}`;
+            } else if (event.event === "chunk") {
+              scheduleChunk(event);
+              setLog(`chunk ${event.index} ready=${formatSec(event.server_elapsed_s)} audio=${formatSec(event.duration_s)}`);
+            } else if (event.event === "end") {
+              setLog(`done chunks=${event.chunks} audio=${formatSec(event.audio_duration_s)} server=${formatSec(event.server_elapsed_s)}`);
+            } else if (event.event === "error") {
+              throw new Error(event.message || "stream error");
+            }
+          }
+        }
+      } catch (err) {
+        if (err.name === "AbortError") {
+          setLog("stopped");
+        } else {
+          setLog(err.message);
+          $("readyPill").textContent = "error";
+          $("readyPill").className = "pill bad";
+        }
+      } finally {
+        window.clearInterval(state.timer);
+        state.timer = null;
+        state.controller = null;
+        setRunning(false);
+        updateMetrics();
+      }
+    }
+
+    function stopStream() {
+      if (state.controller) state.controller.abort();
+      state.sources.forEach((source) => {
+        try { source.stop(); } catch (_) {}
+      });
+      state.sources = [];
+    }
+
+    $("startButton").addEventListener("click", startStream);
+    $("stopButton").addEventListener("click", stopStream);
+    $("clearButton").addEventListener("click", resetView);
+    loadConfig();
+  </script>
+</body>
+</html>

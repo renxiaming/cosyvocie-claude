@@ -76,7 +76,7 @@ if __name__ == '__main__':
     parser.add_argument('--infer_count', default=5, type=int,
                         help='infer loop count')
     parser.add_argument('--output_dir',
-                        default='/home/ma-user/work/test/model/CosyVoice-claude/testout/demo10',
+                        default='/home/ma-user/work/test/model/CosyVoice-claude/testout/demo11',
                         type=str, help='output dir')
     parser.add_argument('--stream', action="store_true", help='stream infer')
     args = parser.parse_args()
