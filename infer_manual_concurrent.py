@@ -48,7 +48,8 @@ def prepare_run_log_dir(log_base):
 # ---------------------------------------------------------------------------
 # 构建 infer.py 命令行
 # ---------------------------------------------------------------------------
-def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times, output_dir, stream):
+def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times,
+                    output_dir, stream, no_save_audio):
     cmd = [
         python_exe,
         'infer.py',
@@ -59,6 +60,8 @@ def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times, output_d
     ]
     if stream:
         cmd.append('--stream')
+    if no_save_audio:
+        cmd.append('--no_save_audio')
     return cmd
 
 
@@ -66,12 +69,14 @@ def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times, output_d
 # 启动单个客户端进程
 # ---------------------------------------------------------------------------
 def spawn_client(client_id, python_exe, model_path, infer_count, warm_up_times,
-                 output_base, stream, run_log_dir, work_dir, env_extra=None):
+                 output_base, stream, no_save_audio, run_log_dir, work_dir,
+                 env_extra=None):
     output_dir = os.path.join(output_base, 'client_{}'.format(client_id))
     os.makedirs(output_dir, exist_ok=True)
     log_path = os.path.join(run_log_dir, 'client_{}.log'.format(client_id))
     cmd = build_infer_cmd(
-        python_exe, model_path, infer_count, warm_up_times, output_dir, stream)
+        python_exe, model_path, infer_count, warm_up_times, output_dir, stream,
+        no_save_audio)
 
     # 合并额外环境变量
     child_env = os.environ.copy()
@@ -189,6 +194,8 @@ def main():
                         help='log base dir')
     parser.add_argument('--stream', action='store_true',
                         help='stream infer')
+    parser.add_argument('--no_save_audio', action='store_true',
+                        help='consume inference output without writing wav files')
     parser.add_argument(
         '--python',
         default=sys.executable,
@@ -258,6 +265,7 @@ def main():
         'cpu_affinity': args.enable_cpu_affinity,
         'serial_warmup': args.serial_warmup,
         'total_cpus': total_cpus,
+        'no_save_audio': args.no_save_audio,
     }
 
     clients = []
@@ -291,6 +299,7 @@ def main():
                 args.warm_up_times,
                 args.output_dir,
                 args.stream,
+                args.no_save_audio,
                 run_log_dir,
                 work_dir,
                 env_extra=env_extra,
@@ -347,6 +356,7 @@ def main():
             args.warm_up_times,
             args.output_dir,
             args.stream,
+            args.no_save_audio,
             run_log_dir,
             work_dir,
             env_extra=env_extra,

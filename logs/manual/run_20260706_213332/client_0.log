@@ -1,0 +1,1359 @@
+/data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:291: ImportWarning: 
+    *************************************************************************************************************
+    The torch.Tensor.cuda and torch.nn.Module.cuda are replaced with torch.Tensor.npu and torch.nn.Module.npu now..
+    The torch.cuda.DoubleTensor is replaced with torch.npu.FloatTensor cause the double type is not supported now..
+    The backend in torch.distributed.init_process_group set to hccl now..
+    The torch.cuda.* and torch.cuda.amp.* are replaced with torch.npu.* and torch.npu.amp.* now..
+    The device parameters have been replaced with npu in the function below:
+    torch.logspace, torch.randint, torch.hann_window, torch.rand, torch.full_like, torch.ones_like, torch.rand_like, torch.randperm, torch.arange, torch.frombuffer, torch.normal, torch._empty_per_channel_affine_quantized, torch.empty_strided, torch.empty_like, torch.scalar_tensor, torch.tril_indices, torch.bartlett_window, torch.ones, torch.sparse_coo_tensor, torch.randn, torch.kaiser_window, torch.tensor, torch.triu_indices, torch.as_tensor, torch.zeros, torch.randint_like, torch.full, torch.eye, torch._sparse_csr_tensor_unsafe, torch.empty, torch._sparse_coo_tensor_unsafe, torch.blackman_window, torch.zeros_like, torch.range, torch.sparse_csr_tensor, torch.randn_like, torch.from_file, torch._cudnn_init_dropout_state, torch._empty_affine_quantized, torch.linspace, torch.hamming_window, torch.empty_quantized, torch._pin_memory, torch.autocast, torch.load, torch.Generator, torch.set_default_device, torch.Tensor.new_empty, torch.Tensor.new_empty_strided, torch.Tensor.new_full, torch.Tensor.new_ones, torch.Tensor.new_tensor, torch.Tensor.new_zeros, torch.Tensor.to, torch.nn.Module.to, torch.nn.Module.to_empty
+    *************************************************************************************************************
+    
+  warnings.warn(msg, ImportWarning)
+/data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:246: RuntimeWarning: torch.jit.script and torch.jit.script_method will be disabled by transfer_to_npu, which currently does not support them, if you need to enable them, please do not use transfer_to_npu.
+  warnings.warn(msg, RuntimeWarning)
+<frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+<frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+/data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/torch_npu/dynamo/torchair/__init__.py:3: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+failed to import ttsfrd, use WeTextProcessing instead
+[INFO] CPU affinity set: cores 0-18 (client_0)
+[INFO] CPU threads configured: OMP=16, MKL=8, torch=16
+[INFO] client_id=0 skip_warmup=False 
+[INFO] loading model...
+/data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/lightning/fabric/__init__.py:41: Deprecated call to `pkg_resources.declare_namespace('lightning.fabric')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/pkg_resources/__init__.py:2560: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:88: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  parse = parser.parseString(pattern)
+/data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:92: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  parser.resetCache()
+/data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/matplotlib/_mathtext.py:30: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+  ParserElement.enablePackrat()
+[WARNING] In /data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+[WARNING] In /data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+/data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/lightning/pytorch/__init__.py:37: Deprecated call to `pkg_resources.declare_namespace('lightning.pytorch')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/pkg_resources/__init__.py:2560: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
+  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
+[INFO] input frame rate=25
+/data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/librosa/core/intervals.py:15: DeprecationWarning: path is deprecated. Use files() instead. Refer to https://importlib-resources.readthedocs.io/en/latest/using.html#migrating-from-legacy for migration advice.
+  with resources.path("librosa.core", "intervals.msgpack") as imsgpack:
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+/data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:65: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'CPUExecutionProvider'
+  warnings.warn(
+2026-07-06 21:34:05,693 WETEXT INFO building fst for zh_normalizer ...
+[INFO] building fst for zh_normalizer ...
+2026-07-06 21:35:01,608 WETEXT INFO done
+[INFO] done
+2026-07-06 21:35:01,608 WETEXT INFO fst path: /data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/tn/zh_tn_tagger.fst
+[INFO] fst path: /data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/tn/zh_tn_tagger.fst
+2026-07-06 21:35:01,608 WETEXT INFO           /data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/tn/zh_tn_verbalizer.fst
+[INFO]           /data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/tn/zh_tn_verbalizer.fst
+2026-07-06 21:35:01,615 WETEXT INFO found existing fst: /data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/tn/en_tn_tagger.fst
+[INFO] found existing fst: /data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/tn/en_tn_tagger.fst
+2026-07-06 21:35:01,616 WETEXT INFO                     /data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/tn/en_tn_verbalizer.fst
+[INFO]                     /data/xmren/work/cosyvoice2_9.00/envs/cosyvoice2_cann9/lib/python3.11/site-packages/tn/en_tn_verbalizer.fst
+2026-07-06 21:35:01,616 WETEXT INFO skip building fst for en_normalizer ...
+[INFO] skip building fst for en_normalizer ...
+[WARN] acl repeat initialize
+[INFO] acl init success
+[INFO] open device 0 success
+[INFO] get current context
+[INFO] load model ../weight/CosyVoice2-0.5B_sft_shenhu_25_60/flow_linux_aarch64.om success
+[INFO] create model description success
+[INFO] create new context
+[INFO] load model ../weight/CosyVoice2-0.5B_sft_shenhu_25_60/flow_static.om success
+[INFO] create model description success
+[INFO] create new context
+[INFO] load model ../weight/CosyVoice2-0.5B_sft_shenhu_25_60/speech_linux_aarch64.om success
+[INFO] create model description success
+Removing weight norm...
+warm up start
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+...[W706 21:36:59.100132281 compiler_depend.ts:51] Warning: CAUTION: The operator 'aten::unfold_backward' is not currently supported on the NPU backend and will fall back to run on the CPU. This may have performance implications. (function npu_cpu_fallback)
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 52.55228593235924
+flow step2
+[Flow Gear] curr_len=168 → gear=170 (pad=2)
+[Flow Gear] curr_len=168 → gear=170 (pad=2)
+[INFO] yield speech len 2.52, rtf 0.22950796853928337
+100%|██████████| 1/1 [00:44<00:00, 44.73s/it]100%|██████████| 1/1 [00:44<00:00, 44.73s/it]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.4114894639878046
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.25438537200291955
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.24713406960169476
+flow step2
+[Flow Gear] curr_len=58 → gear=74 (pad=16)
+[Flow Gear] curr_len=58 → gear=74 (pad=16)
+[INFO] yield speech len 0.32, rtf 0.3438211977481842
+100%|██████████| 1/1 [00:01<00:00,  1.66s/it]100%|██████████| 1/1 [00:01<00:00,  1.66s/it]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.4127159005119687
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.25243004163106286
+flow step2
+[Flow Gear] curr_len=88 → gear=98 (pad=10)
+[Flow Gear] curr_len=88 → gear=98 (pad=10)
+[INFO] yield speech len 0.92, rtf 0.26163692059724225
+100%|██████████| 1/1 [00:01<00:00,  1.19s/it]100%|██████████| 1/1 [00:01<00:00,  1.20s/it]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.408085754939488
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.25618592898050946
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.56, rtf 0.24340441450476646
+100%|██████████| 1/1 [00:01<00:00,  1.58s/it]100%|██████████| 1/1 [00:01<00:00,  1.58s/it]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.4366536935170492
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.2757596969604492
+flow step2
+[Flow Gear] curr_len=58 → gear=74 (pad=16)
+[Flow Gear] curr_len=58 → gear=74 (pad=16)
+[INFO] yield speech len 0.32, rtf 0.34105926752090454
+100%|██████████| 1/1 [00:01<00:00,  1.14s/it]100%|██████████| 1/1 [00:01<00:00,  1.14s/it]
+warm up end, elapsed=50.4s
+[INFO] infer round 0, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.4785881156013126
+flow step2
+[Flow Gear] curr_len=150 → gear=170 (pad=20)
+[Flow Gear] curr_len=150 → gear=170 (pad=20)
+[INFO] yield speech len 2.16, rtf 0.2749269759213483
+100%|██████████| 1/1 [00:00<00:00,  1.00it/s]100%|██████████| 1/1 [00:00<00:00,  1.00it/s]
+[INFO] infer round 0, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.46716502734592985
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.30095597108205163
+flow step2
+[Flow Gear] curr_len=154 → gear=170 (pad=16)
+[Flow Gear] curr_len=154 → gear=170 (pad=16)
+[INFO] yield speech len 2.24, rtf 0.26920938066073824
+100%|██████████| 1/1 [00:01<00:00,  1.72s/it]100%|██████████| 1/1 [00:01<00:00,  1.72s/it]
+[INFO] infer round 0, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.484617551167806
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.2917607625325521
+flow step2
+[Flow Gear] curr_len=100 → gear=122 (pad=22)
+[Flow Gear] curr_len=100 → gear=122 (pad=22)
+[INFO] yield speech len 1.16, rtf 0.2912330216374891
+100%|██████████| 1/1 [00:01<00:00,  1.45s/it]100%|██████████| 1/1 [00:01<00:00,  1.45s/it]
+[INFO] infer round 0, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.4619822615668887
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.30444631973902386
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.30249973138173425
+flow step2
+[Flow Gear] curr_len=66 → gear=74 (pad=8)
+[Flow Gear] curr_len=66 → gear=74 (pad=8)
+[INFO] yield speech len 0.48, rtf 0.3911241888999939
+100%|██████████| 1/1 [00:02<00:00,  2.03s/it]100%|██████████| 1/1 [00:02<00:00,  2.03s/it]
+[INFO] infer round 0, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.49541649364289786
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.318144957224528
+flow step2
+[Flow Gear] curr_len=72 → gear=74 (pad=2)
+[Flow Gear] curr_len=72 → gear=74 (pad=2)
+[INFO] yield speech len 0.6, rtf 0.3425427277882894
+100%|██████████| 1/1 [00:01<00:00,  1.39s/it]100%|██████████| 1/1 [00:01<00:00,  1.39s/it]
+[INFO] infer round 0, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.542014269601731
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3249376018842062
+flow step2
+[Flow Gear] curr_len=168 → gear=170 (pad=2)
+[Flow Gear] curr_len=168 → gear=170 (pad=2)
+[INFO] yield speech len 2.52, rtf 0.30391566337101045
+100%|██████████| 1/1 [00:02<00:00,  2.00s/it]100%|██████████| 1/1 [00:02<00:00,  2.00s/it]
+[INFO] infer round 0, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.595568475269136
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.32441258430480957
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.34202754497528076
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.32512664794921875
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3415501117706299
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3365529576937358
+flow step2
+[Flow Gear] curr_len=94 → gear=98 (pad=4)
+[Flow Gear] curr_len=94 → gear=98 (pad=4)
+[INFO] yield speech len 1.04, rtf 0.3499517073998084
+100%|██████████| 1/1 [00:04<00:00,  4.87s/it]100%|██████████| 1/1 [00:04<00:00,  4.87s/it]
+[INFO] infer round 1, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5124656927017939
+flow step2
+[Flow Gear] curr_len=130 → gear=146 (pad=16)
+[Flow Gear] curr_len=130 → gear=146 (pad=16)
+[INFO] yield speech len 1.76, rtf 0.32151178880171344
+100%|██████████| 1/1 [00:00<00:00,  1.00it/s]100%|██████████| 1/1 [00:00<00:00,  1.00it/s]
+[INFO] infer round 1, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5654164722987584
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.334902306397756
+flow step2
+[Flow Gear] curr_len=148 → gear=170 (pad=22)
+[Flow Gear] curr_len=148 → gear=170 (pad=22)
+[INFO] yield speech len 2.12, rtf 0.33547360942048843
+100%|██████████| 1/1 [00:01<00:00,  1.99s/it]100%|██████████| 1/1 [00:01<00:00,  1.99s/it]
+[INFO] infer round 1, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5252327237810408
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3314611315727234
+flow step2
+[Flow Gear] curr_len=106 → gear=122 (pad=16)
+[Flow Gear] curr_len=106 → gear=122 (pad=16)
+[INFO] yield speech len 1.28, rtf 0.3278672695159912
+100%|██████████| 1/1 [00:01<00:00,  1.66s/it]100%|██████████| 1/1 [00:01<00:00,  1.66s/it]
+[INFO] infer round 1, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5212281431470599
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3460936745007833
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3309626380602519
+flow step2
+[Flow Gear] curr_len=62 → gear=74 (pad=12)
+[Flow Gear] curr_len=62 → gear=74 (pad=12)
+[INFO] yield speech len 0.4, rtf 0.38153350353240967
+100%|██████████| 1/1 [00:02<00:00,  2.22s/it]100%|██████████| 1/1 [00:02<00:00,  2.22s/it]
+[INFO] infer round 1, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5600219681149438
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3242114186286926
+flow step2
+[Flow Gear] curr_len=96 → gear=98 (pad=2)
+[Flow Gear] curr_len=96 → gear=98 (pad=2)
+[INFO] yield speech len 1.08, rtf 0.3373393306025752
+100%|██████████| 1/1 [00:01<00:00,  1.61s/it]100%|██████████| 1/1 [00:01<00:00,  1.61s/it]
+[INFO] infer round 1, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5273041271028065
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.32874991496404016
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3425551454226176
+flow step2
+[Flow Gear] curr_len=128 → gear=146 (pad=18)
+[Flow Gear] curr_len=128 → gear=146 (pad=18)
+[INFO] yield speech len 1.72, rtf 0.2969026565551758
+100%|██████████| 1/1 [00:02<00:00,  2.57s/it]100%|██████████| 1/1 [00:02<00:00,  2.57s/it]
+[INFO] infer round 1, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5101178373609271
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.33250540494918823
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3312130769093832
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.33145387967427575
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.33506423234939575
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3325926264127096
+flow step2
+[Flow Gear] curr_len=100 → gear=122 (pad=22)
+[Flow Gear] curr_len=100 → gear=122 (pad=22)
+[INFO] yield speech len 1.16, rtf 0.33581996786183327
+100%|██████████| 1/1 [00:04<00:00,  4.81s/it]100%|██████████| 1/1 [00:04<00:00,  4.81s/it]
+[INFO] infer round 2, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5494574705759685
+flow step2
+[Flow Gear] curr_len=140 → gear=146 (pad=6)
+[Flow Gear] curr_len=140 → gear=146 (pad=6)
+[INFO] yield speech len 1.96, rtf 0.2985719515352833
+100%|██████████| 1/1 [00:01<00:00,  1.05s/it]100%|██████████| 1/1 [00:01<00:00,  1.05s/it]
+[INFO] infer round 2, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5239143258049375
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3431628147761027
+flow step2
+[Flow Gear] curr_len=146 → gear=146 (pad=0)
+[Flow Gear] curr_len=146 → gear=146 (pad=0)
+[INFO] yield speech len 2.08, rtf 0.3126340416761545
+100%|██████████| 1/1 [00:01<00:00,  1.92s/it]100%|██████████| 1/1 [00:01<00:00,  1.92s/it]
+[INFO] infer round 2, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5320551849546887
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.33774564663569134
+flow step2
+[Flow Gear] curr_len=100 → gear=122 (pad=22)
+[Flow Gear] curr_len=100 → gear=122 (pad=22)
+[INFO] yield speech len 1.16, rtf 0.31229606990156505
+100%|██████████| 1/1 [00:01<00:00,  1.62s/it]100%|██████████| 1/1 [00:01<00:00,  1.62s/it]
+[INFO] infer round 2, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.525117488134475
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3479568163553874
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.56, rtf 0.3014940768480301
+100%|██████████| 1/1 [00:02<00:00,  2.05s/it]100%|██████████| 1/1 [00:02<00:00,  2.05s/it]
+[INFO] infer round 2, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5003395534697034
+flow step2
+[Flow Gear] curr_len=172 → gear=200 (pad=28)
+[Flow Gear] curr_len=172 → gear=200 (pad=28)
+[INFO] yield speech len 2.6, rtf 0.32032398077157825
+100%|██████████| 1/1 [00:01<00:00,  1.25s/it]100%|██████████| 1/1 [00:01<00:00,  1.25s/it]
+[INFO] infer round 2, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.552007414045788
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.340242882569631
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3293694059054057
+flow step2
+[Flow Gear] curr_len=74 → gear=74 (pad=0)
+[Flow Gear] curr_len=74 → gear=74 (pad=0)
+[INFO] yield speech len 0.64, rtf 0.3770314157009125
+100%|██████████| 1/1 [00:02<00:00,  2.31s/it]100%|██████████| 1/1 [00:02<00:00,  2.31s/it]
+[INFO] infer round 2, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5460673854464576
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.34150123596191406
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.5166922012964885
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3255198399225871
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.33228009939193726
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.32954156398773193
+flow step2
+[Flow Gear] curr_len=120 → gear=122 (pad=2)
+[Flow Gear] curr_len=120 → gear=122 (pad=2)
+[INFO] yield speech len 1.56, rtf 0.31267939469753164
+100%|██████████| 1/1 [00:05<00:00,  5.38s/it]100%|██████████| 1/1 [00:05<00:00,  5.38s/it]
+[INFO] infer round 3, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5521689142499652
+flow step2
+[Flow Gear] curr_len=138 → gear=146 (pad=8)
+[Flow Gear] curr_len=138 → gear=146 (pad=8)
+[INFO] yield speech len 1.92, rtf 0.3022356579701106
+100%|██████████| 1/1 [00:01<00:00,  1.05s/it]100%|██████████| 1/1 [00:01<00:00,  1.05s/it]
+[INFO] infer round 3, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.4964822814578102
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.33825457096099854
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.33377955357233685
+flow step2
+[Flow Gear] curr_len=58 → gear=74 (pad=16)
+[Flow Gear] curr_len=58 → gear=74 (pad=16)
+[INFO] yield speech len 0.32, rtf 0.4657566547393799
+100%|██████████| 1/1 [00:02<00:00,  2.18s/it]100%|██████████| 1/1 [00:02<00:00,  2.18s/it]
+[INFO] infer round 3, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.47340534982227145
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3270964821179708
+flow step2
+[Flow Gear] curr_len=86 → gear=98 (pad=12)
+[Flow Gear] curr_len=86 → gear=98 (pad=12)
+[INFO] yield speech len 0.88, rtf 0.34002607518976385
+100%|██████████| 1/1 [00:01<00:00,  1.48s/it]100%|██████████| 1/1 [00:01<00:00,  1.48s/it]
+[INFO] infer round 3, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5054082189287459
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.462908943494161
+flow step2
+[Flow Gear] curr_len=162 → gear=170 (pad=8)
+[Flow Gear] curr_len=162 → gear=170 (pad=8)
+[INFO] yield speech len 2.4, rtf 0.29124200344085693
+100%|██████████| 1/1 [00:02<00:00,  2.24s/it]100%|██████████| 1/1 [00:02<00:00,  2.24s/it]
+[INFO] infer round 3, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.538265137445359
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3385366002718608
+flow step2
+[Flow Gear] curr_len=84 → gear=98 (pad=14)
+[Flow Gear] curr_len=84 → gear=98 (pad=14)
+[INFO] yield speech len 0.84, rtf 0.32888083230881465
+100%|██████████| 1/1 [00:01<00:00,  1.54s/it]100%|██████████| 1/1 [00:01<00:00,  1.54s/it]
+[INFO] infer round 3, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5370543116614932
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.33284733692804974
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.32682279745737713
+flow step2
+[Flow Gear] curr_len=98 → gear=98 (pad=0)
+[Flow Gear] curr_len=98 → gear=98 (pad=0)
+[INFO] yield speech len 1.12, rtf 0.33073510442461285
+100%|██████████| 1/1 [00:02<00:00,  2.41s/it]100%|██████████| 1/1 [00:02<00:00,  2.41s/it]
+[INFO] infer round 3, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.545552514848255
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3439253568649292
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3385785222053528
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.341482957204183
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.32435476779937744
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3334669272104899
+flow step2
+[Flow Gear] curr_len=98 → gear=98 (pad=0)
+[Flow Gear] curr_len=98 → gear=98 (pad=0)
+[INFO] yield speech len 1.12, rtf 0.36892741918563837
+100%|██████████| 1/1 [00:04<00:00,  4.91s/it]100%|██████████| 1/1 [00:04<00:00,  4.91s/it]
+[INFO] infer round 4, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5254563831147694
+flow step2
+[Flow Gear] curr_len=136 → gear=146 (pad=10)
+[Flow Gear] curr_len=136 → gear=146 (pad=10)
+[INFO] yield speech len 1.88, rtf 0.2894613337009511
+100%|██████████| 1/1 [00:00<00:00,  1.01it/s]100%|██████████| 1/1 [00:00<00:00,  1.01it/s]
+[INFO] infer round 4, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5668810435703823
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3396141529083252
+flow step2
+[Flow Gear] curr_len=172 → gear=200 (pad=28)
+[Flow Gear] curr_len=172 → gear=200 (pad=28)
+[INFO] yield speech len 2.6, rtf 0.2953101121462308
+100%|██████████| 1/1 [00:02<00:00,  2.06s/it]100%|██████████| 1/1 [00:02<00:00,  2.06s/it]
+[INFO] infer round 4, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5290599096389044
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3436057766278585
+flow step2
+[Flow Gear] curr_len=142 → gear=146 (pad=4)
+[Flow Gear] curr_len=142 → gear=146 (pad=4)
+[INFO] yield speech len 2.0, rtf 0.3136308193206787
+100%|██████████| 1/1 [00:01<00:00,  1.90s/it]100%|██████████| 1/1 [00:01<00:00,  1.90s/it]
+[INFO] infer round 4, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5035357815878732
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3595231970151266
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.32793392737706506
+flow step2
+[Flow Gear] curr_len=62 → gear=74 (pad=12)
+[Flow Gear] curr_len=62 → gear=74 (pad=12)
+[INFO] yield speech len 0.4, rtf 0.4235953092575073
+100%|██████████| 1/1 [00:02<00:00,  2.24s/it]100%|██████████| 1/1 [00:02<00:00,  2.24s/it]
+[INFO] infer round 4, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5319408008030483
+flow step2
+[Flow Gear] curr_len=172 → gear=200 (pad=28)
+[Flow Gear] curr_len=172 → gear=200 (pad=28)
+[INFO] yield speech len 2.6, rtf 0.2929096955519456
+100%|██████████| 1/1 [00:01<00:00,  1.21s/it]100%|██████████| 1/1 [00:01<00:00,  1.21s/it]
+[INFO] infer round 4, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5151964369274321
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.33726731936136883
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.56, rtf 0.2912537194788456
+100%|██████████| 1/1 [00:01<00:00,  1.99s/it]100%|██████████| 1/1 [00:01<00:00,  1.99s/it]
+[INFO] infer round 4, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5187003385452997
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.34041951100031537
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.35874048868815106
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.33123811086018884
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.375404953956604
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3859494129816691
+flow step2
+[Flow Gear] curr_len=62 → gear=74 (pad=12)
+[Flow Gear] curr_len=62 → gear=74 (pad=12)
+[INFO] yield speech len 0.4, rtf 0.3760182857513428
+100%|██████████| 1/1 [00:04<00:00,  4.89s/it]100%|██████████| 1/1 [00:04<00:00,  4.89s/it]
+[INFO] infer round 5, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.56931319690886
+flow step2
+[Flow Gear] curr_len=150 → gear=170 (pad=20)
+[Flow Gear] curr_len=150 → gear=170 (pad=20)
+[INFO] yield speech len 2.16, rtf 0.3435956107245551
+100%|██████████| 1/1 [00:01<00:00,  1.22s/it]100%|██████████| 1/1 [00:01<00:00,  1.22s/it]
+[INFO] infer round 5, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5357379005068824
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3838247060775757
+flow step2
+[Flow Gear] curr_len=144 → gear=146 (pad=2)
+[Flow Gear] curr_len=144 → gear=146 (pad=2)
+[INFO] yield speech len 2.04, rtf 0.3244470147525563
+100%|██████████| 1/1 [00:02<00:00,  2.03s/it]100%|██████████| 1/1 [00:02<00:00,  2.03s/it]
+[INFO] infer round 5, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6067894753955659
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.36872168382008874
+flow step2
+[Flow Gear] curr_len=120 → gear=122 (pad=2)
+[Flow Gear] curr_len=120 → gear=122 (pad=2)
+[INFO] yield speech len 1.56, rtf 0.34757928970532537
+100%|██████████| 1/1 [00:01<00:00,  1.94s/it]100%|██████████| 1/1 [00:01<00:00,  1.94s/it]
+[INFO] infer round 5, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6021352041335333
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.39205729961395264
+flow step2
+[Flow Gear] curr_len=168 → gear=170 (pad=2)
+[Flow Gear] curr_len=168 → gear=170 (pad=2)
+[INFO] yield speech len 2.52, rtf 0.3746076235695491
+100%|██████████| 1/1 [00:02<00:00,  2.39s/it]100%|██████████| 1/1 [00:02<00:00,  2.39s/it]
+[INFO] infer round 5, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5997354076022193
+flow step2
+[Flow Gear] curr_len=152 → gear=170 (pad=18)
+[Flow Gear] curr_len=152 → gear=170 (pad=18)
+[INFO] yield speech len 2.2, rtf 0.3745118054476651
+100%|██████████| 1/1 [00:01<00:00,  1.33s/it]100%|██████████| 1/1 [00:01<00:00,  1.33s/it]
+[INFO] infer round 5, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5972981452941895
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.38739750782648724
+flow step2
+[Flow Gear] curr_len=166 → gear=170 (pad=4)
+[Flow Gear] curr_len=166 → gear=170 (pad=4)
+[INFO] yield speech len 2.48, rtf 0.3720516158688453
+100%|██████████| 1/1 [00:02<00:00,  2.36s/it]100%|██████████| 1/1 [00:02<00:00,  2.36s/it]
+[INFO] infer round 5, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.612587020510719
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.39316326379776
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.42013456424077356
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3925504287083944
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.4003581404685974
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.4197612404823303
+flow step2
+[Flow Gear] curr_len=94 → gear=98 (pad=4)
+[Flow Gear] curr_len=94 → gear=98 (pad=4)
+[INFO] yield speech len 1.04, rtf 0.3815197027646578
+100%|██████████| 1/1 [00:05<00:00,  5.78s/it]100%|██████████| 1/1 [00:05<00:00,  5.78s/it]
+[INFO] infer round 6, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6490872019813174
+flow step2
+[Flow Gear] curr_len=130 → gear=146 (pad=16)
+[Flow Gear] curr_len=130 → gear=146 (pad=16)
+[INFO] yield speech len 1.76, rtf 0.3756164149804549
+100%|██████████| 1/1 [00:01<00:00,  1.21s/it]100%|██████████| 1/1 [00:01<00:00,  1.21s/it]
+[INFO] infer round 6, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5599879083179292
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.39985706408818567
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.39265215396881104
+flow step2
+[Flow Gear] curr_len=68 → gear=74 (pad=6)
+[Flow Gear] curr_len=68 → gear=74 (pad=6)
+[INFO] yield speech len 0.52, rtf 0.4462755643404447
+100%|██████████| 1/1 [00:02<00:00,  2.61s/it]100%|██████████| 1/1 [00:02<00:00,  2.61s/it]
+[INFO] infer round 6, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5751047815595355
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.4144775867462158
+flow step2
+[Flow Gear] curr_len=122 → gear=122 (pad=0)
+[Flow Gear] curr_len=122 → gear=122 (pad=0)
+[INFO] yield speech len 1.6, rtf 0.4035554826259613
+100%|██████████| 1/1 [00:02<00:00,  2.13s/it]100%|██████████| 1/1 [00:02<00:00,  2.13s/it]
+[INFO] infer round 6, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6273386024293446
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.39472093184789026
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.38746029138565063
+flow step2
+[Flow Gear] curr_len=62 → gear=74 (pad=12)
+[Flow Gear] curr_len=62 → gear=74 (pad=12)
+[INFO] yield speech len 0.4, rtf 0.440637469291687
+100%|██████████| 1/1 [00:02<00:00,  2.58s/it]100%|██████████| 1/1 [00:02<00:00,  2.58s/it]
+[INFO] infer round 6, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6015351840427944
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.39770493904749554
+flow step2
+[Flow Gear] curr_len=56 → gear=74 (pad=18)
+[Flow Gear] curr_len=56 → gear=74 (pad=18)
+[INFO] yield speech len 0.28, rtf 0.5171443734850202
+100%|██████████| 1/1 [00:01<00:00,  1.61s/it]100%|██████████| 1/1 [00:01<00:00,  1.61s/it]
+[INFO] infer round 6, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6210057508377802
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3992499907811483
+flow step2
+[Flow Gear] curr_len=136 → gear=146 (pad=10)
+[Flow Gear] curr_len=136 → gear=146 (pad=10)
+[INFO] yield speech len 1.88, rtf 0.36961284089595714
+100%|██████████| 1/1 [00:02<00:00,  2.18s/it]100%|██████████| 1/1 [00:02<00:00,  2.18s/it]
+[INFO] infer round 6, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5910986945742652
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3956368565559387
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.4094582796096802
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.375859538714091
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.4068237543106079
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.42648007472356164
+flow step2
+[Flow Gear] curr_len=68 → gear=74 (pad=6)
+[Flow Gear] curr_len=68 → gear=74 (pad=6)
+[INFO] yield speech len 0.52, rtf 0.3800080372737004
+100%|██████████| 1/1 [00:05<00:00,  5.53s/it]100%|██████████| 1/1 [00:05<00:00,  5.53s/it]
+[INFO] infer round 7, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6257079896472749
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.56, rtf 0.37507060915231705
+100%|██████████| 1/1 [00:01<00:00,  1.49s/it]100%|██████████| 1/1 [00:01<00:00,  1.49s/it]
+[INFO] infer round 7, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6215044430324009
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.41940728823343915
+flow step2
+[Flow Gear] curr_len=154 → gear=170 (pad=16)
+[Flow Gear] curr_len=154 → gear=170 (pad=16)
+[INFO] yield speech len 2.24, rtf 0.35402764167104445
+100%|██████████| 1/1 [00:02<00:00,  2.32s/it]100%|██████████| 1/1 [00:02<00:00,  2.32s/it]
+[INFO] infer round 7, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5638789562951951
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.39867351452509564
+flow step2
+[Flow Gear] curr_len=96 → gear=98 (pad=2)
+[Flow Gear] curr_len=96 → gear=98 (pad=2)
+[INFO] yield speech len 1.08, rtf 0.417644668508459
+100%|██████████| 1/1 [00:01<00:00,  1.88s/it]100%|██████████| 1/1 [00:01<00:00,  1.88s/it]
+[INFO] infer round 7, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6009399890899658
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.38696060578028363
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.4129303495089213
+flow step2
+[Flow Gear] curr_len=70 → gear=74 (pad=4)
+[Flow Gear] curr_len=70 → gear=74 (pad=4)
+[INFO] yield speech len 0.56, rtf 0.45643533979143414
+100%|██████████| 1/1 [00:02<00:00,  2.68s/it]100%|██████████| 1/1 [00:02<00:00,  2.68s/it]
+[INFO] infer round 7, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6463121800195604
+flow step2
+[Flow Gear] curr_len=174 → gear=200 (pad=26)
+[Flow Gear] curr_len=174 → gear=200 (pad=26)
+[INFO] yield speech len 2.64, rtf 0.36276109290845465
+100%|██████████| 1/1 [00:01<00:00,  1.50s/it]100%|██████████| 1/1 [00:01<00:00,  1.50s/it]
+[INFO] infer round 7, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6095792566026961
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3892991940180461
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.4049009084701538
+flow step2
+[Flow Gear] curr_len=66 → gear=74 (pad=8)
+[Flow Gear] curr_len=66 → gear=74 (pad=8)
+[INFO] yield speech len 0.48, rtf 0.4860396186510722
+100%|██████████| 1/1 [00:02<00:00,  2.65s/it]100%|██████████| 1/1 [00:02<00:00,  2.65s/it]
+[INFO] infer round 7, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5895217259724935
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.40237406889597577
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.40756036837895715
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.40535052617390954
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.4009024302164714
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.38011252880096436
+flow step2
+[Flow Gear] curr_len=92 → gear=98 (pad=6)
+[Flow Gear] curr_len=92 → gear=98 (pad=6)
+[INFO] yield speech len 1.0, rtf 0.4375181198120117
+100%|██████████| 1/1 [00:05<00:00,  5.73s/it]100%|██████████| 1/1 [00:05<00:00,  5.73s/it]
+[INFO] infer round 8, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.618620997383481
+flow step2
+[Flow Gear] curr_len=132 → gear=146 (pad=14)
+[Flow Gear] curr_len=132 → gear=146 (pad=14)
+[INFO] yield speech len 1.8, rtf 0.3291696972317166
+100%|██████████| 1/1 [00:01<00:00,  1.11s/it]100%|██████████| 1/1 [00:01<00:00,  1.11s/it]
+[INFO] infer round 8, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6475607554117839
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3747458259264628
+flow step2
+[Flow Gear] curr_len=132 → gear=146 (pad=14)
+[Flow Gear] curr_len=132 → gear=146 (pad=14)
+[INFO] yield speech len 1.8, rtf 0.3619334432813856
+100%|██████████| 1/1 [00:02<00:00,  2.10s/it]100%|██████████| 1/1 [00:02<00:00,  2.10s/it]
+[INFO] infer round 8, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5868457612537202
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.41519711414972943
+flow step2
+[Flow Gear] curr_len=112 → gear=122 (pad=10)
+[Flow Gear] curr_len=112 → gear=122 (pad=10)
+[INFO] yield speech len 1.4, rtf 0.3710847241537912
+100%|██████████| 1/1 [00:02<00:00,  2.01s/it]100%|██████████| 1/1 [00:02<00:00,  2.01s/it]
+[INFO] infer round 8, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6565343765985399
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.38517673810323083
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.39809465408325195
+flow step2
+[Flow Gear] curr_len=70 → gear=74 (pad=4)
+[Flow Gear] curr_len=70 → gear=74 (pad=4)
+[INFO] yield speech len 0.56, rtf 0.34937007086617605
+100%|██████████| 1/1 [00:02<00:00,  2.63s/it]100%|██████████| 1/1 [00:02<00:00,  2.63s/it]
+[INFO] infer round 8, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6997423512595041
+flow step2
+[Flow Gear] curr_len=154 → gear=170 (pad=16)
+[Flow Gear] curr_len=154 → gear=170 (pad=16)
+[INFO] yield speech len 2.24, rtf 0.3517041248934609
+100%|██████████| 1/1 [00:01<00:00,  1.38s/it]100%|██████████| 1/1 [00:01<00:00,  1.38s/it]
+[INFO] infer round 8, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6398382641020276
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.38479387760162354
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.4035729169845581
+flow step2
+[Flow Gear] curr_len=108 → gear=122 (pad=14)
+[Flow Gear] curr_len=108 → gear=122 (pad=14)
+[INFO] yield speech len 1.32, rtf 0.40239167935920483
+100%|██████████| 1/1 [00:02<00:00,  2.96s/it]100%|██████████| 1/1 [00:02<00:00,  2.96s/it]
+[INFO] infer round 8, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5530706473759243
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.40363808472951257
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.4122708241144816
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.39635658264160156
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.391555925210317
+flow step2
+[Flow Gear] curr_len=174 → gear=200 (pad=26)
+[Flow Gear] curr_len=174 → gear=200 (pad=26)
+[INFO] yield speech len 2.64, rtf 0.3619463154763886
+100%|██████████| 1/1 [00:05<00:00,  5.27s/it]100%|██████████| 1/1 [00:05<00:00,  5.27s/it]
+[INFO] infer round 9, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6371699628375825
+flow step2
+[Flow Gear] curr_len=136 → gear=146 (pad=10)
+[Flow Gear] curr_len=136 → gear=146 (pad=10)
+[INFO] yield speech len 1.88, rtf 0.32886330117570595
+100%|██████████| 1/1 [00:01<00:00,  1.15s/it]100%|██████████| 1/1 [00:01<00:00,  1.16s/it]
+[INFO] infer round 9, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6227044832138788
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.4021007815996806
+flow step2
+[Flow Gear] curr_len=168 → gear=170 (pad=2)
+[Flow Gear] curr_len=168 → gear=170 (pad=2)
+[INFO] yield speech len 2.52, rtf 0.3669440746307373
+100%|██████████| 1/1 [00:02<00:00,  2.41s/it]100%|██████████| 1/1 [00:02<00:00,  2.41s/it]
+[INFO] infer round 9, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.5544611385890416
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.40742089351018274
+flow step2
+[Flow Gear] curr_len=114 → gear=122 (pad=8)
+[Flow Gear] curr_len=114 → gear=122 (pad=8)
+[INFO] yield speech len 1.44, rtf 0.3585434622234768
+100%|██████████| 1/1 [00:01<00:00,  1.96s/it]100%|██████████| 1/1 [00:01<00:00,  1.96s/it]
+[INFO] infer round 9, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6216838246300107
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3967413306236267
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.39402296145757043
+flow step2
+[Flow Gear] curr_len=56 → gear=74 (pad=18)
+[Flow Gear] curr_len=56 → gear=74 (pad=18)
+[INFO] yield speech len 0.28, rtf 0.5196375506264822
+100%|██████████| 1/1 [00:02<00:00,  2.57s/it]100%|██████████| 1/1 [00:02<00:00,  2.57s/it]
+[INFO] infer round 9, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6189261163984027
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3873315453529358
+flow step2
+[Flow Gear] curr_len=82 → gear=98 (pad=16)
+[Flow Gear] curr_len=82 → gear=98 (pad=16)
+[INFO] yield speech len 0.8, rtf 0.37873268127441406
+100%|██████████| 1/1 [00:01<00:00,  1.75s/it]100%|██████████| 1/1 [00:01<00:00,  1.75s/it]
+[INFO] infer round 9, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6017051991962251
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3940322995185852
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.4080197215080261
+flow step2
+[Flow Gear] curr_len=106 → gear=122 (pad=16)
+[Flow Gear] curr_len=106 → gear=122 (pad=16)
+[INFO] yield speech len 1.28, rtf 0.3507545217871666
+100%|██████████| 1/1 [00:02<00:00,  2.88s/it]100%|██████████| 1/1 [00:02<00:00,  2.88s/it]
+[INFO] infer round 9, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+flow step2
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[Flow Gear] curr_len=50 → gear=50 (pad=0)
+[INFO] yield speech len 0.84, rtf 0.6084388210659936
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.41060030460357666
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.37885059912999475
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3685946265856425
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.3670091430346171
+flow step2
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[Flow Gear] curr_len=170 → gear=170 (pad=0)
+[INFO] yield speech len 2.4, rtf 0.37686844666798913
+flow step2
+[Flow Gear] curr_len=60 → gear=74 (pad=14)
+[Flow Gear] curr_len=60 → gear=74 (pad=14)
+[INFO] yield speech len 0.36, rtf 0.4131860203213162
+100%|██████████| 1/1 [00:05<00:00,  5.23s/it]100%|██████████| 1/1 [00:05<00:00,  5.23s/it]
+[INFO] unload model success, model Id is 2147483648
+[INFO] unload model success, model Id is 2147483649
+[INFO] unload model success, model Id is 2
+[WARN] acl repeat destroy

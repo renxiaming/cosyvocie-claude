@@ -79,6 +79,8 @@ if __name__ == '__main__':
                         default='/home/ma-user/work/test/model/CosyVoice-claude/testout/demo11',
                         type=str, help='output dir')
     parser.add_argument('--stream', action="store_true", help='stream infer')
+    parser.add_argument('--no_save_audio', action="store_true",
+                        help='consume inference output without writing wav files')
     args = parser.parse_args()
 
     # 检查是否跳过 warmup（由 infer_manual_concurrent 的 serial_warmup 模式控制）
@@ -97,13 +99,13 @@ if __name__ == '__main__':
 
     # 对hift模型结构进行torchair图模式适配
     cosyvoice.model.hift.remove_weight_norm()  # 删除推理过程中的weight_norm
-    config = CompilerConfig()
-    config.experimental_config.frozen_parameter = True
-    config.experimental_config.tiling_schedule_optimize = True
-    npu_backend = tng.get_npu_backend(compiler_config=config)
-    cosyvoice.model.hift.decode = torch.compile(
-        cosyvoice.model.hift.decode, dynamic=True, fullgraph=True,
-        backend=npu_backend)
+    # config = CompilerConfig()
+    # config.experimental_config.frozen_parameter = True
+    # config.experimental_config.tiling_schedule_optimize = True
+    # npu_backend = tng.get_npu_backend(compiler_config=config)
+    # cosyvoice.model.hift.decode = torch.compile(
+    #     cosyvoice.model.hift.decode, dynamic=True, fullgraph=True,
+    #     backend=npu_backend)
 
     # 输入数据加载
     prompt_texts = [
@@ -120,9 +122,11 @@ if __name__ == '__main__':
         if args.warm_up_times > 0 and not skip_warmup:
             print('warm up start', flush=True)
             warmup_start = time.time()
-            for _ in range(args.warm_up_times):
-                next(cosyvoice.inference_sft(prompt_texts[0], '03729',
-                                              stream=args.stream))
+            for warmup_idx in range(args.warm_up_times):
+                warmup_text = prompt_texts[warmup_idx % len(prompt_texts)]
+                for _ in cosyvoice.inference_sft(warmup_text, '03729',
+                                                 stream=args.stream):
+                    pass
             print('warm up end, elapsed={:.1f}s'.format(
                 time.time() - warmup_start), flush=True)
 
@@ -135,15 +139,20 @@ if __name__ == '__main__':
             for text_idx, prompt_txt in enumerate(prompt_texts):
                 print('[INFO] infer round {}, text {}: {}'.format(
                     infer_idx, text_idx, prompt_txt))
-                speech_chunks = []
-                for _, j in enumerate(cosyvoice.inference_sft(
-                        prompt_txt, '03729', stream=args.stream)):
-                    speech_chunks.append(j['tts_speech'])
-                if speech_chunks:
-                    full_speech = torch.cat(speech_chunks, dim=1)
-                    output_path = os.path.join(
-                        args.output_dir,
-                        'sft_full_{}_{}.wav'.format(infer_idx, text_idx))
-                    torchaudio.save(output_path, full_speech,
-                                    cosyvoice.sample_rate)
-                    print('[INFO] save full speech to {}'.format(output_path))
+                if args.no_save_audio:
+                    for _ in cosyvoice.inference_sft(
+                            prompt_txt, '03729', stream=args.stream):
+                        pass
+                else:
+                    speech_chunks = []
+                    for _, j in enumerate(cosyvoice.inference_sft(
+                            prompt_txt, '03729', stream=args.stream)):
+                        speech_chunks.append(j['tts_speech'])
+                    if speech_chunks:
+                        full_speech = torch.cat(speech_chunks, dim=1)
+                        output_path = os.path.join(
+                            args.output_dir,
+                            'sft_full_{}_{}.wav'.format(infer_idx, text_idx))
+                        torchaudio.save(output_path, full_speech,
+                                        cosyvoice.sample_rate)
+                        print('[INFO] save full speech to {}'.format(output_path))

@@ -39,6 +39,12 @@ export COSYVOICE2_FLOW_GEARS="${COSYVOICE2_FLOW_GEARS:-50,74,98,122,146,170,200,
 # 生产环境关闭 debug 计时（同步屏障/打印均有额外开销，调试时设为1）
 export COSYVOICE2_DEBUG_TIMING="${COSYVOICE2_DEBUG_TIMING:-0}"
 
+# 性能压测时可设 NO_SAVE_AUDIO=1，只消费推理输出，不拼接/保存 wav
+NO_SAVE_ARG=""
+if [ "${NO_SAVE_AUDIO:-0}" = "1" ]; then
+  NO_SAVE_ARG="--no_save_audio"
+fi
+
 # 使能环境变量
 source /usr/local/Ascend/ascend-toolkit/set_env.sh
 # 规避找不到ttsfrd
@@ -54,8 +60,9 @@ rm -rf ~/.cache/modelscope/
 python3 infer_manual_concurrent.py \
   --model_path="${MODEL_PATH:-../weight/CosyVoice2-0.5B_sft_shenhu_25_60}" \
   --stream \
-  --concurrency="${CONCURRENCY:-6}" \
+  --concurrency="${CONCURRENCY:-10}" \
   --infer_count=5 \
   --warm_up_times=5 \
   --log_dir="${LOG_DIR:-logs/manual}" \
-  --enable_cpu_affinity
+  --enable_cpu_affinity \
+  $NO_SAVE_ARG

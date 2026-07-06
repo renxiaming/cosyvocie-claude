@@ -1,0 +1,18 @@
+[SUMMARY] log_dir=logs/manual/run_20260706_174612
+[SUMMARY] mode=manual_terminal_spawn, concurrency=9, infer_count=5
+[SUMMARY] each_client=infer.py (same as run.sh), stream=True
+[SUMMARY] stagger_delay=0.0
+[SUMMARY] cpu_affinity=True
+[SUMMARY] serial_warmup=False
+[SUMMARY] total_cpus=192
+[SUMMARY] success=9, failed=0, batch_wall=448.874s
+[SUMMARY] avg_client_elapsed=389.486s, p95_client_elapsed=433.958s
+[CLIENT] client_0 pid=2793119 success=True exit_code=0 elapsed=357.222s log=logs/manual/run_20260706_174612/client_0.log
+[CLIENT] client_1 pid=2793120 success=True exit_code=0 elapsed=369.653s log=logs/manual/run_20260706_174612/client_1.log
+[CLIENT] client_2 pid=2793121 success=True exit_code=0 elapsed=369.652s log=logs/manual/run_20260706_174612/client_2.log
+[CLIENT] client_3 pid=2793122 success=True exit_code=0 elapsed=369.652s log=logs/manual/run_20260706_174612/client_3.log
+[CLIENT] client_4 pid=2793123 success=True exit_code=0 elapsed=385.456s log=logs/manual/run_20260706_174612/client_4.log
+[CLIENT] client_5 pid=2793124 success=True exit_code=0 elapsed=385.456s log=logs/manual/run_20260706_174612/client_5.log
+[CLIENT] client_6 pid=2793125 success=True exit_code=0 elapsed=385.456s log=logs/manual/run_20260706_174612/client_6.log
+[CLIENT] client_7 pid=2793126 success=True exit_code=0 elapsed=433.958s log=logs/manual/run_20260706_174612/client_7.log
+[CLIENT] client_8 pid=2793127 success=True exit_code=0 elapsed=448.868s log=logs/manual/run_20260706_174612/client_8.log

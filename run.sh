@@ -1,3 +1,4 @@
+# conda activate cosyvoice2_copy  
 # 指定使用NPU ID，默认为0
 export ASCEND_RT_VISIBLE_DEVICES=0
 export PYTHONPATH=third_party/Matcha-TTS:$PYTHONPATH
@@ -7,7 +8,7 @@ export PYTHONPATH=transformers/src:$PYTHONPATH
 export ASCEND_GEO_W8A16=1
 export DYNAMIC_QUANT=1
 
-# --- ACL 算子缓存 ---
+# --- ACL 算子缓存 ---jiu
 export ACLNN_CACHE_LIMIT="${ACLNN_CACHE_LIMIT:-100000}"
 
 # --- Ascend 多 Stream 优化 ---
@@ -25,8 +26,8 @@ export COSYVOICE2_FIRST_CHUNK_SIZE="${COSYVOICE2_FIRST_CHUNK_SIZE:-25}"
 export COSYVOICE2_TOKEN_HOP_LEN="${COSYVOICE2_TOKEN_HOP_LEN:-60}"
 export COSYVOICE2_FLOW_CONTEXT_TOKENS="${COSYVOICE2_FLOW_CONTEXT_TOKENS:-25}"
 # mel_len = token×2-6, 首包50/中间包170
-export COSYVOICE2_FLOW_GEARS="${COSYVOICE2_FLOW_GEARS:-50,74,98,122,146,170,200,230,260,290,320,350,380,410}"
-
+# export COSYVOICE2_FLOW_GEARS="${COSYVOICE2_FLOW_GEARS:-50,74,98,122,146,170,200,230,260,290,320,350,380,410}"
+export COSYVOICE2_FLOW_GEARS="${COSYVOICE2_FLOW_GEARS:-50,170}"
 # 使能环境变量
 source /usr/local/Ascend/ascend-toolkit/set_env.sh
 # 规避找不到ttsfrd
@@ -39,5 +40,5 @@ export CPLUS_INCLUDE_PATH=/usr/local/Ascend/ascend-toolkit/8.1.RC1/toolkit/toolc
 # 清理modelscope缓存
 rm -rf ~/.cache/modelscope/
 
-python3 infer.py --model_path="${MODEL_PATH:-../weight/CosyVoice2-0.5B_sft_shenhu_25_60}" --stream
+python3 infer.py --model_path="${MODEL_PATH:-../weight/CosyVoice2-0.5B_sft_shenhu_25_60_vnpu212}" --stream
 # python3 register_wav.py

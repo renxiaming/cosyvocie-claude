@@ -1,549 +1,0 @@
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch/cuda/__init__.py:58: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
-  import pynvml  # type: ignore[import]
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/latest owner does not match the current owner.
-  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/8.1.RC1/aarch64-linux/ascend_toolkit_install.info owner does not match the current owner.
-  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:291: ImportWarning: 
-    *************************************************************************************************************
-    The torch.Tensor.cuda and torch.nn.Module.cuda are replaced with torch.Tensor.npu and torch.nn.Module.npu now..
-    The torch.cuda.DoubleTensor is replaced with torch.npu.FloatTensor cause the double type is not supported now..
-    The backend in torch.distributed.init_process_group set to hccl now..
-    The torch.cuda.* and torch.cuda.amp.* are replaced with torch.npu.* and torch.npu.amp.* now..
-    The device parameters have been replaced with npu in the function below:
-    torch.logspace, torch.randint, torch.hann_window, torch.rand, torch.full_like, torch.ones_like, torch.rand_like, torch.randperm, torch.arange, torch.frombuffer, torch.normal, torch._empty_per_channel_affine_quantized, torch.empty_strided, torch.empty_like, torch.scalar_tensor, torch.tril_indices, torch.bartlett_window, torch.ones, torch.sparse_coo_tensor, torch.randn, torch.kaiser_window, torch.tensor, torch.triu_indices, torch.as_tensor, torch.zeros, torch.randint_like, torch.full, torch.eye, torch._sparse_csr_tensor_unsafe, torch.empty, torch._sparse_coo_tensor_unsafe, torch.blackman_window, torch.zeros_like, torch.range, torch.sparse_csr_tensor, torch.randn_like, torch.from_file, torch._cudnn_init_dropout_state, torch._empty_affine_quantized, torch.linspace, torch.hamming_window, torch.empty_quantized, torch._pin_memory, torch.autocast, torch.load, torch.Generator, torch.set_default_device, torch.Tensor.new_empty, torch.Tensor.new_empty_strided, torch.Tensor.new_full, torch.Tensor.new_ones, torch.Tensor.new_tensor, torch.Tensor.new_zeros, torch.Tensor.to, torch.nn.Module.to, torch.nn.Module.to_empty
-    *************************************************************************************************************
-    
-  warnings.warn(msg, ImportWarning)
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:246: RuntimeWarning: torch.jit.script and torch.jit.script_method will be disabled by transfer_to_npu, which currently does not support them, if you need to enable them, please do not use transfer_to_npu.
-  warnings.warn(msg, RuntimeWarning)
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/__init__.py:3: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
-  import pkg_resources
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2832: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('mpl_toolkits')`.
-Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
-  declare_namespace(pkg)
-2026-06-15 17:06:29,708 - modelscope - INFO - PyTorch version 2.4.0 Found.
-2026-06-15 17:06:29,709 - modelscope - INFO - Loading ast index from /home/ma-user/.cache/modelscope/ast_indexer
-2026-06-15 17:06:29,786 - modelscope - INFO - Loading done! Current index file version is 1.15.0, with md5 ba02a9e8b787c76889d15c575a4429cf and a total number of 980 components indexed
-failed to import ttsfrd, use WeTextProcessing instead
-[INFO] CPU affinity set: cores 96-127 (client_3)
-[INFO] CPU threads configured: OMP=16, MKL=8, torch=16
-[INFO] client_id=3 skip_warmup=False 
-[INFO] loading model...
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/lightning/fabric/__init__.py:41: Deprecated call to `pkg_resources.declare_namespace('lightning.fabric')`.
-Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
-Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
-  declare_namespace(parent)
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:88: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
-  parse = parser.parseString(pattern)
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:92: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
-  parser.resetCache()
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/_mathtext.py:30: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
-  ParserElement.enablePackrat()
-[WARNING] In /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
-[WARNING] In /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/lightning/pytorch/__init__.py:37: Deprecated call to `pkg_resources.declare_namespace('lightning.pytorch')`.
-Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
-Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
-  declare_namespace(parent)
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
-  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
-[INFO] input frame rate=25
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/librosa/core/intervals.py:15: DeprecationWarning: path is deprecated. Use files() instead. Refer to https://importlib-resources.readthedocs.io/en/latest/using.html#migrating-from-legacy for migration advice.
-  with resources.path("librosa.core", "intervals.msgpack") as imsgpack:
-Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
-Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:65: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'CPUExecutionProvider'
-  warnings.warn(
-/usr/local/Ascend/ascend-toolkit/8.1.RC1/python/site-packages/tbe/tvm/contrib/ccec.py:866: DeprecationWarning: invalid escape sequence '\L'
-  if not dirpath.find("AppData\Local\Temp"):
-/usr/local/Ascend/ascend-toolkit/latest/python/site-packages/tbe/dsl/classifier/transdata/transdata_classifier.py:222: DeprecationWarning: invalid escape sequence '\B'
-  """
-/usr/local/Ascend/ascend-toolkit/latest/python/site-packages/tbe/dsl/unify_schedule/vector/transdata/common/graph/transdata_graph_info.py:143: DeprecationWarning: invalid escape sequence '\c'
-  """
-2026-06-15 17:07:04,666 WETEXT INFO building fst for zh_normalizer ...
-[INFO] building fst for zh_normalizer ...
-2026-06-15 17:07:59,303 WETEXT INFO done
-[INFO] done
-2026-06-15 17:07:59,304 WETEXT INFO fst path: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_tagger.fst
-[INFO] fst path: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_tagger.fst
-2026-06-15 17:07:59,304 WETEXT INFO           /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_verbalizer.fst
-[INFO]           /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/zh_tn_verbalizer.fst
-2026-06-15 17:07:59,312 WETEXT INFO found existing fst: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_tagger.fst
-[INFO] found existing fst: /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_tagger.fst
-2026-06-15 17:07:59,312 WETEXT INFO                     /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_verbalizer.fst
-[INFO]                     /home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/tn/en_tn_verbalizer.fst
-2026-06-15 17:07:59,312 WETEXT INFO skip building fst for en_normalizer ...
-[INFO] skip building fst for en_normalizer ...
-[WARN] acl repeat initialize
-[INFO] acl init success
-[INFO] open device 0 success
-[INFO] get current context
-[INFO] load model ../weight/CosyVoice2-0.5B_sft_shenhu/flow_linux_aarch64.om success
-[INFO] create model description success
-[INFO] create new context
-[INFO] load model ../weight/CosyVoice2-0.5B_sft_shenhu/flow_static.om success
-[INFO] create model description success
-[INFO] create new context
-[INFO] load model ../weight/CosyVoice2-0.5B_sft_shenhu/speech_linux_aarch64.om success
-[INFO] create model description success
-Removing weight norm...
-warm up start
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
-./home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py:567: UserWarning: When enable frozen_parameter, Parameters will be considered frozen.Please make sure that the Parameters data address remain the same throughout the program runtime.
-  warnings.warn(f'When enable frozen_parameter, Parameters will be considered frozen.'
-..[W615 17:10:51.160041020 compiler_depend.ts:51] Warning: CAUTION: The operator 'aten::unfold_backward' is not currently supported on the NPU backend and will fall back to run on the CPU. This may have performance implications. (function npu_cpu_fallback)
-flow step2
-[INFO] yield speech len 0.64, rtf 144.1501870751381
-  0%|          | 0/1 [01:32<?, ?it/s]
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.42235180735588074
-  0%|          | 0/1 [00:00<?, ?it/s]
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.39285682141780853
-  0%|          | 0/1 [00:00<?, ?it/s]
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.4017248749732971
-  0%|          | 0/1 [00:00<?, ?it/s]
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.4003070294857025
-  0%|          | 0/1 [00:00<?, ?it/s]
-warm up end, elapsed=93.4s
-[INFO] infer round 0, text 0: 是的，您现在还有大概1个G的流量。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.387602299451828
-/home/ma-user/anaconda3/envs/cosyvoice2_copy/lib/python3.11/site-packages/torch_npu/dynamo/torchair/_ge_concrete_graph/fx2ge_converter.py:567: UserWarning: When enable frozen_parameter, Parameters will be considered frozen.Please make sure that the Parameters data address remain the same throughout the program runtime.
-  warnings.warn(f'When enable frozen_parameter, Parameters will be considered frozen.'
-..flow step2
-[INFO] yield speech len 2.0, rtf 22.4471937417984
-flow step2
-[INFO] yield speech len 0.56, rtf 0.31746796199253624
-100%|██████████| 1/1 [00:45<00:00, 45.32s/it]100%|██████████| 1/1 [00:45<00:00, 45.32s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_0_0.wav
-[INFO] infer round 0, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5048491060733795
-flow step2
-[INFO] yield speech len 2.0, rtf 0.27388739585876465
-flow step2
-[INFO] yield speech len 2.0, rtf 0.26724183559417725
-flow step2
-[INFO] yield speech len 1.28, rtf 0.26749949902296066
-100%|██████████| 1/1 [00:01<00:00,  1.75s/it]100%|██████████| 1/1 [00:01<00:00,  1.75s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_0_1.wav
-[INFO] infer round 0, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.44891610741615295
-flow step2
-[INFO] yield speech len 2.0, rtf 0.27088427543640137
-flow step2
-[INFO] yield speech len 2.0, rtf 0.24121487140655518
-100%|██████████| 1/1 [00:01<00:00,  1.32s/it]100%|██████████| 1/1 [00:01<00:00,  1.32s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_0_2.wav
-[INFO] infer round 0, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
-flow step2
-[INFO] yield speech len 0.64, rtf 0.4670526832342148
-flow step2
-[INFO] yield speech len 2.0, rtf 0.27778589725494385
-flow step2
-[INFO] yield speech len 2.0, rtf 0.275978684425354
-flow step2
-[INFO] yield speech len 0.52, rtf 0.3275642028221717
-100%|██████████| 1/1 [00:01<00:00,  1.58s/it]100%|██████████| 1/1 [00:01<00:00,  1.58s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_0_3.wav
-[INFO] infer round 0, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.46645477414131165
-flow step2
-[INFO] yield speech len 2.2, rtf 0.2527761459350586
-100%|██████████| 1/1 [00:00<00:00,  1.17it/s]100%|██████████| 1/1 [00:00<00:00,  1.17it/s]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_0_4.wav
-[INFO] infer round 0, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.49935728311538696
-flow step2
-[INFO] yield speech len 2.0, rtf 0.284503698348999
-flow step2
-[INFO] yield speech len 2.0, rtf 0.28677046298980713
-flow step2
-[INFO] yield speech len 1.76, rtf 0.2554339441386136
-100%|██████████| 1/1 [00:01<00:00,  1.91s/it]100%|██████████| 1/1 [00:01<00:00,  1.92s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_0_5.wav
-[INFO] infer round 0, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.507676973938942
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3145939111709595
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30545616149902344
-flow step2
-[INFO] yield speech len 2.0, rtf 0.311387300491333
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3024172782897949
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30096888542175293
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3025026321411133
-flow step2
-[INFO] yield speech len 1.0, rtf 0.2912745475769043
-100%|██████████| 1/1 [00:04<00:00,  4.30s/it]100%|██████████| 1/1 [00:04<00:00,  4.30s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_0_6.wav
-[INFO] infer round 1, text 0: 是的，您现在还有大概1个G的流量。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5481693893671036
-flow step2
-[INFO] yield speech len 1.92, rtf 0.27756107350190484
-100%|██████████| 1/1 [00:00<00:00,  1.13it/s]100%|██████████| 1/1 [00:00<00:00,  1.13it/s]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_1_0.wav
-[INFO] infer round 1, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5257770419120789
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30838894844055176
-flow step2
-[INFO] yield speech len 2.16, rtf 0.2752031441088076
-100%|██████████| 1/1 [00:01<00:00,  1.55s/it]100%|██████████| 1/1 [00:01<00:00,  1.55s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_1_1.wav
-[INFO] infer round 1, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.514434278011322
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3050529956817627
-flow step2
-[INFO] yield speech len 2.08, rtf 0.2761339912047753
-100%|██████████| 1/1 [00:01<00:00,  1.52s/it]100%|██████████| 1/1 [00:01<00:00,  1.52s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_1_2.wav
-[INFO] infer round 1, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5241516977548599
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3113611936569214
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2998751401901245
-flow step2
-[INFO] yield speech len 0.96, rtf 0.3108973304430644
-100%|██████████| 1/1 [00:01<00:00,  1.86s/it]100%|██████████| 1/1 [00:01<00:00,  1.86s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_1_3.wav
-[INFO] infer round 1, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5160782486200333
-flow step2
-[INFO] yield speech len 2.0, rtf 0.31784725189208984
-flow step2
-[INFO] yield speech len 0.36, rtf 0.3860778278774685
-100%|██████████| 1/1 [00:01<00:00,  1.11s/it]100%|██████████| 1/1 [00:01<00:00,  1.11s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_1_4.wav
-[INFO] infer round 1, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5349550396203995
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3115805387496948
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3058284521102905
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3056124448776245
-flow step2
-[INFO] yield speech len 0.32, rtf 0.40468648076057434
-100%|██████████| 1/1 [00:02<00:00,  2.32s/it]100%|██████████| 1/1 [00:02<00:00,  2.32s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_1_5.wav
-[INFO] infer round 1, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5277901887893677
-flow step2
-[INFO] yield speech len 2.0, rtf 0.31186139583587646
-flow step2
-[INFO] yield speech len 2.0, rtf 0.31721413135528564
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30731260776519775
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2993277311325073
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30171942710876465
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30344080924987793
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3076789379119873
-flow step2
-[INFO] yield speech len 1.28, rtf 0.2773825079202652
-100%|██████████| 1/1 [00:04<00:00,  4.99s/it]100%|██████████| 1/1 [00:04<00:00,  4.99s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_1_6.wav
-[INFO] infer round 2, text 0: 是的，您现在还有大概1个G的流量。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5056042224168777
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2964555025100708
-flow step2
-[INFO] yield speech len 0.52, rtf 0.3069318257845365
-100%|██████████| 1/1 [00:01<00:00,  1.08s/it]100%|██████████| 1/1 [00:01<00:00,  1.08s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_2_0.wav
-[INFO] infer round 2, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5109749734401703
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30565333366394043
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3093658685684204
-flow step2
-[INFO] yield speech len 1.32, rtf 0.2805541862141002
-100%|██████████| 1/1 [00:01<00:00,  1.93s/it]100%|██████████| 1/1 [00:01<00:00,  1.93s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_2_1.wav
-[INFO] infer round 2, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.533728301525116
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2967641353607178
-flow step2
-[INFO] yield speech len 1.92, rtf 0.2595614641904831
-100%|██████████| 1/1 [00:01<00:00,  1.44s/it]100%|██████████| 1/1 [00:01<00:00,  1.44s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_2_2.wav
-[INFO] infer round 2, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5665693432092667
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3022315502166748
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30951130390167236
-flow step2
-[INFO] yield speech len 1.16, rtf 0.28955977538536337
-100%|██████████| 1/1 [00:01<00:00,  1.93s/it]100%|██████████| 1/1 [00:01<00:00,  1.93s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_2_3.wav
-[INFO] infer round 2, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5565796047449112
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30367791652679443
-flow step2
-[INFO] yield speech len 0.6, rtf 0.3286381562550863
-100%|██████████| 1/1 [00:01<00:00,  1.16s/it]100%|██████████| 1/1 [00:01<00:00,  1.16s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_2_4.wav
-[INFO] infer round 2, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5204629153013229
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3110898733139038
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30003154277801514
-flow step2
-[INFO] yield speech len 2.12, rtf 0.2711185869180931
-100%|██████████| 1/1 [00:02<00:00,  2.13s/it]100%|██████████| 1/1 [00:02<00:00,  2.13s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_2_5.wav
-[INFO] infer round 2, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5056452006101608
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30242693424224854
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30224287509918213
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2946460247039795
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3004109859466553
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30805277824401855
-flow step2
-[INFO] yield speech len 2.0, rtf 0.299541711807251
-flow step2
-[INFO] yield speech len 1.4, rtf 0.2851079191480364
-100%|██████████| 1/1 [00:04<00:00,  4.34s/it]100%|██████████| 1/1 [00:04<00:00,  4.34s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_2_6.wav
-[INFO] infer round 3, text 0: 是的，您现在还有大概1个G的流量。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5090039223432541
-flow step2
-[INFO] yield speech len 2.16, rtf 0.27349017284534594
-100%|██████████| 1/1 [00:00<00:00,  1.09it/s]100%|██████████| 1/1 [00:00<00:00,  1.09it/s]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_3_0.wav
-[INFO] infer round 3, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5277644842863083
-flow step2
-[INFO] yield speech len 2.0, rtf 0.31443142890930176
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30770599842071533
-flow step2
-[INFO] yield speech len 0.52, rtf 0.32132909848139835
-100%|██████████| 1/1 [00:01<00:00,  1.75s/it]100%|██████████| 1/1 [00:01<00:00,  1.75s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_3_1.wav
-[INFO] infer round 3, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.527292862534523
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3029998540878296
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30560553073883057
-flow step2
-[INFO] yield speech len 0.6, rtf 0.29756704966227215
-100%|██████████| 1/1 [00:01<00:00,  1.74s/it]100%|██████████| 1/1 [00:01<00:00,  1.74s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_3_2.wav
-[INFO] infer round 3, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
-flow step2
-[INFO] yield speech len 0.64, rtf 0.4822075366973877
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30692362785339355
-flow step2
-[INFO] yield speech len 2.0, rtf 0.30191540718078613
-flow step2
-[INFO] yield speech len 1.12, rtf 0.26880140815462383
-100%|██████████| 1/1 [00:01<00:00,  1.83s/it]100%|██████████| 1/1 [00:01<00:00,  1.83s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_3_3.wav
-[INFO] infer round 3, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5166526883840561
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2981569766998291
-flow step2
-[INFO] yield speech len 1.16, rtf 0.2861754647616683
-100%|██████████| 1/1 [00:01<00:00,  1.26s/it]100%|██████████| 1/1 [00:01<00:00,  1.26s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_3_4.wav
-[INFO] infer round 3, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5095042288303375
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2917797565460205
-flow step2
-[INFO] yield speech len 2.0, rtf 0.29068565368652344
-flow step2
-[INFO] yield speech len 1.36, rtf 0.2904476488337797
-100%|██████████| 1/1 [00:01<00:00,  1.89s/it]100%|██████████| 1/1 [00:01<00:00,  1.89s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_3_5.wav
-[INFO] infer round 3, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5013979971408844
-flow step2
-[INFO] yield speech len 2.0, rtf 0.29482150077819824
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3018076419830322
-flow step2
-[INFO] yield speech len 2.0, rtf 0.3051762580871582
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2868993282318115
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2979854345321655
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2953646183013916
-flow step2
-[INFO] yield speech len 1.32, rtf 0.27880072593688965
-100%|██████████| 1/1 [00:04<00:00,  4.26s/it]100%|██████████| 1/1 [00:04<00:00,  4.26s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_3_6.wav
-[INFO] infer round 4, text 0: 是的，您现在还有大概1个G的流量。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5328886210918427
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2862461805343628
-flow step2
-[INFO] yield speech len 0.64, rtf 0.31191110610961914
-100%|██████████| 1/1 [00:01<00:00,  1.12s/it]100%|██████████| 1/1 [00:01<00:00,  1.12s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_4_0.wav
-[INFO] infer round 4, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.5127310752868652
-flow step2
-[INFO] yield speech len 2.0, rtf 0.28648126125335693
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2723538875579834
-flow step2
-[INFO] yield speech len 0.64, rtf 0.2959057688713074
-100%|██████████| 1/1 [00:01<00:00,  1.64s/it]100%|██████████| 1/1 [00:01<00:00,  1.64s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_4_1.wav
-[INFO] infer round 4, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
-flow step2
-[INFO] yield speech len 0.64, rtf 0.4722241312265396
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2696077823638916
-flow step2
-[INFO] yield speech len 1.84, rtf 0.24487894514332645
-100%|██████████| 1/1 [00:01<00:00,  1.29s/it]100%|██████████| 1/1 [00:01<00:00,  1.30s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_4_2.wav
-[INFO] infer round 4, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
-flow step2
-[INFO] yield speech len 0.64, rtf 0.4741080105304718
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2856100797653198
-flow step2
-[INFO] yield speech len 2.0, rtf 0.27145063877105713
-flow step2
-[INFO] yield speech len 1.2, rtf 0.2482086420059204
-100%|██████████| 1/1 [00:01<00:00,  1.72s/it]100%|██████████| 1/1 [00:01<00:00,  1.72s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_4_3.wav
-[INFO] infer round 4, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.4686269909143448
-flow step2
-[INFO] yield speech len 2.0, rtf 0.260831356048584
-flow step2
-[INFO] yield speech len 0.68, rtf 0.2741750548867618
-100%|██████████| 1/1 [00:01<00:00,  1.01s/it]100%|██████████| 1/1 [00:01<00:00,  1.01s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_4_4.wav
-[INFO] infer round 4, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.45731738209724426
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2505371570587158
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2472362518310547
-flow step2
-[INFO] yield speech len 1.0, rtf 0.24258732795715332
-100%|██████████| 1/1 [00:01<00:00,  1.53s/it]100%|██████████| 1/1 [00:01<00:00,  1.53s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_4_5.wav
-[INFO] infer round 4, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
-  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
-flow step2
-[INFO] yield speech len 0.64, rtf 0.43127015233039856
-flow step2
-[INFO] yield speech len 2.0, rtf 0.25097596645355225
-flow step2
-[INFO] yield speech len 2.0, rtf 0.24760699272155762
-flow step2
-[INFO] yield speech len 2.0, rtf 0.24405145645141602
-flow step2
-[INFO] yield speech len 2.0, rtf 0.24544155597686768
-flow step2
-[INFO] yield speech len 2.0, rtf 0.2515181303024292
-flow step2
-[INFO] yield speech len 1.88, rtf 0.2177381769139716
-100%|██████████| 1/1 [00:03<00:00,  3.17s/it]100%|██████████| 1/1 [00:03<00:00,  3.17s/it]
-[INFO] save full speech to /home/ma-user/work/test/model/CosyVoice-claude/testout/manual_concurrent/client_3/sft_full_4_6.wav
-[INFO] unload model success, model Id is 2147483649
-[INFO] unload model success, model Id is 2147483648
-[INFO] unload model success, model Id is 2
-[WARN] acl repeat destroy
