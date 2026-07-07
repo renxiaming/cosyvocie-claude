@@ -58,6 +58,26 @@ def configure_threads():
         omp_threads, mkl_threads, torch.get_num_threads()), flush=True)
 
 
+def wait_sync_start(sync_dir, client_id, timeout):
+    if not sync_dir:
+        return
+    os.makedirs(sync_dir, exist_ok=True)
+    ready_path = os.path.join(sync_dir, 'client_{}.ready'.format(client_id))
+    go_path = os.path.join(sync_dir, 'go')
+    with open(ready_path, 'w', buffering=1) as f:
+        f.write('{}\n'.format(os.getpid()))
+    print('[SYNC] client_{} ready, waiting for go'.format(client_id),
+          flush=True)
+    start = time.time()
+    while not os.path.exists(go_path):
+        if timeout > 0 and time.time() - start > timeout:
+            raise TimeoutError(
+                'sync start timeout after {:.1f}s'.format(timeout))
+        time.sleep(0.05)
+    print('[SYNC] client_{} go, wait={:.3f}s'.format(
+        client_id, time.time() - start), flush=True)
+
+
 if __name__ == '__main__':
     # ================================================================
     # 启动时立即设置 CPU 亲和性和线程数（在其他 import 之前尽可能早）
@@ -81,6 +101,10 @@ if __name__ == '__main__':
     parser.add_argument('--stream', action="store_true", help='stream infer')
     parser.add_argument('--no_save_audio', action="store_true",
                         help='consume inference output without writing wav files')
+    parser.add_argument('--sync_start_dir', default='', type=str,
+                        help='directory used as formal inference start barrier')
+    parser.add_argument('--sync_start_timeout', default=900.0, type=float,
+                        help='seconds to wait for formal inference start barrier')
     args = parser.parse_args()
 
     # 检查是否跳过 warmup（由 infer_manual_concurrent 的 serial_warmup 模式控制）
@@ -134,6 +158,9 @@ if __name__ == '__main__':
         if args.infer_count <= 0:
             print('[INFO] infer_count=0, exiting after warmup', flush=True)
             sys.exit(0)
+
+        wait_sync_start(args.sync_start_dir, client_id,
+                        args.sync_start_timeout)
 
         for infer_idx in range(args.infer_count):
             for text_idx, prompt_txt in enumerate(prompt_texts):

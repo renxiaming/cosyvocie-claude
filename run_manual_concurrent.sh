@@ -1,6 +1,17 @@
 # ============================================================
 # 多进程并发推理优化配置
 # ============================================================
+# HiFT decode OM：只替换 hift.decode，未设置时自动走原 PyTorch 路径
+export COSYVOICE2_HIFT_DECODE_OM="${COSYVOICE2_HIFT_DECODE_OM:-experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om}"
+export COSYVOICE2_HIFT_DECODE_GEARS="${COSYVOICE2_HIFT_DECODE_GEARS:-30,50,128,130,160}"
+
+# 严格 10 进程正式推理同步：所有进程 warmup 完成后统一开始正式推理
+export SYNC_START="${SYNC_START:-1}"
+export SYNC_START_TIMEOUT="${SYNC_START_TIMEOUT:-1800}"
+
+# 性能压测默认不保存音频，避免 torchaudio/save 影响 RTF；需要保存时 NO_SAVE_AUDIO=0
+export NO_SAVE_AUDIO="${NO_SAVE_AUDIO:-1}"
+export LOG_DIR="${LOG_DIR:-logs/manual_hift_om_v2_sync_run}"
 
 # NPU 设备绑定
 export ASCEND_RT_VISIBLE_DEVICES=0
@@ -15,15 +26,14 @@ export DYNAMIC_QUANT=1
 export ACLNN_CACHE_LIMIT="${ACLNN_CACHE_LIMIT:-100000}"
 
 # --- Ascend 多 Stream 优化 (允许不同进程的算子提交到不同 Stream 队列) ---
-export ENABLE_DYNAMIC_SHAPE_MULTI_STREAM=1
-export TASK_QUEUE_ENABLE=2
+export ENABLE_DYNAMIC_SHAPE_MULTI_STREAM="${ENABLE_DYNAMIC_SHAPE_MULTI_STREAM:-1}"
+export TASK_QUEUE_ENABLE="${TASK_QUEUE_ENABLE:-2}"
 
-# --- 限制每个进程的 CPU 线程数 (192 核 / 10 进程 ≈ 19 核/进程) ---
-# 设为 16 留出余量给系统和其他组件
-export OMP_NUM_THREADS="${OMP_NUM_THREADS:-16}"
-export MKL_NUM_THREADS="${MKL_NUM_THREADS:-8}"
-export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-8}"
-export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-8}"
+# --- 限制每个进程的 CPU 线程数，减少 10 进程下 CPU/BLAS 竞争 ---
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-4}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-2}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-2}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-2}"
 
 # --- 流式推理性能调优 ---
 # 首包大小（默认20，新模型用25）
@@ -38,11 +48,18 @@ export COSYVOICE2_FLOW_CONTEXT_TOKENS="${COSYVOICE2_FLOW_CONTEXT_TOKENS:-25}"
 export COSYVOICE2_FLOW_GEARS="${COSYVOICE2_FLOW_GEARS:-50,74,98,122,146,170,200,230,260,290,320,350,380,410}"
 # 生产环境关闭 debug 计时（同步屏障/打印均有额外开销，调试时设为1）
 export COSYVOICE2_DEBUG_TIMING="${COSYVOICE2_DEBUG_TIMING:-0}"
+# 关闭额外 Flow/HiFT NPU stream，严格 10 进程下 p95 更稳
+export COSYVOICE2_FLOW_HIFT_STREAM="${COSYVOICE2_FLOW_HIFT_STREAM:-0}"
 
 # 性能压测时可设 NO_SAVE_AUDIO=1，只消费推理输出，不拼接/保存 wav
 NO_SAVE_ARG=""
 if [ "${NO_SAVE_AUDIO:-0}" = "1" ]; then
   NO_SAVE_ARG="--no_save_audio"
+fi
+
+SYNC_START_ARG=""
+if [ "${SYNC_START:-1}" = "1" ]; then
+  SYNC_START_ARG="--sync_start --sync_start_timeout ${SYNC_START_TIMEOUT:-1200}"
 fi
 
 # 使能环境变量
@@ -60,9 +77,10 @@ rm -rf ~/.cache/modelscope/
 python3 infer_manual_concurrent.py \
   --model_path="${MODEL_PATH:-../weight/CosyVoice2-0.5B_sft_shenhu_25_60}" \
   --stream \
-  --concurrency="${CONCURRENCY:-10}" \
+  --concurrency="${CONCURRENCY:-1}" \
   --infer_count=5 \
   --warm_up_times=5 \
   --log_dir="${LOG_DIR:-logs/manual}" \
   --enable_cpu_affinity \
+  $SYNC_START_ARG \
   $NO_SAVE_ARG

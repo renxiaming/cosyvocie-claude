@@ -1,0 +1,346 @@
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:294: ImportWarning: 
+    *************************************************************************************************************
+    The torch.Tensor.cuda and torch.nn.Module.cuda are replaced with torch.Tensor.npu and torch.nn.Module.npu now..
+    The torch.cuda.DoubleTensor is replaced with torch.npu.FloatTensor cause the double type is not supported now..
+    The backend in torch.distributed.init_process_group set to hccl now..
+    The torch.cuda.* and torch.cuda.amp.* are replaced with torch.npu.* and torch.npu.amp.* now..
+    The device parameters have been replaced with npu in the function below:
+    torch.logspace, torch.randint, torch.hann_window, torch.rand, torch.full_like, torch.ones_like, torch.rand_like, torch.randperm, torch.arange, torch.frombuffer, torch.normal, torch._empty_per_channel_affine_quantized, torch.empty_strided, torch.empty_like, torch.scalar_tensor, torch.tril_indices, torch.bartlett_window, torch.ones, torch.sparse_coo_tensor, torch.randn, torch.kaiser_window, torch.tensor, torch.triu_indices, torch.as_tensor, torch.zeros, torch.randint_like, torch.full, torch.eye, torch._sparse_csr_tensor_unsafe, torch.empty, torch._sparse_coo_tensor_unsafe, torch.blackman_window, torch.zeros_like, torch.range, torch.sparse_csr_tensor, torch.randn_like, torch.from_file, torch._cudnn_init_dropout_state, torch._empty_affine_quantized, torch.linspace, torch.hamming_window, torch.empty_quantized, torch._pin_memory, torch.autocast, torch.load, torch.Generator, torch.set_default_device, torch.Tensor.new_empty, torch.Tensor.new_empty_strided, torch.Tensor.new_full, torch.Tensor.new_ones, torch.Tensor.new_tensor, torch.Tensor.new_zeros, torch.Tensor.to, torch.Tensor.pin_memory, torch.nn.Module.to, torch.nn.Module.to_empty
+    *************************************************************************************************************
+    
+  warnings.warn(msg, ImportWarning)
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:249: RuntimeWarning: torch.jit.script and torch.jit.script_method will be disabled by transfer_to_npu, which currently does not support them, if you need to enable them, please do not use transfer_to_npu.
+  warnings.warn(msg, RuntimeWarning)
+<frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+<frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/torch_npu/dynamo/torchair/__init__.py:8: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+  import pkg_resources
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/pkg_resources/__init__.py:2832: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('mpl_toolkits')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(pkg)
+2026-07-06 22:35:07,957 - modelscope - INFO - PyTorch version 2.3.1 Found.
+2026-07-06 22:35:07,958 - modelscope - INFO - Loading ast index from /root/.cache/modelscope/ast_indexer
+2026-07-06 22:35:08,016 - modelscope - INFO - Loading done! Current index file version is 1.15.0, with md5 e1bca2734ade934fc1c149a26cd6fcaf and a total number of 980 components indexed
+failed to import ttsfrd, use WeTextProcessing instead
+[INFO] CPU affinity set: cores 57-75 (client_3)
+[INFO] CPU threads configured: OMP=16, MKL=8, torch=16
+[INFO] client_id=3 skip_warmup=False 
+[INFO] loading model...
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/lightning/fabric/__init__.py:41: Deprecated call to `pkg_resources.declare_namespace('lightning.fabric')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:88: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  parse = parser.parseString(pattern)
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:92: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  parser.resetCache()
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/matplotlib/_mathtext.py:30: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+  ParserElement.enablePackrat()
+[WARNING] In /data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+[WARNING] In /data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/lightning/pytorch/__init__.py:37: Deprecated call to `pkg_resources.declare_namespace('lightning.pytorch')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/pkg_resources/__init__.py:2317: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('lightning')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(parent)
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
+  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
+[INFO] input frame rate=25
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/librosa/core/intervals.py:15: DeprecationWarning: path is deprecated. Use files() instead. Refer to https://importlib-resources.readthedocs.io/en/latest/using.html#migrating-from-legacy for migration advice.
+  with resources.path("librosa.core", "intervals.msgpack") as imsgpack:
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+/data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:69: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'AzureExecutionProvider, CPUExecutionProvider'
+  warnings.warn(
+2026-07-06 22:35:33,354 WETEXT INFO building fst for zh_normalizer ...
+[INFO] building fst for zh_normalizer ...
+2026-07-06 22:36:30,861 WETEXT INFO done
+[INFO] done
+2026-07-06 22:36:30,862 WETEXT INFO fst path: /data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/tn/zh_tn_tagger.fst
+[INFO] fst path: /data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/tn/zh_tn_tagger.fst
+2026-07-06 22:36:30,862 WETEXT INFO           /data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/tn/zh_tn_verbalizer.fst
+[INFO]           /data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/tn/zh_tn_verbalizer.fst
+2026-07-06 22:36:30,870 WETEXT INFO found existing fst: /data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/tn/en_tn_tagger.fst
+[INFO] found existing fst: /data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/tn/en_tn_tagger.fst
+2026-07-06 22:36:30,870 WETEXT INFO                     /data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/tn/en_tn_verbalizer.fst
+[INFO]                     /data/zhbai/mimo/miniconda3/envs/voxcpm/lib/python3.11/site-packages/tn/en_tn_verbalizer.fst
+2026-07-06 22:36:30,870 WETEXT INFO skip building fst for en_normalizer ...
+[INFO] skip building fst for en_normalizer ...
+[WARN] acl repeat initialize
+[INFO] acl init success
+[INFO] open device 0 success
+[INFO] get current context
+[INFO] load model ../weight/CosyVoice2-0.5B_sft_shenhu_25_60/flow_linux_aarch64.om success
+[INFO] create model description success
+[INFO] create new context
+[INFO] load model ../weight/CosyVoice2-0.5B_sft_shenhu_25_60/flow_static.om success
+[INFO] create model description success
+[INFO] create new context
+[INFO] load model ../weight/CosyVoice2-0.5B_sft_shenhu_25_60/speech_linux_aarch64.om success
+[INFO] create model description success
+Removing weight norm...
+warm up start
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+...[W compiler_depend.ts:250] Warning: CAUTION: The operator 'aten::unfold_backward' is not currently supported on the NPU backend and will fall back to run on the CPU. This may have performance implications. (function npu_cpu_fallback)
+[INFO] yield speech len 0.84, rtf 50.05755623181661
+[INFO] yield speech len 2.52, rtf 0.2533931580800859
+100%|██████████| 1/1 [00:42<00:00, 42.69s/it]100%|██████████| 1/1 [00:42<00:00, 42.69s/it]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+[INFO] yield speech len 0.84, rtf 0.3963847955067953
+[INFO] yield speech len 2.4, rtf 0.23963401714960736
+[INFO] yield speech len 2.4, rtf 0.237274169921875
+[INFO] yield speech len 0.32, rtf 0.3657624125480652
+100%|██████████| 1/1 [00:01<00:00,  1.60s/it]100%|██████████| 1/1 [00:01<00:00,  1.60s/it]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+[INFO] yield speech len 0.84, rtf 0.4410522324698312
+[INFO] yield speech len 2.4, rtf 0.2573718627293905
+[INFO] yield speech len 0.92, rtf 0.27613095615221106
+100%|██████████| 1/1 [00:01<00:00,  1.24s/it]100%|██████████| 1/1 [00:01<00:00,  1.24s/it]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+[INFO] yield speech len 0.84, rtf 0.4058295772189186
+[INFO] yield speech len 2.4, rtf 0.2333285411198934
+[INFO] yield speech len 2.56, rtf 0.21180249750614166
+100%|██████████| 1/1 [00:01<00:00,  1.45s/it]100%|██████████| 1/1 [00:01<00:00,  1.45s/it]
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+[INFO] yield speech len 0.84, rtf 0.3647741817292713
+[INFO] yield speech len 2.4, rtf 0.2266200383504232
+[INFO] yield speech len 0.32, rtf 0.2972029149532318
+100%|██████████| 1/1 [00:00<00:00,  1.06it/s]100%|██████████| 1/1 [00:00<00:00,  1.06it/s]
+warm up end, elapsed=48.0s
+[SYNC] client_3 ready, waiting for go=logs/manual/run_20260706_223458/sync_start/go
+[SYNC] client_3 go, wait_elapsed=88.021s
+[INFO] infer round 0, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+[INFO] yield speech len 0.84, rtf 0.5222050916580927
+[INFO] yield speech len 2.16, rtf 0.35075457007796673
+100%|██████████| 1/1 [00:01<00:00,  1.20s/it]100%|██████████| 1/1 [00:01<00:00,  1.20s/it]
+[INFO] infer round 0, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+[INFO] yield speech len 0.84, rtf 0.5198274339948382
+[INFO] yield speech len 2.4, rtf 0.3334960341453552
+[INFO] yield speech len 2.24, rtf 0.3393283912113734
+100%|██████████| 1/1 [00:01<00:00,  2.00s/it]100%|██████████| 1/1 [00:01<00:00,  2.00s/it]
+[INFO] infer round 0, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+[INFO] yield speech len 0.84, rtf 0.5883608545575824
+[INFO] yield speech len 2.4, rtf 0.33759961525599164
+[INFO] yield speech len 1.16, rtf 0.35897308382494697
+100%|██████████| 1/1 [00:01<00:00,  1.72s/it]100%|██████████| 1/1 [00:01<00:00,  1.72s/it]
+[INFO] infer round 0, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+[INFO] yield speech len 0.84, rtf 0.54709031468346
+[INFO] yield speech len 2.4, rtf 0.3434763352076213
+[INFO] yield speech len 2.4, rtf 0.3506794571876526
+[INFO] yield speech len 0.48, rtf 0.5692149202028911
+100%|██████████| 1/1 [00:02<00:00,  2.40s/it]100%|██████████| 1/1 [00:02<00:00,  2.40s/it]
+[INFO] infer round 0, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+[INFO] yield speech len 0.84, rtf 0.5275238127935501
+[INFO] yield speech len 2.4, rtf 0.34082253774007165
+[INFO] yield speech len 0.6, rtf 0.5381790796915691
+100%|██████████| 1/1 [00:01<00:00,  1.59s/it]100%|██████████| 1/1 [00:01<00:00,  1.59s/it]
+[INFO] infer round 0, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+[INFO] yield speech len 0.84, rtf 0.5166496549333846
+[INFO] yield speech len 2.4, rtf 0.3344208002090454
+[INFO] yield speech len 2.52, rtf 0.3323225747971308
+100%|██████████| 1/1 [00:02<00:00,  2.08s/it]100%|██████████| 1/1 [00:02<00:00,  2.08s/it]
+[INFO] infer round 0, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+[INFO] yield speech len 0.84, rtf 0.5949431941622779
+[INFO] yield speech len 2.4, rtf 0.3410818179448446
+[INFO] yield speech len 2.4, rtf 0.36398728688557946
+[INFO] yield speech len 2.4, rtf 0.3624013066291809
+[INFO] yield speech len 2.4, rtf 0.36605964104334515
+[INFO] yield speech len 2.4, rtf 0.37126938501993817
+[INFO] yield speech len 1.04, rtf 0.44366556864518386
+100%|██████████| 1/1 [00:05<00:00,  5.30s/it]100%|██████████| 1/1 [00:05<00:00,  5.30s/it]
+[INFO] infer round 1, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+[INFO] yield speech len 0.84, rtf 0.5961508977980841
+[INFO] yield speech len 1.76, rtf 0.3400725397196683
+100%|██████████| 1/1 [00:01<00:00,  1.10s/it]100%|██████████| 1/1 [00:01<00:00,  1.10s/it]
+[INFO] infer round 1, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+[INFO] yield speech len 0.84, rtf 0.6084655012403216
+[INFO] yield speech len 2.4, rtf 0.35574247439702356
+[INFO] yield speech len 2.12, rtf 0.3683173431540435
+100%|██████████| 1/1 [00:02<00:00,  2.15s/it]100%|██████████| 1/1 [00:02<00:00,  2.15s/it]
+[INFO] infer round 1, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+[INFO] yield speech len 0.84, rtf 0.6260173661368233
+[INFO] yield speech len 2.4, rtf 0.34830600023269653
+[INFO] yield speech len 1.28, rtf 0.4251614212989807
+100%|██████████| 1/1 [00:01<00:00,  1.91s/it]100%|██████████| 1/1 [00:01<00:00,  1.91s/it]
+[INFO] infer round 1, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+[INFO] yield speech len 0.84, rtf 0.6038015797024682
+[INFO] yield speech len 2.4, rtf 0.35002628962198895
+[INFO] yield speech len 2.4, rtf 0.3676800926526388
+[INFO] yield speech len 0.4, rtf 0.493314266204834
+100%|██████████| 1/1 [00:02<00:00,  2.43s/it]100%|██████████| 1/1 [00:02<00:00,  2.43s/it]
+[INFO] infer round 1, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+[INFO] yield speech len 0.84, rtf 0.6493429342905681
+[INFO] yield speech len 2.4, rtf 0.3570701678593954
+[INFO] yield speech len 1.08, rtf 0.4388751807036223
+100%|██████████| 1/1 [00:01<00:00,  1.88s/it]100%|██████████| 1/1 [00:01<00:00,  1.88s/it]
+[INFO] infer round 1, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+[INFO] yield speech len 0.84, rtf 0.6088344823746454
+[INFO] yield speech len 2.4, rtf 0.3612753748893738
+[INFO] yield speech len 2.4, rtf 0.3885858257611593
+[INFO] yield speech len 1.72, rtf 0.3926931425582531
+100%|██████████| 1/1 [00:02<00:00,  2.99s/it]100%|██████████| 1/1 [00:02<00:00,  2.99s/it]
+[INFO] infer round 1, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+[INFO] yield speech len 0.84, rtf 0.6098792666480655
+[INFO] yield speech len 2.4, rtf 0.3601996103922526
+[INFO] yield speech len 2.4, rtf 0.3823004166285197
+[INFO] yield speech len 2.4, rtf 0.3881910443305969
+[INFO] yield speech len 2.4, rtf 0.39286235968271893
+[INFO] yield speech len 2.4, rtf 0.391370157400767
+[INFO] yield speech len 1.16, rtf 0.43499675290337925
+100%|██████████| 1/1 [00:05<00:00,  5.62s/it]100%|██████████| 1/1 [00:05<00:00,  5.62s/it]
+[INFO] infer round 2, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+[INFO] yield speech len 0.84, rtf 0.6406991254715693
+[INFO] yield speech len 1.96, rtf 0.34475265717019843
+100%|██████████| 1/1 [00:01<00:00,  1.22s/it]100%|██████████| 1/1 [00:01<00:00,  1.22s/it]
+[INFO] infer round 2, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+[INFO] yield speech len 0.84, rtf 0.6485842523120698
+[INFO] yield speech len 2.4, rtf 0.36836614211400354
+[INFO] yield speech len 2.08, rtf 0.37984034189811117
+100%|██████████| 1/1 [00:02<00:00,  2.22s/it]100%|██████████| 1/1 [00:02<00:00,  2.22s/it]
+[INFO] infer round 2, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+[INFO] yield speech len 0.84, rtf 0.685564676920573
+[INFO] yield speech len 2.4, rtf 0.36569565534591675
+[INFO] yield speech len 1.16, rtf 0.4483664857930151
+100%|██████████| 1/1 [00:01<00:00,  1.98s/it]100%|██████████| 1/1 [00:01<00:00,  1.98s/it]
+[INFO] infer round 2, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+[INFO] yield speech len 0.84, rtf 0.6133425803411575
+[INFO] yield speech len 2.4, rtf 0.365231732527415
+[INFO] yield speech len 2.56, rtf 0.35181865096092224
+100%|██████████| 1/1 [00:02<00:00,  2.29s/it]100%|██████████| 1/1 [00:02<00:00,  2.29s/it]
+[INFO] infer round 2, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+[INFO] yield speech len 0.84, rtf 0.6893350964500791
+[INFO] yield speech len 2.6, rtf 0.33976683249840367
+100%|██████████| 1/1 [00:01<00:00,  1.46s/it]100%|██████████| 1/1 [00:01<00:00,  1.46s/it]
+[INFO] infer round 2, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+[INFO] yield speech len 0.84, rtf 0.687838736034575
+[INFO] yield speech len 2.4, rtf 0.3710198402404785
+[INFO] yield speech len 2.4, rtf 0.38675000270207727
+[INFO] yield speech len 0.64, rtf 0.4729095846414566
+100%|██████████| 1/1 [00:02<00:00,  2.70s/it]100%|██████████| 1/1 [00:02<00:00,  2.70s/it]
+[INFO] infer round 2, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+[INFO] yield speech len 0.84, rtf 0.6069027242206392
+[INFO] yield speech len 2.4, rtf 0.36347965399424237
+[INFO] yield speech len 2.4, rtf 0.38444886604944867
+[INFO] yield speech len 2.4, rtf 0.3847623864809672
+[INFO] yield speech len 2.4, rtf 0.3866874178250631
+[INFO] yield speech len 2.4, rtf 0.3860524296760559
+[INFO] yield speech len 1.56, rtf 0.43072364269158775
+100%|██████████| 1/1 [00:05<00:00,  5.76s/it]100%|██████████| 1/1 [00:05<00:00,  5.76s/it]
+[INFO] infer round 3, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+[INFO] yield speech len 0.84, rtf 0.5981976077670142
+[INFO] yield speech len 1.92, rtf 0.35856900115807855
+100%|██████████| 1/1 [00:01<00:00,  1.19s/it]100%|██████████| 1/1 [00:01<00:00,  1.19s/it]
+[INFO] infer round 3, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+[INFO] yield speech len 0.84, rtf 0.5929873103187198
+[INFO] yield speech len 2.4, rtf 0.3650689125061035
+[INFO] yield speech len 2.4, rtf 0.39676398038864136
+[INFO] yield speech len 0.32, rtf 0.4897378385066986
+100%|██████████| 1/1 [00:02<00:00,  2.48s/it]100%|██████████| 1/1 [00:02<00:00,  2.49s/it]
+[INFO] infer round 3, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+[INFO] yield speech len 0.84, rtf 0.6209870179494222
+[INFO] yield speech len 2.4, rtf 0.37295132875442505
+[INFO] yield speech len 0.88, rtf 0.4250867800279097
+100%|██████████| 1/1 [00:01<00:00,  1.79s/it]100%|██████████| 1/1 [00:01<00:00,  1.79s/it]
+[INFO] infer round 3, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+[INFO] yield speech len 0.84, rtf 0.6110106195722308
+[INFO] yield speech len 2.4, rtf 0.3648388385772705
+[INFO] yield speech len 2.4, rtf 0.3649501999219259
+100%|██████████| 1/1 [00:02<00:00,  2.27s/it]100%|██████████| 1/1 [00:02<00:00,  2.27s/it]
+[INFO] infer round 3, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+[INFO] yield speech len 0.84, rtf 0.622220550264631
+[INFO] yield speech len 2.4, rtf 0.3668362895647685
+[INFO] yield speech len 0.84, rtf 0.468637262071882
+100%|██████████| 1/1 [00:01<00:00,  1.80s/it]100%|██████████| 1/1 [00:01<00:00,  1.80s/it]
+[INFO] infer round 3, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+[INFO] yield speech len 0.84, rtf 0.6538237844194685
+[INFO] yield speech len 2.4, rtf 0.3569072484970093
+[INFO] yield speech len 2.4, rtf 0.3828556338946025
+[INFO] yield speech len 1.12, rtf 0.39753913879394526
+100%|██████████| 1/1 [00:02<00:00,  2.77s/it]100%|██████████| 1/1 [00:02<00:00,  2.77s/it]
+[INFO] infer round 3, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+[INFO] yield speech len 0.84, rtf 0.5962950842721122
+[INFO] yield speech len 2.4, rtf 0.37643561760584515
+[INFO] yield speech len 2.4, rtf 0.383120079835256
+[INFO] yield speech len 2.4, rtf 0.39217005173365277
+[INFO] yield speech len 2.4, rtf 0.3948784867922465
+[INFO] yield speech len 2.4, rtf 0.39936790863672894
+[INFO] yield speech len 1.12, rtf 0.41016638278961176
+100%|██████████| 1/1 [00:05<00:00,  5.63s/it]100%|██████████| 1/1 [00:05<00:00,  5.63s/it]
+[INFO] infer round 4, text 0: 是的，您现在还有大概1个G的流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 是的，您现在还有大概一个G的流量。
+[INFO] yield speech len 0.84, rtf 0.6025243373144241
+[INFO] yield speech len 1.88, rtf 0.34961002938290864
+100%|██████████| 1/1 [00:01<00:00,  1.16s/it]100%|██████████| 1/1 [00:01<00:00,  1.16s/it]
+[INFO] infer round 4, text 1: 不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 不全是通用的哦，里面有八百兆是通用流量，还有九百兆是定向流量。
+[INFO] yield speech len 0.84, rtf 0.617136557896932
+[INFO] yield speech len 2.4, rtf 0.37049561738967896
+[INFO] yield speech len 2.6, rtf 0.3509709468254676
+100%|██████████| 1/1 [00:02<00:00,  2.32s/it]100%|██████████| 1/1 [00:02<00:00,  2.32s/it]
+[INFO] infer round 4, text 2: 查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 查到了，您现在的通用流量还剩八百兆，定向流量还剩九百兆。
+[INFO] yield speech len 0.84, rtf 0.6123503049214681
+[INFO] yield speech len 2.4, rtf 0.3758815924326579
+[INFO] yield speech len 2.0, rtf 0.37684333324432373
+100%|██████████| 1/1 [00:02<00:00,  2.17s/it]100%|██████████| 1/1 [00:02<00:00,  2.17s/it]
+[INFO] infer round 4, text 3: 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，稍后如果您收到评价短信，麻烦您对我的服务做出评价，感谢您的来电，祝您生活愉快，再见！
+[INFO] yield speech len 0.84, rtf 0.6092267377035958
+[INFO] yield speech len 2.4, rtf 0.3705235322316488
+[INFO] yield speech len 2.4, rtf 0.40257145961125695
+[INFO] yield speech len 0.4, rtf 0.5209261178970337
+100%|██████████| 1/1 [00:02<00:00,  2.58s/it]100%|██████████| 1/1 [00:02<00:00,  2.58s/it]
+[INFO] infer round 4, text 4: 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 您好，中国移动，很高兴为您服务。请问有什么可以帮您？
+[INFO] yield speech len 0.84, rtf 0.6069762366158622
+[INFO] yield speech len 2.6, rtf 0.3510791521805983
+100%|██████████| 1/1 [00:01<00:00,  1.42s/it]100%|██████████| 1/1 [00:01<00:00,  1.42s/it]
+[INFO] infer round 4, text 5: 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的，请问您是要为当前拨打的这个号码办理吗？另外需要和您核实一下，机主是您本人吗？
+[INFO] yield speech len 0.84, rtf 0.5950124490828741
+[INFO] yield speech len 2.4, rtf 0.37740349769592285
+[INFO] yield speech len 2.56, rtf 0.36674151197075844
+100%|██████████| 1/1 [00:02<00:00,  2.35s/it]100%|██████████| 1/1 [00:02<00:00,  2.35s/it]
+[INFO] infer round 4, text 6: 好的。这款"青春畅想5G套餐"主要是针对年轻用户的专属优惠，月费59元，包含30G通用流量、30G定向流量和100分钟语音通话。您看这个流量够您平时使用吗？
+  0%|          | 0/1 [00:00<?, ?it/s][INFO] synthesis text 好的。这款"青春畅想五G套餐"主要是针对年轻用户的专属优惠，月费五十九元，包含三十G通用流量、三十G定向流量和一百分钟语音通话。您看这个流量够您平时使用吗？
+[INFO] yield speech len 0.84, rtf 0.5784707409994942
+[INFO] yield speech len 2.4, rtf 0.38458665211995446
+[INFO] yield speech len 2.4, rtf 0.3932613134384155
+[INFO] yield speech len 2.4, rtf 0.3854149580001831
+[INFO] yield speech len 2.4, rtf 0.39076844851175946
+[INFO] yield speech len 2.4, rtf 0.38450002670288086
+[INFO] yield speech len 0.4, rtf 0.435183048248291
+100%|██████████| 1/1 [00:05<00:00,  5.31s/it]100%|██████████| 1/1 [00:05<00:00,  5.31s/it]
+[INFO] unload model success, model Id is 2147483649
+[INFO] unload model success, model Id is 2147483648
+[INFO] unload model success, model Id is 2
+[WARN] acl repeat destroy

@@ -49,7 +49,8 @@ def prepare_run_log_dir(log_base):
 # 构建 infer.py 命令行
 # ---------------------------------------------------------------------------
 def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times,
-                    output_dir, stream, no_save_audio):
+                    output_dir, stream, no_save_audio, sync_start_dir='',
+                    sync_start_timeout=900.0):
     cmd = [
         python_exe,
         'infer.py',
@@ -62,6 +63,11 @@ def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times,
         cmd.append('--stream')
     if no_save_audio:
         cmd.append('--no_save_audio')
+    if sync_start_dir:
+        cmd.extend([
+            '--sync_start_dir', sync_start_dir,
+            '--sync_start_timeout', str(sync_start_timeout),
+        ])
     return cmd
 
 
@@ -70,13 +76,13 @@ def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times,
 # ---------------------------------------------------------------------------
 def spawn_client(client_id, python_exe, model_path, infer_count, warm_up_times,
                  output_base, stream, no_save_audio, run_log_dir, work_dir,
-                 env_extra=None):
+                 env_extra=None, sync_start_dir='', sync_start_timeout=900.0):
     output_dir = os.path.join(output_base, 'client_{}'.format(client_id))
     os.makedirs(output_dir, exist_ok=True)
     log_path = os.path.join(run_log_dir, 'client_{}.log'.format(client_id))
     cmd = build_infer_cmd(
         python_exe, model_path, infer_count, warm_up_times, output_dir, stream,
-        no_save_audio)
+        no_save_audio, sync_start_dir, sync_start_timeout)
 
     # 合并额外环境变量
     child_env = os.environ.copy()
@@ -137,6 +143,39 @@ def wait_clients(clients):
             flush=True)
     batch_elapsed = time.time() - batch_start
     return results, batch_elapsed
+
+
+def wait_sync_ready(clients, sync_dir, timeout):
+    os.makedirs(sync_dir, exist_ok=True)
+    expected = {
+        'client_{}.ready'.format(client['client_id'])
+        for client in clients
+    }
+    start = time.time()
+    while True:
+        ready = set(os.path.basename(path) for path in
+                    [os.path.join(sync_dir, name)
+                     for name in os.listdir(sync_dir)]
+                    if path.endswith('.ready'))
+        missing = sorted(expected - ready)
+        if not missing:
+            go_path = os.path.join(sync_dir, 'go')
+            with open(go_path, 'w', buffering=1) as f:
+                f.write('{:.6f}\n'.format(time.time()))
+            print('[SYNC] all {} clients ready in {:.3f}s, go={}'.format(
+                len(clients), time.time() - start, go_path), flush=True)
+            return time.time() - start
+        failed = [client for client in clients
+                  if client['proc'].poll() is not None]
+        if failed:
+            ids = ','.join(str(client['client_id']) for client in failed)
+            raise RuntimeError(
+                'clients exited before sync ready: {}'.format(ids))
+        if timeout > 0 and time.time() - start > timeout:
+            raise TimeoutError(
+                'sync ready timeout after {:.1f}s, missing={}'.format(
+                    timeout, ','.join(missing)))
+        time.sleep(0.2)
 
 
 # ---------------------------------------------------------------------------
@@ -220,6 +259,16 @@ def main():
         help='串行执行所有进程的 warmup（减少 NPU 编译风暴），warmup 结束后再并发推理',
     )
     parser.add_argument(
+        '--sync_start',
+        action='store_true',
+        help='所有子进程 warmup 完成后等待统一 go，再同时开始正式推理',
+    )
+    parser.add_argument(
+        '--sync_start_timeout',
+        default=900.0, type=float,
+        help='等待所有子进程进入正式推理屏障的超时时间（秒）',
+    )
+    parser.add_argument(
         '--total_cpus',
         default=None, type=int,
         help='系统 CPU 总数（默认自动检测）',
@@ -264,11 +313,15 @@ def main():
         'stagger_delay': args.stagger_delay,
         'cpu_affinity': args.enable_cpu_affinity,
         'serial_warmup': args.serial_warmup,
+        'sync_start': args.sync_start,
+        'sync_start_timeout': args.sync_start_timeout,
         'total_cpus': total_cpus,
         'no_save_audio': args.no_save_audio,
     }
 
     clients = []
+    sync_dir = os.path.join(run_log_dir, 'sync_start')
+    sync_wait_elapsed = None
 
     # ====================================================================
     # Phase 1: 串行 Warmup（可选）
@@ -348,6 +401,10 @@ def main():
             # 通知 infer.py 跳过 warmup
             env_extra['SKIP_WARMUP'] = '1'
 
+        child_sync_dir = ''
+        if args.sync_start:
+            child_sync_dir = sync_dir
+
         client = spawn_client(
             client_id,
             args.python,
@@ -360,6 +417,8 @@ def main():
             run_log_dir,
             work_dir,
             env_extra=env_extra,
+            sync_start_dir=child_sync_dir,
+            sync_start_timeout=args.sync_start_timeout,
         )
 
         # CPU 亲和性
@@ -387,6 +446,11 @@ def main():
 
     print('[INFO] all {} clients spawned in {:.3f}s, waiting...'.format(
         args.concurrency, time.time() - spawn_start), flush=True)
+
+    if args.sync_start:
+        sync_wait_elapsed = wait_sync_ready(
+            clients, sync_dir, args.sync_start_timeout)
+        extra_info['sync_wait_elapsed'] = '{:.3f}'.format(sync_wait_elapsed)
 
     results, batch_elapsed = wait_clients(clients)
     summary_path = write_summary(run_log_dir, args, results, batch_elapsed,

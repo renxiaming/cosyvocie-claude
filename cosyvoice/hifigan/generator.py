@@ -15,6 +15,7 @@
 """HIFI-GAN"""
 
 from typing import Dict, Optional, List
+import os
 import numpy as np
 from scipy.signal import get_window
 import torch
@@ -316,6 +317,20 @@ class HiFTGenerator(nn.Module):
         self.reflection_pad = nn.ReflectionPad1d((1, 0))
         self.stft_window = torch.from_numpy(get_window("hann", istft_params["n_fft"], fftbins=True).astype(np.float32))
         self.f0_predictor = f0_predictor
+        self.decode_om = None
+        self.decode_om_restore_session = None
+        self.decode_om_gears = []
+
+    def load_decode_om(self, om_path: str, device_id: int = 0,
+                       restore_session=None):
+        from ais_bench.infer.interface import InferSession
+        self.decode_om = InferSession(device_id, om_path)
+        self.decode_om_restore_session = restore_session
+        gears = os.environ.get("COSYVOICE2_HIFT_DECODE_GEARS", "")
+        self.decode_om_gears = sorted(
+            int(item.strip()) for item in gears.split(",") if item.strip())
+        print("[INFO] hift decode om loaded: {}, gears={}".format(
+            om_path, self.decode_om_gears), flush=True)
 
     def remove_weight_norm(self):
         print('Removing weight norm...')
@@ -374,6 +389,39 @@ class HiFTGenerator(nn.Module):
 
         return magnitude, phase
 
+    def decode_by_om(self, x: torch.Tensor, s_stft: torch.Tensor):
+        curr_len = int(x.shape[2])
+        target_len = curr_len
+        if self.decode_om_gears:
+            target_len = next((gear for gear in self.decode_om_gears
+                               if gear >= curr_len), None)
+            if target_len is None:
+                raise RuntimeError(
+                    "no hift decode om gear for mel length {}".format(curr_len))
+
+        target_stft_len = 120 * target_len + 1
+        x_feed = x.detach().cpu().numpy().astype(np.float32)
+        s_feed = s_stft.detach().cpu().numpy().astype(np.float32)
+        if target_len > curr_len:
+            x_feed = np.pad(x_feed,
+                            ((0, 0), (0, 0), (0, target_len - curr_len)),
+                            mode="constant")
+        if target_stft_len > s_feed.shape[2]:
+            s_feed = np.pad(
+                s_feed,
+                ((0, 0), (0, 0), (0, target_stft_len - s_feed.shape[2])),
+                mode="constant")
+
+        magnitude, phase = self.decode_om.infer([x_feed, s_feed],
+                                                mode="dymdims")
+        if self.decode_om_restore_session is not None:
+            self.decode_om_restore_session.set_context()
+        if x.device.type == "npu":
+            torch.npu.set_device(x.device)
+        magnitude = torch.from_numpy(magnitude).to(x.device)
+        phase = torch.from_numpy(phase).to(x.device)
+        return magnitude[:, :, :s_stft.shape[2]], phase[:, :, :s_stft.shape[2]]
+
     def forward(
             self,
             batch: dict,
@@ -405,7 +453,10 @@ class HiFTGenerator(nn.Module):
         s_stft_real, s_stft_imag = self._stft(s.squeeze(1))
         s_stft = torch.cat([s_stft_real, s_stft_imag], dim=1)
         index = self.istft_params["n_fft"] // 2 + 1 # 为了适配dynamo编译，把decode内部index拿到外部计算
-        magnitude, phase = self.decode(x=speech_feat, s_stft=s_stft, index=index)
+        if self.decode_om is not None:
+            magnitude, phase = self.decode_by_om(x=speech_feat, s_stft=s_stft)
+        else:
+            magnitude, phase = self.decode(x=speech_feat, s_stft=s_stft, index=index)
         x = self._istft(magnitude, phase)
         generated_speech = torch.clamp(x, -self.audio_limit, self.audio_limit)
         return generated_speech, s

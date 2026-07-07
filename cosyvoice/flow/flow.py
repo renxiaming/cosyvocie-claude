@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import logging
+import os
 import random
 from typing import Dict, Optional
 import torch
@@ -227,7 +228,9 @@ class CausalMaskedDiffWithXvec(torch.nn.Module):
         conds = conds.transpose(1, 2)
 
         mask = (~make_pad_mask(torch.tensor([mel_len1 + mel_len2]))).to(h)
-        print("flow step2")
+        if os.environ.get('COSYVOICE2_VERBOSE_FLOW', '0') == '1':
+            print("flow step2")
+        flow_steps = int(os.environ.get('COSYVOICE2_FLOW_STEPS', '2'))
         feat, _ = self.decoder(
             mu=h.transpose(1, 2).contiguous(),
             mask=mask.unsqueeze(1),
@@ -235,7 +238,7 @@ class CausalMaskedDiffWithXvec(torch.nn.Module):
             cond=conds,
             #n_timesteps=10
             # n_timesteps=6
-            n_timesteps=2
+            n_timesteps=flow_steps
         )
         feat = feat[:, :, mel_len1:]
         assert feat.shape[2] == mel_len2

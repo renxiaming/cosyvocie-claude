@@ -1,0 +1,14 @@
+[SUMMARY] log_dir=logs/manual_hift_om_v2_sync_run/run_20260707_144009
+[SUMMARY] mode=manual_terminal_spawn, concurrency=1, infer_count=5
+[SUMMARY] each_client=infer.py (same as run.sh), stream=True
+[SUMMARY] stagger_delay=0.0
+[SUMMARY] cpu_affinity=True
+[SUMMARY] serial_warmup=False
+[SUMMARY] sync_start=True
+[SUMMARY] sync_start_timeout=1800.0
+[SUMMARY] total_cpus=192
+[SUMMARY] no_save_audio=True
+[SUMMARY] sync_wait_elapsed=191.355
+[SUMMARY] success=1, failed=0, batch_wall=257.335s
+[SUMMARY] avg_client_elapsed=257.335s, p95_client_elapsed=257.335s
+[CLIENT] client_0 pid=1501614 success=True exit_code=0 elapsed=257.335s log=logs/manual_hift_om_v2_sync_run/run_20260707_144009/client_0.log

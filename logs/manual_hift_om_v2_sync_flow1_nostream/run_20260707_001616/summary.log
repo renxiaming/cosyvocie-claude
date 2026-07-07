@@ -1,0 +1,23 @@
+[SUMMARY] log_dir=logs/manual_hift_om_v2_sync_flow1_nostream/run_20260707_001616
+[SUMMARY] mode=manual_terminal_spawn, concurrency=10, infer_count=5
+[SUMMARY] each_client=infer.py (same as run.sh), stream=True
+[SUMMARY] stagger_delay=0.0
+[SUMMARY] cpu_affinity=True
+[SUMMARY] serial_warmup=False
+[SUMMARY] sync_start=True
+[SUMMARY] sync_start_timeout=1800.0
+[SUMMARY] total_cpus=192
+[SUMMARY] no_save_audio=True
+[SUMMARY] sync_wait_elapsed=284.781
+[SUMMARY] success=10, failed=0, batch_wall=382.390s
+[SUMMARY] avg_client_elapsed=376.753s, p95_client_elapsed=381.970s
+[CLIENT] client_0 pid=4146531 success=True exit_code=0 elapsed=373.304s log=logs/manual_hift_om_v2_sync_flow1_nostream/run_20260707_001616/client_0.log
+[CLIENT] client_1 pid=4146532 success=True exit_code=0 elapsed=373.672s log=logs/manual_hift_om_v2_sync_flow1_nostream/run_20260707_001616/client_1.log
+[CLIENT] client_2 pid=4146533 success=True exit_code=0 elapsed=373.671s log=logs/manual_hift_om_v2_sync_flow1_nostream/run_20260707_001616/client_2.log
+[CLIENT] client_3 pid=4146534 success=True exit_code=0 elapsed=374.018s log=logs/manual_hift_om_v2_sync_flow1_nostream/run_20260707_001616/client_3.log
+[CLIENT] client_4 pid=4146535 success=True exit_code=0 elapsed=374.017s log=logs/manual_hift_om_v2_sync_flow1_nostream/run_20260707_001616/client_4.log
+[CLIENT] client_5 pid=4146536 success=True exit_code=0 elapsed=378.166s log=logs/manual_hift_om_v2_sync_flow1_nostream/run_20260707_001616/client_5.log
+[CLIENT] client_6 pid=4146537 success=True exit_code=0 elapsed=378.166s log=logs/manual_hift_om_v2_sync_flow1_nostream/run_20260707_001616/client_6.log
+[CLIENT] client_7 pid=4146538 success=True exit_code=0 elapsed=378.165s log=logs/manual_hift_om_v2_sync_flow1_nostream/run_20260707_001616/client_7.log
+[CLIENT] client_8 pid=4146539 success=True exit_code=0 elapsed=381.970s log=logs/manual_hift_om_v2_sync_flow1_nostream/run_20260707_001616/client_8.log
+[CLIENT] client_9 pid=4146540 success=True exit_code=0 elapsed=382.383s log=logs/manual_hift_om_v2_sync_flow1_nostream/run_20260707_001616/client_9.log

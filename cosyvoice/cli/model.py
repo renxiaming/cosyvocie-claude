@@ -328,7 +328,11 @@ class CosyVoice2Model(CosyVoiceModel):
         # ---- NPU Stream 隔离 & 调试控制 ----
         # 使用独立 NPU Stream 使 Flow+Hift 与 LLM 的算子队列隔离，
         # 减少多进程场景下不同模块间的算子排队竞争
-        self.flow_hift_stream = torch.npu.Stream() if torch.npu.is_available() else None
+        use_flow_hift_stream = os.environ.get(
+            'COSYVOICE2_FLOW_HIFT_STREAM', '1') == '1'
+        self.flow_hift_stream = (
+            torch.npu.Stream()
+            if torch.npu.is_available() and use_flow_hift_stream else None)
         # 通过环境变量控制 debug 打印（多进程并发时关闭以减少 stdout 锁竞争）
         self._debug_timing = os.environ.get('COSYVOICE2_DEBUG_TIMING', '0') == '1'
 

@@ -199,6 +199,10 @@ class CosyVoice2(CosyVoice):
             self.frontend.flow_om = flow_om
             self.model.flow.decoder.flow_om_static = flow_om_static
             self.model.flow.decoder.flow_om = flow_om
+            hift_decode_om = os.environ.get('COSYVOICE2_HIFT_DECODE_OM', '')
+            if hift_decode_om:
+                self.model.hift.load_decode_om(hift_decode_om,
+                                                restore_session=flow_om)
         del configs
 
     def inference_instruct(self, *args, **kwargs):
