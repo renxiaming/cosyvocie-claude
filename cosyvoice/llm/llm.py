@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from typing import Dict, Optional, Callable, List, Generator
+import os
 import torch
 from torch import nn
 import torch.nn.functional as F
@@ -228,9 +229,37 @@ class Qwen2Encoder(torch.nn.Module):
     def __init__(self, pretrain_path):
         super().__init__()
         self.model = Qwen2ForCausalLM.from_pretrained(pretrain_path)
+        self.hidden_only = os.environ.get('COSYVOICE2_QWEN_HIDDEN_ONLY', '0') == '1'
 
     def forward_one_step(self, xs, masks, prompt_length, cache=None):
         with torch.no_grad():
+            if self.hidden_only and hasattr(self.model.model, 'forward_hidden_only'):
+                updated_kv_positions, cache, position_ids, kv_padding_size, actual_seq_len = self.model.prepare_data(
+                    xs, cache, prompt_length)
+                model_inputs = {
+                    "inputs_embeds": xs,
+                    "past_key_values": cache,
+                    "position_ids": position_ids,
+                    "kv_padding_size": kv_padding_size,
+                    "actual_seq_len": actual_seq_len,
+                    "attention_mask": masks,
+                }
+                if xs.shape[1] == 1:
+                    self.model._mark_model_inputs_static(model_inputs)
+                outs, last_hidden_state = self.model.model.forward_hidden_only(
+                    attention_mask=masks,
+                    position_ids=position_ids,
+                    past_key_values=cache,
+                    updated_kv_positions=updated_kv_positions,
+                    kv_padding_size=kv_padding_size,
+                    actual_seq_len=actual_seq_len,
+                    inputs_embeds=xs,
+                    use_cache=True,
+                    output_attentions=False,
+                    output_hidden_states=False,
+                    return_dict=True,
+                )
+                return last_hidden_state, outs.past_key_values
             outs = self.model(
                 inputs_embeds=xs,
                 attention_mask=masks,

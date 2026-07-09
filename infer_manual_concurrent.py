@@ -49,8 +49,8 @@ def prepare_run_log_dir(log_base):
 # 构建 infer.py 命令行
 # ---------------------------------------------------------------------------
 def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times,
-                    output_dir, stream, no_save_audio, sync_start_dir='',
-                    sync_start_timeout=900.0):
+                    output_dir, stream, no_save_audio, warmup_full=False,
+                    sync_start_dir='', sync_start_timeout=900.0):
     cmd = [
         python_exe,
         'infer.py',
@@ -63,6 +63,8 @@ def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times,
         cmd.append('--stream')
     if no_save_audio:
         cmd.append('--no_save_audio')
+    if warmup_full:
+        cmd.append('--warmup_full')
     if sync_start_dir:
         cmd.extend([
             '--sync_start_dir', sync_start_dir,
@@ -76,13 +78,14 @@ def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times,
 # ---------------------------------------------------------------------------
 def spawn_client(client_id, python_exe, model_path, infer_count, warm_up_times,
                  output_base, stream, no_save_audio, run_log_dir, work_dir,
-                 env_extra=None, sync_start_dir='', sync_start_timeout=900.0):
+                 env_extra=None, warmup_full=False, sync_start_dir='',
+                 sync_start_timeout=900.0):
     output_dir = os.path.join(output_base, 'client_{}'.format(client_id))
     os.makedirs(output_dir, exist_ok=True)
     log_path = os.path.join(run_log_dir, 'client_{}.log'.format(client_id))
     cmd = build_infer_cmd(
         python_exe, model_path, infer_count, warm_up_times, output_dir, stream,
-        no_save_audio, sync_start_dir, sync_start_timeout)
+        no_save_audio, warmup_full, sync_start_dir, sync_start_timeout)
 
     # 合并额外环境变量
     child_env = os.environ.copy()
@@ -259,6 +262,11 @@ def main():
         help='串行执行所有进程的 warmup（减少 NPU 编译风暴），warmup 结束后再并发推理',
     )
     parser.add_argument(
+        '--warmup_full',
+        action='store_true',
+        help='warmup 时完整消费流式输出；不设置时只等待首包，行为与 run.sh 旧版本一致',
+    )
+    parser.add_argument(
         '--sync_start',
         action='store_true',
         help='所有子进程 warmup 完成后等待统一 go，再同时开始正式推理',
@@ -356,6 +364,7 @@ def main():
                 run_log_dir,
                 work_dir,
                 env_extra=env_extra,
+                warmup_full=args.warmup_full,
             )
 
             # CPU 亲和性：在父进程侧对子进程 PID 设置
@@ -417,6 +426,7 @@ def main():
             run_log_dir,
             work_dir,
             env_extra=env_extra,
+            warmup_full=args.warmup_full,
             sync_start_dir=child_sync_dir,
             sync_start_timeout=args.sync_start_timeout,
         )

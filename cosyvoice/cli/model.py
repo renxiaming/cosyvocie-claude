@@ -335,6 +335,12 @@ class CosyVoice2Model(CosyVoiceModel):
             if torch.npu.is_available() and use_flow_hift_stream else None)
         # 通过环境变量控制 debug 打印（多进程并发时关闭以减少 stdout 锁竞争）
         self._debug_timing = os.environ.get('COSYVOICE2_DEBUG_TIMING', '0') == '1'
+        self._no_cpu_output = os.environ.get('COSYVOICE2_NO_CPU_OUTPUT', '0') == '1'
+
+    def _wrap_tts_output(self, tts_speech):
+        if self._no_cpu_output:
+            return {'tts_speech': tts_speech}
+        return {'tts_speech': tts_speech.cpu()}
 
     def load_jit(self, flow_encoder_model):
         flow_encoder = torch.jit.load(flow_encoder_model, map_location=self.device)
@@ -483,7 +489,7 @@ class CosyVoice2Model(CosyVoiceModel):
                     else:
                         token_offset += self.token_hop_len
                     # print(self.token_hop_len)
-                    yield {'tts_speech': this_tts_speech.cpu()}
+                    yield self._wrap_tts_output(this_tts_speech)
 
                     # 重置 LLM 计时器，准备下一包
                     llm_start_time = time.time()
@@ -507,7 +513,7 @@ class CosyVoice2Model(CosyVoiceModel):
             if self._debug_timing:
                 print(f"[Profiling Final] Tail Logic Time: {final_duration:.1f}ms")
 
-            yield {'tts_speech': this_tts_speech.cpu()}
+            yield self._wrap_tts_output(this_tts_speech)
         else:
             p = threading.Thread(target=self.llm_job, args=(text, prompt_text, llm_prompt_speech_token, llm_embedding, this_uuid))
             p.start()
@@ -522,7 +528,7 @@ class CosyVoice2Model(CosyVoiceModel):
                                              token_offset=0,
                                              finalize=True,
                                              speed=speed)
-            yield {'tts_speech': this_tts_speech.cpu()}
+            yield self._wrap_tts_output(this_tts_speech)
         with self.lock:
             self.tts_speech_token_dict.pop(this_uuid)
             self.llm_end_dict.pop(this_uuid)

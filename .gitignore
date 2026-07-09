@@ -52,3 +52,4 @@ pretrained_models/*
 *.tar
 *.whl
 
+experiments/

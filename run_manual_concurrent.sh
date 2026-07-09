@@ -29,6 +29,11 @@ export ACLNN_CACHE_LIMIT="${ACLNN_CACHE_LIMIT:-100000}"
 export ENABLE_DYNAMIC_SHAPE_MULTI_STREAM="${ENABLE_DYNAMIC_SHAPE_MULTI_STREAM:-1}"
 export TASK_QUEUE_ENABLE="${TASK_QUEUE_ENABLE:-2}"
 
+# --- Qwen LLM hidden-only 推理 ---
+# 只跳过 CosyVoice 未使用的 Qwen lm_head，独立使用 safe hidden-only 编译缓存。
+export COSYVOICE2_QWEN_HIDDEN_ONLY="${COSYVOICE2_QWEN_HIDDEN_ONLY:-1}"
+export TORCHAIR_CACHE_HOME="${TORCHAIR_CACHE_HOME:-experiments/torchair_cache_hidden_safe}"
+
 # --- 限制每个进程的 CPU 线程数，减少 10 进程下 CPU/BLAS 竞争 ---
 export OMP_NUM_THREADS="${OMP_NUM_THREADS:-4}"
 export MKL_NUM_THREADS="${MKL_NUM_THREADS:-2}"
@@ -77,9 +82,10 @@ rm -rf ~/.cache/modelscope/
 python3 infer_manual_concurrent.py \
   --model_path="${MODEL_PATH:-../weight/CosyVoice2-0.5B_sft_shenhu_25_60}" \
   --stream \
-  --concurrency="${CONCURRENCY:-1}" \
+  --concurrency="${CONCURRENCY:-10}" \
   --infer_count=5 \
   --warm_up_times=5 \
+  --warmup_full \
   --log_dir="${LOG_DIR:-logs/manual}" \
   --enable_cpu_affinity \
   $SYNC_START_ARG \

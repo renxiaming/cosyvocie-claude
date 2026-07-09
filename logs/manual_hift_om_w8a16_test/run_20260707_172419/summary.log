@@ -1,0 +1,23 @@
+[SUMMARY] log_dir=logs/manual_hift_om_w8a16_test/run_20260707_172419
+[SUMMARY] mode=manual_terminal_spawn, concurrency=10, infer_count=5
+[SUMMARY] each_client=infer.py (same as run.sh), stream=True
+[SUMMARY] stagger_delay=0.0
+[SUMMARY] cpu_affinity=True
+[SUMMARY] serial_warmup=False
+[SUMMARY] sync_start=True
+[SUMMARY] sync_start_timeout=1800.0
+[SUMMARY] total_cpus=192
+[SUMMARY] no_save_audio=True
+[SUMMARY] sync_wait_elapsed=293.685
+[SUMMARY] success=10, failed=0, batch_wall=427.071s
+[SUMMARY] avg_client_elapsed=420.829s, p95_client_elapsed=427.065s
+[CLIENT] client_0 pid=2156641 success=True exit_code=0 elapsed=413.982s log=logs/manual_hift_om_w8a16_test/run_20260707_172419/client_0.log
+[CLIENT] client_1 pid=2156642 success=True exit_code=0 elapsed=414.746s log=logs/manual_hift_om_w8a16_test/run_20260707_172419/client_1.log
+[CLIENT] client_2 pid=2156643 success=True exit_code=0 elapsed=414.746s log=logs/manual_hift_om_w8a16_test/run_20260707_172419/client_2.log
+[CLIENT] client_3 pid=2156644 success=True exit_code=0 elapsed=414.746s log=logs/manual_hift_om_w8a16_test/run_20260707_172419/client_3.log
+[CLIENT] client_4 pid=2156645 success=True exit_code=0 elapsed=414.745s log=logs/manual_hift_om_w8a16_test/run_20260707_172419/client_4.log
+[CLIENT] client_5 pid=2156646 success=True exit_code=0 elapsed=427.065s log=logs/manual_hift_om_w8a16_test/run_20260707_172419/client_5.log
+[CLIENT] client_6 pid=2156647 success=True exit_code=0 elapsed=427.065s log=logs/manual_hift_om_w8a16_test/run_20260707_172419/client_6.log
+[CLIENT] client_7 pid=2156648 success=True exit_code=0 elapsed=427.065s log=logs/manual_hift_om_w8a16_test/run_20260707_172419/client_7.log
+[CLIENT] client_8 pid=2156649 success=True exit_code=0 elapsed=427.064s log=logs/manual_hift_om_w8a16_test/run_20260707_172419/client_8.log
+[CLIENT] client_9 pid=2156650 success=True exit_code=0 elapsed=427.064s log=logs/manual_hift_om_w8a16_test/run_20260707_172419/client_9.log

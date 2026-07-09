@@ -101,11 +101,15 @@ if __name__ == '__main__':
     parser.add_argument('--stream', action="store_true", help='stream infer')
     parser.add_argument('--no_save_audio', action="store_true",
                         help='consume inference output without writing wav files')
+    parser.add_argument('--warmup_full', action="store_true",
+                        help='consume full streaming output during warmup; default only waits for first packet')
     parser.add_argument('--sync_start_dir', default='', type=str,
                         help='directory used as formal inference start barrier')
     parser.add_argument('--sync_start_timeout', default=900.0, type=float,
                         help='seconds to wait for formal inference start barrier')
     args = parser.parse_args()
+    if args.no_save_audio:
+        os.environ.setdefault('COSYVOICE2_NO_CPU_OUTPUT', '1')
 
     # 检查是否跳过 warmup（由 infer_manual_concurrent 的 serial_warmup 模式控制）
     skip_warmup = os.environ.get('SKIP_WARMUP', '0') == '1'
@@ -148,9 +152,13 @@ if __name__ == '__main__':
             warmup_start = time.time()
             for warmup_idx in range(args.warm_up_times):
                 warmup_text = prompt_texts[warmup_idx % len(prompt_texts)]
-                for _ in cosyvoice.inference_sft(warmup_text, '03729',
-                                                 stream=args.stream):
-                    pass
+                if args.warmup_full:
+                    for _ in cosyvoice.inference_sft(warmup_text, '03729',
+                                                     stream=args.stream):
+                        pass
+                else:
+                    next(cosyvoice.inference_sft(warmup_text, '03729',
+                                                 stream=args.stream))
             print('warm up end, elapsed={:.1f}s'.format(
                 time.time() - warmup_start), flush=True)
 
