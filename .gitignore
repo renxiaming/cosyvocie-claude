@@ -36,6 +36,10 @@ data
 raw_wav
 tensorboard
 **/*build*
+logs/
+testout/
+edm_capture_artifacts.bak_*/
+kernel_meta.bak_*/
 
 # Clangd files
 .cache

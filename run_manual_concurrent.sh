@@ -14,7 +14,7 @@ export NO_SAVE_AUDIO="${NO_SAVE_AUDIO:-1}"
 export LOG_DIR="${LOG_DIR:-logs/manual_hift_om_v2_sync_run}"
 
 # NPU 设备绑定
-export ASCEND_RT_VISIBLE_DEVICES=0
+export ASCEND_RT_VISIBLE_DEVICES="${ASCEND_RT_VISIBLE_DEVICES:-0}"
 export PYTHONPATH=third_party/Matcha-TTS:$PYTHONPATH
 export PYTHONPATH=transformers/src:$PYTHONPATH
 

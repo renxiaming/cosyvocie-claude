@@ -230,6 +230,8 @@ class Qwen2Encoder(torch.nn.Module):
         super().__init__()
         self.model = Qwen2ForCausalLM.from_pretrained(pretrain_path)
         self.hidden_only = os.environ.get('COSYVOICE2_QWEN_HIDDEN_ONLY', '0') == '1'
+        print('[INFO] qwen hidden_only={}, forward_hidden_only={}'.format(
+            self.hidden_only, hasattr(self.model.model, 'forward_hidden_only')), flush=True)
 
     def forward_one_step(self, xs, masks, prompt_length, cache=None):
         with torch.no_grad():
