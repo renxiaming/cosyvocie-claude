@@ -33,6 +33,11 @@ export TASK_QUEUE_ENABLE="${TASK_QUEUE_ENABLE:-2}"
 # 只跳过 CosyVoice 未使用的 Qwen lm_head，独立使用 safe hidden-only 编译缓存。
 export COSYVOICE2_QWEN_HIDDEN_ONLY="${COSYVOICE2_QWEN_HIDDEN_ONLY:-1}"
 export TORCHAIR_CACHE_HOME="${TORCHAIR_CACHE_HOME:-experiments/torchair_cache_hidden_safe}"
+# --- Qwen LLM decode 轻量化 ---
+# fast_topk 避免原始 RAS/top-p 全量排序；device-token decode 减少逐 token .item() Host 同步。
+export COSYVOICE2_SAMPLING_MODE="${COSYVOICE2_SAMPLING_MODE:-fast_topk}"
+export COSYVOICE2_FAST_TOPK_K="${COSYVOICE2_FAST_TOPK_K:-25}"
+export COSYVOICE2_DEVICE_TOKEN_DECODE="${COSYVOICE2_DEVICE_TOKEN_DECODE:-1}"
 
 # --- 限制每个进程的 CPU 线程数，减少 10 进程下 CPU/BLAS 竞争 ---
 export OMP_NUM_THREADS="${OMP_NUM_THREADS:-4}"
@@ -53,6 +58,8 @@ export COSYVOICE2_FLOW_CONTEXT_TOKENS="${COSYVOICE2_FLOW_CONTEXT_TOKENS:-25}"
 export COSYVOICE2_FLOW_GEARS="${COSYVOICE2_FLOW_GEARS:-50,74,98,122,146,170,200,230,260,290,320,350,380,410}"
 # 生产环境关闭 debug 计时（同步屏障/打印均有额外开销，调试时设为1）
 export COSYVOICE2_DEBUG_TIMING="${COSYVOICE2_DEBUG_TIMING:-0}"
+# 跳过推理期 mask 全 false 防御检查，避免每次 mask 后 .item() 强制同步；如需排查 mask 问题设为0。
+export COSYVOICE2_SKIP_MASK_SANITY="${COSYVOICE2_SKIP_MASK_SANITY:-1}"
 # 关闭额外 Flow/HiFT NPU stream，严格 10 进程下 p95 更稳
 export COSYVOICE2_FLOW_HIFT_STREAM="${COSYVOICE2_FLOW_HIFT_STREAM:-0}"
 
@@ -83,7 +90,7 @@ python3 infer_manual_concurrent.py \
   --model_path="${MODEL_PATH:-../weight/CosyVoice2-0.5B_sft_shenhu_25_60}" \
   --stream \
   --concurrency="${CONCURRENCY:-10}" \
-  --infer_count=5 \
+  --infer_count=25 \
   --warm_up_times=5 \
   --warmup_full \
   --log_dir="${LOG_DIR:-logs/manual}" \

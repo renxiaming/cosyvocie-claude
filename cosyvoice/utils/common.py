@@ -16,6 +16,7 @@
 """Unility functions for Transformer."""
 
 import random
+import os
 from typing import List
 
 import numpy as np
@@ -107,11 +108,21 @@ def init_weights(m, mean=0.0, std=0.01):
 
 # Repetition Aware Sampling in VALL-E 2
 def ras_sampling(weighted_scores, decoded_tokens, sampling, top_p=0.8, top_k=25, win_size=10, tau_r=0.1):
+    sampling_mode = os.environ.get('COSYVOICE2_SAMPLING_MODE', '')
+    if sampling_mode == 'fast_topk':
+        return fast_topk_sampling(weighted_scores, top_k=top_k)
     top_ids = dst_sampling(weighted_scores, top_p=top_p, top_k=top_k)
     rep_num = (torch.tensor(decoded_tokens[-win_size:]).to(weighted_scores.device) == top_ids).sum().item()
     if rep_num >= win_size * tau_r:
         top_ids = random_sampling(weighted_scores, decoded_tokens, sampling)
     return top_ids
+
+def fast_topk_sampling(weighted_scores, top_k=25):
+    top_k = int(os.environ.get('COSYVOICE2_FAST_TOPK_K', top_k))
+    k = min(top_k, weighted_scores.size(0))
+    top_values, top_indices = torch.topk(weighted_scores, k=k, dim=0)
+    top_probs = top_values.softmax(dim=0)
+    return top_indices[top_probs.multinomial(1, replacement=True)]
 
 def dst_sampling(weighted_scores, top_p=0.8, top_k=25):
 

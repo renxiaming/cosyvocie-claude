@@ -342,6 +342,13 @@ class CosyVoice2Model(CosyVoiceModel):
             return {'tts_speech': tts_speech}
         return {'tts_speech': tts_speech.cpu()}
 
+    def _speech_tokens_to_tensor(self, tokens):
+        if len(tokens) == 0:
+            return torch.zeros(1, 0, dtype=torch.long, device=self.device)
+        if torch.is_tensor(tokens[0]):
+            return torch.stack([i.reshape(()) for i in tokens]).reshape(1, -1).long()
+        return torch.tensor(tokens).unsqueeze(dim=0)
+
     def load_jit(self, flow_encoder_model):
         flow_encoder = torch.jit.load(flow_encoder_model, map_location=self.device)
         self.flow.encoder = flow_encoder
@@ -454,12 +461,14 @@ class CosyVoice2Model(CosyVoiceModel):
                     llm_duration = (time.time() - llm_start_time) * 1000
 
                     if token_offset == 0:
-                        this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid][:self.first_chunk_size + self.flow.pre_lookahead_len]).unsqueeze(dim=0)
+                        this_tts_speech_token = self._speech_tokens_to_tensor(
+                            self.tts_speech_token_dict[this_uuid][:self.first_chunk_size + self.flow.pre_lookahead_len])
                         flow_token_offset = 0
                     else:
                         flow_token_start = max(0, token_offset - self.flow_context_len)
                         flow_token_end = token_offset + self.token_hop_len + self.flow.pre_lookahead_len
-                        this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid][flow_token_start:flow_token_end]).unsqueeze(dim=0)
+                        this_tts_speech_token = self._speech_tokens_to_tensor(
+                            self.tts_speech_token_dict[this_uuid][flow_token_start:flow_token_end])
                         flow_token_offset = token_offset - flow_token_start
 
                     # --- 2. 测量 token2wav (包含 Flow 和 Hift) 的耗时 ---
@@ -498,7 +507,8 @@ class CosyVoice2Model(CosyVoiceModel):
             start_final = time.time()
 
             flow_token_start = max(0, token_offset - self.flow_context_len)
-            this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid][flow_token_start:]).unsqueeze(dim=0)
+            this_tts_speech_token = self._speech_tokens_to_tensor(
+                self.tts_speech_token_dict[this_uuid][flow_token_start:])
             this_tts_speech = self.token2wav(token=this_tts_speech_token,
                                                 prompt_token=flow_prompt_speech_token,
                                                 prompt_feat=prompt_speech_feat,
@@ -519,7 +529,8 @@ class CosyVoice2Model(CosyVoiceModel):
             p.start()
             # deal with all tokens
             p.join()
-            this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid]).unsqueeze(dim=0)
+            this_tts_speech_token = self._speech_tokens_to_tensor(
+                self.tts_speech_token_dict[this_uuid])
             this_tts_speech = self.token2wav(token=this_tts_speech_token,
                                              prompt_token=flow_prompt_speech_token,
                                              prompt_feat=prompt_speech_feat,

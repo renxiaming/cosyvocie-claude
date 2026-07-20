@@ -18,7 +18,7 @@ from torch import nn
 import torch.nn.functional as F
 from transformers import Qwen2ForCausalLM
 from torch.nn.utils.rnn import pad_sequence, unpad_sequence
-from cosyvoice.utils.common import IGNORE_ID
+from cosyvoice.utils.common import IGNORE_ID, fast_topk_sampling
 from cosyvoice.transformer.label_smoothing_loss import LabelSmoothingLoss
 from cosyvoice.utils.common import th_accuracy
 from cosyvoice.utils.file_utils import logging
@@ -351,6 +351,10 @@ class Qwen2LM(TransformerLM):
         out_tokens = []
         cache = None
         input_length = lm_input.shape[1]
+        device_token_decode = (
+            os.environ.get('COSYVOICE2_DEVICE_TOKEN_DECODE', '0') == '1'
+            and os.environ.get('COSYVOICE2_SAMPLING_MODE', '') == 'fast_topk'
+        )
         for i in range(max_len):
             # 档位统计
             # if i % 25 == 0:
@@ -365,6 +369,19 @@ class Qwen2LM(TransformerLM):
                                                       prompt_length=prompt_length,
                                                       cache=cache)
             logp = self.llm_decoder(y_pred[:, -1]).log_softmax(dim=-1)
+            if device_token_decode:
+                weighted_scores = logp.squeeze(dim=0)
+                if i < min_len:
+                    weighted_scores[self.speech_token_size:] = -float('inf')
+                else:
+                    weighted_scores[self.speech_token_size + 1:] = -float('inf')
+                top_ids = fast_topk_sampling(weighted_scores, top_k=sampling)
+                if i >= min_len and int(top_ids.item()) == self.speech_token_size:
+                    break
+                yield top_ids
+                out_tokens.append(top_ids)
+                lm_input = self.speech_embedding(top_ids.reshape(1, 1)).detach().clone()
+                continue
             top_ids = self.sampling_ids(logp.squeeze(dim=0), out_tokens, sampling, ignore_eos=True if i < min_len else False).item()
             if top_ids == self.speech_token_size:
                 break

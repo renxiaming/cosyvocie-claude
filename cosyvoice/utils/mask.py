@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 import torch
 from cosyvoice.utils.file_utils import logging
 '''
@@ -232,7 +233,7 @@ def add_optional_chunk_mask(xs: torch.Tensor,
     else:
         chunk_masks = masks
     assert chunk_masks.dtype == torch.bool
-    if (chunk_masks.sum(dim=-1) == 0).sum().item() != 0:
+    if os.environ.get('COSYVOICE2_SKIP_MASK_SANITY', '0') != '1' and (chunk_masks.sum(dim=-1) == 0).sum().item() != 0:
         logging.warning('get chunk_masks all false at some timestep, force set to true, make sure they are masked in futuer computation!')
         chunk_masks[chunk_masks.sum(dim=-1)==0] = True
     return chunk_masks
