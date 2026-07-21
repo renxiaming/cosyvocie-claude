@@ -8,6 +8,7 @@ export COSYVOICE2_HIFT_DECODE_GEARS="${COSYVOICE2_HIFT_DECODE_GEARS:-30,50,128,1
 
 # 单进程默认保存音频，性能压测可设 NO_SAVE_AUDIO=1
 export NO_SAVE_AUDIO="${NO_SAVE_AUDIO:-0}"
+export TEXT_FILE="${TEXT_FILE:-data/manual_transcript_20260720.txt}"
 
 # 避免 HuggingFace tokenizer 在线程池初始化后 fork 引发死锁风险。
 export TOKENIZERS_PARALLELISM="${TOKENIZERS_PARALLELISM:-false}"
@@ -93,5 +94,6 @@ python3 infer.py \
   --warm_up_times="${WARM_UP_TIMES:-5}" \
   --infer_count="${INFER_COUNT:-5}" \
   --output_dir="${OUTPUT_DIR:-testout/run_single}" \
+  --text_file="${TEXT_FILE}" \
   $NO_SAVE_ARG
 # python3 register_wav.py

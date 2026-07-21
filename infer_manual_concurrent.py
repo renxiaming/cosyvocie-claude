@@ -20,16 +20,48 @@ def get_cpu_count():
     return os.cpu_count() or 192  # fallback 192 for Ascend platform
 
 
-def cpu_affinity_ranges(concurrency, total_cpus=None):
-    """将 total_cpus 个核均分为 concurrency 段，返回 [(start, end), ...] 列表"""
-    if total_cpus is None:
-        total_cpus = get_cpu_count()
-    chunk_size = total_cpus // concurrency
+def parse_cpu_list(cpu_spec):
+    """Parse CPU list like '144-167' or '144-151,160-167'."""
+    cpus = []
+    for part in cpu_spec.split(','):
+        part = part.strip()
+        if not part:
+            continue
+        if '-' in part:
+            start, end = part.split('-', 1)
+            cpus.extend(range(int(start), int(end) + 1))
+        else:
+            cpus.append(int(part))
+    return sorted(set(cpus))
+
+
+def cpu_affinity_ranges(concurrency, total_cpus=None, cpu_list=None,
+                        share_cpu_list=False):
+    """将 CPU 核均分为 concurrency 段，返回 [(start, end), ...] 列表"""
+    if cpu_list is None:
+        if total_cpus is None:
+            total_cpus = get_cpu_count()
+        chunk_size = total_cpus // concurrency
+        ranges = []
+        for i in range(concurrency):
+            start = i * chunk_size
+            end = start + chunk_size - 1 if i < concurrency - 1 else total_cpus - 1
+            ranges.append((start, end))
+        return ranges
+    if len(cpu_list) < concurrency:
+        raise ValueError('cpu_list has fewer CPUs ({}) than concurrency ({})'.format(
+            len(cpu_list), concurrency))
+    if share_cpu_list:
+        return [(cpu_list[0], cpu_list[-1]) for _ in range(concurrency)]
+    base_size = len(cpu_list) // concurrency
+    remainder = len(cpu_list) % concurrency
     ranges = []
+    offset = 0
     for i in range(concurrency):
-        start = i * chunk_size
-        end = start + chunk_size - 1 if i < concurrency - 1 else total_cpus - 1
-        ranges.append((start, end))
+        size = base_size + (1 if i < remainder else 0)
+        chunk = cpu_list[offset: offset + size]
+        ranges.append((chunk[0], chunk[-1]))
+        offset += size
     return ranges
 
 
@@ -50,7 +82,8 @@ def prepare_run_log_dir(log_base):
 # ---------------------------------------------------------------------------
 def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times,
                     output_dir, stream, no_save_audio, warmup_full=False,
-                    sync_start_dir='', sync_start_timeout=900.0):
+                    sync_start_dir='', sync_start_timeout=900.0,
+                    text_file=''):
     cmd = [
         python_exe,
         'infer.py',
@@ -70,6 +103,8 @@ def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times,
             '--sync_start_dir', sync_start_dir,
             '--sync_start_timeout', str(sync_start_timeout),
         ])
+    if text_file:
+        cmd.extend(['--text_file', text_file])
     return cmd
 
 
@@ -79,13 +114,14 @@ def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times,
 def spawn_client(client_id, python_exe, model_path, infer_count, warm_up_times,
                  output_base, stream, no_save_audio, run_log_dir, work_dir,
                  env_extra=None, warmup_full=False, sync_start_dir='',
-                 sync_start_timeout=900.0):
+                 sync_start_timeout=900.0, text_file=''):
     output_dir = os.path.join(output_base, 'client_{}'.format(client_id))
     os.makedirs(output_dir, exist_ok=True)
     log_path = os.path.join(run_log_dir, 'client_{}.log'.format(client_id))
     cmd = build_infer_cmd(
         python_exe, model_path, infer_count, warm_up_times, output_dir, stream,
-        no_save_audio, warmup_full, sync_start_dir, sync_start_timeout)
+        no_save_audio, warmup_full, sync_start_dir, sync_start_timeout,
+        text_file)
 
     # 合并额外环境变量
     child_env = os.environ.copy()
@@ -234,6 +270,8 @@ def main():
     )
     parser.add_argument('--log_dir', default='logs/manual', type=str,
                         help='log base dir')
+    parser.add_argument('--text_file', default='', type=str,
+                        help='utf-8 text file passed to infer.py; one non-empty line is one inference text')
     parser.add_argument('--stream', action='store_true',
                         help='stream infer')
     parser.add_argument('--no_save_audio', action='store_true',
@@ -281,6 +319,17 @@ def main():
         default=None, type=int,
         help='系统 CPU 总数（默认自动检测）',
     )
+    parser.add_argument(
+        '--cpu_affinity_cpus',
+        default='',
+        type=str,
+        help='CPU list/range used for affinity split, e.g. 144-167. Overrides --total_cpus when set.',
+    )
+    parser.add_argument(
+        '--cpu_affinity_share',
+        action='store_true',
+        help='bind every client to the same --cpu_affinity_cpus range instead of splitting it',
+    )
     args = parser.parse_args()
 
     work_dir = os.path.dirname(os.path.abspath(__file__))
@@ -293,16 +342,23 @@ def main():
         print('[ERROR] python not found: {}'.format(args.python),
               file=sys.stderr)
         sys.exit(1)
+    if args.text_file and not os.path.isfile(args.text_file):
+        print('[ERROR] text_file not found: {}'.format(args.text_file),
+              file=sys.stderr)
+        sys.exit(1)
 
     run_log_dir = prepare_run_log_dir(args.log_dir)
     os.makedirs(args.output_dir, exist_ok=True)
-    total_cpus = args.total_cpus or get_cpu_count()
+    affinity_cpu_list = parse_cpu_list(args.cpu_affinity_cpus) if args.cpu_affinity_cpus else None
+    total_cpus = len(affinity_cpu_list) if affinity_cpu_list else (args.total_cpus or get_cpu_count())
 
     print('[INFO] run_log_dir={}'.format(run_log_dir), flush=True)
     print('[INFO] mode=manual_terminal_spawn, concurrency={}'.format(
         args.concurrency), flush=True)
     print('[INFO] python={}'.format(args.python), flush=True)
     print('[INFO] model_path={}'.format(args.model_path), flush=True)
+    if args.text_file:
+        print('[INFO] text_file={}'.format(args.text_file), flush=True)
     print('[INFO] each client runs: infer.py --infer_count={} --warm_up_times={} --stream={}'.format(
         args.infer_count, args.warm_up_times, args.stream), flush=True)
     print('[INFO] total_cpus={}, stagger_delay={:.1f}s, cpu_affinity={}, serial_warmup={}'.format(
@@ -312,7 +368,9 @@ def main():
     # --- 计算 CPU 亲和性范围 ---
     cpu_ranges = None
     if args.enable_cpu_affinity:
-        cpu_ranges = cpu_affinity_ranges(args.concurrency, total_cpus)
+        cpu_ranges = cpu_affinity_ranges(
+            args.concurrency, total_cpus, affinity_cpu_list,
+            args.cpu_affinity_share)
         for i, (start, end) in enumerate(cpu_ranges):
             print('[INFO] client_{} cpu_range={}-{}'.format(i, start, end),
                   flush=True)
@@ -324,7 +382,10 @@ def main():
         'sync_start': args.sync_start,
         'sync_start_timeout': args.sync_start_timeout,
         'total_cpus': total_cpus,
+        'cpu_affinity_cpus': args.cpu_affinity_cpus,
+        'cpu_affinity_share': args.cpu_affinity_share,
         'no_save_audio': args.no_save_audio,
+        'text_file': args.text_file,
     }
 
     clients = []
@@ -365,6 +426,7 @@ def main():
                 work_dir,
                 env_extra=env_extra,
                 warmup_full=args.warmup_full,
+                text_file=args.text_file,
             )
 
             # CPU 亲和性：在父进程侧对子进程 PID 设置
@@ -429,6 +491,7 @@ def main():
             warmup_full=args.warmup_full,
             sync_start_dir=child_sync_dir,
             sync_start_timeout=args.sync_start_timeout,
+            text_file=args.text_file,
         )
 
         # CPU 亲和性

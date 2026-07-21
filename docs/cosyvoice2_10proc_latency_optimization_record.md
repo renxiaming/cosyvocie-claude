@@ -297,6 +297,178 @@ first_ms = speech_len * rtf * 1000
 - 中间包 RTF avg 从 `0.335369` 降到 `0.291429`，已经小于 0.3。
 - 中间包 RTF p95 为 `0.317905`，相比基线明显降低，但如果以 p95 严格要求小于 0.3，还需要继续优化。
 
+## 2026-07-21 追加优化：CPU/NPU 拓扑亲和与线程收敛
+
+本轮目标不改变首包/中间包 chunk 长度，不改变 Flow 步数，不引入影响音质的 OM device pointer 路径，仅从工程调度和 CPU runtime 竞争侧继续压低 10 进程中间包 RTF。
+
+### Profiling 结论
+
+新增默认关闭的 chunk profiling 开关：
+
+```bash
+export COSYVOICE2_CHUNK_PROFILE=0
+```
+
+开启后会在每个流式 chunk 打印：
+
+```text
+[CHUNK_PROFILE] offset=... speech_len=... llm_ms=... t2w_ms=... rtf=...
+```
+
+2 进程 profiling 日志：
+
+```text
+logs/exp_chunk_profile_2p/run_20260721_142427
+```
+
+聚合结论：
+
+| 分段 | LLM avg | Flow+HiFT avg | RTF avg | LLM 占比 |
+| --- | ---: | ---: | ---: | ---: |
+| 中间包 | 345.57ms | 78.17ms | 0.162213 | 81.6% |
+| 全部 chunk | 289.10ms | 86.59ms | 0.300242 | 77.0% |
+
+结论：
+
+- 10 进程下中间包主要瓶颈仍是 LLM token 生成和调度排队。
+- Flow/HiFT 小优化收益有限，继续改 OM padding / HiFT 输入搬运不能解决主要长尾。
+- 后续大收益方向仍是 LLM 执行层、调度层，或者 vLLM/SGLang/MindIE 类自定义 LLM 后端。
+
+### CPU/NPU 拓扑亲和
+
+机器拓扑：
+
+```text
+npu-smi info -t topo
+NPU0 CPU Affinity: 144-167
+```
+
+原并发脚本把 10 个进程均分到全机器 `0-191`，大量进程会在远端 NUMA 上做 Python runtime、TorchNPU runtime、OM Host 输入输出准备，容易放大 LLM/OM 调度长尾。
+
+本轮给 `infer_manual_concurrent.py` 增加两个参数：
+
+```bash
+--cpu_affinity_cpus 144-167
+--cpu_affinity_share
+```
+
+含义：
+
+- `--cpu_affinity_cpus`：指定一段 CPU 核范围。
+- `--cpu_affinity_share`：10 个进程共享同一段 CPU 核，而不是再切成 10 份。
+
+最终采用默认：
+
+```bash
+export CPU_AFFINITY_CPUS="${CPU_AFFINITY_CPUS:-144-167}"
+export CPU_AFFINITY_SHARE="${CPU_AFFINITY_SHARE:-1}"
+```
+
+注意：
+
+- `144-167` 是当前机器 NPU0 的就近 CPU。换机器或换 NPU 后必须重新执行 `npu-smi info -t topo` 确认。
+- 如果使用 NPU1/NPU4 等其他卡，需要把 `CPU_AFFINITY_CPUS` 改成对应卡的 CPU Affinity。
+- 实验中 `144-191` 虽然给了更多 CPU，但 strict 中间包 `RTF>0.3` 比例不如 `144-167`。
+
+### CPU 线程数收敛
+
+10 进程同时跑时，每个进程开太多 CPU/BLAS 线程会抢占 CPU runtime、TorchNPU runtime 和 Host 侧调度。当前最优默认值：
+
+```bash
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-2}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+```
+
+验证结论：
+
+- `OMP=4/MKL=2`：比全机绑核好，但仍有中间包长尾。
+- `OMP=2/MKL=1`：当前最优，首包和 strict 中间包同时改善。
+- `OMP=1/MKL=1`：CPU 侧过紧，strict 中间包 `RTF>0.3` 比例变差。
+
+### 当前 2026-07-21 最佳配置
+
+当前并发脚本默认使用：
+
+```bash
+export CPU_AFFINITY_CPUS="${CPU_AFFINITY_CPUS:-144-167}"
+export CPU_AFFINITY_SHARE="${CPU_AFFINITY_SHARE:-1}"
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-2}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+export TASK_QUEUE_ENABLE="${TASK_QUEUE_ENABLE:-2}"
+export ENABLE_DYNAMIC_SHAPE_MULTI_STREAM="${ENABLE_DYNAMIC_SHAPE_MULTI_STREAM:-1}"
+```
+
+最佳验证日志：
+
+```text
+logs/exp_cpu_share_144_167_threads2_10p/run_20260721_143733
+```
+
+对比日志：
+
+```text
+旧 round0 基线:
+logs/manual_hift_om_v2_sync_run/run_20260720_225800
+```
+
+同口径 round0 统计：
+
+| 指标 | 2026-07-20 基线 | 2026-07-21 当前最佳 | 改善 |
+| --- | ---: | ---: | ---: |
+| 首包 avg | 380.73ms | 371.69ms | -9.04ms |
+| 首包 p50 | 388.17ms | 379.01ms | -9.16ms |
+| 首包 p95 | 407.94ms | 396.69ms | -11.25ms |
+| 首包 p99 | 413.01ms | 403.33ms | -9.68ms |
+| strict 中间包 RTF avg | 0.293577 | 0.285056 | -0.008521 |
+| strict 中间包 RTF p50 | 0.294036 | 0.284493 | -0.009543 |
+| strict 中间包 RTF p95 | 0.312281 | 0.305498 | -0.006783 |
+| strict 中间包 RTF p99 | 0.322722 | 0.313682 | -0.009040 |
+| strict 中间包 RTF>0.3 | 23.73% | 7.91% | -15.82 pct |
+
+说明：
+
+- strict 中间包定义：非首包且 `speech_len > 0.9s` 的 chunk。
+- 全量 mid 仍包含较短尾包，短尾包天然 RTF 偏高，因此 strict 指标更能反映稳定中间包。
+- 当前首包 p95 已低于 400ms。
+- strict 中间包 p95 仍为 `0.305498`，还没有完全低于 0.3，但 `RTF>0.3` 比例已经从 `23.73%` 降到 `7.91%`。
+
+### 已尝试但不保留的方案
+
+| 方案 | 结果 | 处理 |
+| --- | --- | --- |
+| OM device input / `aclruntime.BaseTensor(data_ptr)` | 数值略好，但音质明显变差 | 已回退 |
+| OM host padding buffer reuse | 单独略好，和最佳 CPU 亲和组合不稳定 | 已回退 |
+| OM NPU FP32 copy | 收益很小，p95/尾包不稳 | 已回退 |
+| 长度 tensor cache | strict `RTF>0.3` 略降，但 p95 和尾包变差 | 已回退 |
+| `CPU_AFFINITY_CPUS=144-191` | CPU 更宽，但 strict `RTF>0.3` 变差 | 不采用 |
+| `OMP_NUM_THREADS=1` | CPU 侧过紧，strict `RTF>0.3` 变差 | 不采用 |
+| `TASK_QUEUE_ENABLE=1` | 首包和中间包明显变差 | 不采用 |
+| 跳过 fast_topk 前的 `log_softmax` | 没有收益，生成包数变化，存在采样差异风险 | 已回退 |
+| `ENABLE_DYNAMIC_SHAPE_MULTI_STREAM=0` | 部分 p95 好，但 strict `RTF>0.3` 不如当前最佳 | 暂不采用 |
+
+### 当前音质验证
+
+当前保留代码重新生成的单进程音频：
+
+```text
+/home/ma-user/work/test/model/CosyVoice-claude/testout/current_best_audio_check
+```
+
+示例文件：
+
+```text
+/home/ma-user/work/test/model/CosyVoice-claude/testout/current_best_audio_check/sft_full_0_0.wav
+/home/ma-user/work/test/model/CosyVoice-claude/testout/current_best_audio_check/sft_full_0_4.wav
+/home/ma-user/work/test/model/CosyVoice-claude/testout/current_best_audio_check/sft_full_0_20.wav
+/home/ma-user/work/test/model/CosyVoice-claude/testout/current_best_audio_check/sft_full_0_63.wav
+```
+
+该音频用于验证当前保留优化后的音质，不包含已回退的 OM device input 实验。
+
 ## 当前启动方式
 
 默认启动：
@@ -314,6 +486,8 @@ bash run_manual_concurrent.sh
 - 默认开启 HiFT decode OM。
 - 默认开启 safe hidden-only。
 - 默认使用 `experiments/torchair_cache_hidden_safe` 作为 torchair cache。
+- 默认绑定 NPU0 就近 CPU `144-167`，10 个进程共享该 CPU 范围。
+- 默认 CPU 线程数为 `OMP=2, MKL=1, OPENBLAS=1, NUMEXPR=1`。
 
 保存音频验证：
 

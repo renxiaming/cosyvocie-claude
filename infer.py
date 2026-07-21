@@ -107,6 +107,8 @@ if __name__ == '__main__':
                         help='directory used as formal inference start barrier')
     parser.add_argument('--sync_start_timeout', default=900.0, type=float,
                         help='seconds to wait for formal inference start barrier')
+    parser.add_argument('--text_file', default='', type=str,
+                        help='utf-8 text file; one non-empty line is one inference text')
     args = parser.parse_args()
     if args.no_save_audio:
         os.environ.setdefault('COSYVOICE2_NO_CPU_OUTPUT', '1')
@@ -135,8 +137,8 @@ if __name__ == '__main__':
     #     cosyvoice.model.hift.decode, dynamic=True, fullgraph=True,
     #     backend=npu_backend)
 
-    # 输入数据加载
-    prompt_texts = [
+    # 输入数据加载。默认保留少量 smoke 文本；正式压测通过 --text_file 使用业务抄本。
+    default_prompt_texts = [
         '是的，您现在还有大概1个G的流量。',
         '不全是通用的哦，里面有800兆是通用流量，还有900兆是定向流量。',
         '查到了，您现在的通用流量还剩800兆，定向流量还剩900兆。',
@@ -150,6 +152,15 @@ if __name__ == '__main__':
         '嗯，好的，辛苦您了。其他的疑问还有没有？',
         '嗯嗯，那如果重启了，还是没法用怎么办？',
     ]
+    if args.text_file:
+        with open(args.text_file, 'r', encoding='utf-8') as f:
+            prompt_texts = [line.strip() for line in f if line.strip()]
+        if not prompt_texts:
+            raise ValueError('text_file is empty: {}'.format(args.text_file))
+        print('[INFO] loaded {} texts from {}'.format(
+            len(prompt_texts), args.text_file), flush=True)
+    else:
+        prompt_texts = default_prompt_texts
 
     with torch.no_grad():
         if args.warm_up_times > 0 and not skip_warmup:

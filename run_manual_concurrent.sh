@@ -12,6 +12,7 @@ export SYNC_START_TIMEOUT="${SYNC_START_TIMEOUT:-1800}"
 # 性能压测默认不保存音频，避免 torchaudio/save 影响 RTF；需要保存时 NO_SAVE_AUDIO=0
 export NO_SAVE_AUDIO="${NO_SAVE_AUDIO:-1}"
 export LOG_DIR="${LOG_DIR:-logs/manual_hift_om_v2_sync_run}"
+export TEXT_FILE="${TEXT_FILE:-data/manual_transcript_20260720.txt}"
 
 # NPU 设备绑定
 export ASCEND_RT_VISIBLE_DEVICES="${ASCEND_RT_VISIBLE_DEVICES:-0}"
@@ -40,10 +41,10 @@ export COSYVOICE2_FAST_TOPK_K="${COSYVOICE2_FAST_TOPK_K:-25}"
 export COSYVOICE2_DEVICE_TOKEN_DECODE="${COSYVOICE2_DEVICE_TOKEN_DECODE:-1}"
 
 # --- 限制每个进程的 CPU 线程数，减少 10 进程下 CPU/BLAS 竞争 ---
-export OMP_NUM_THREADS="${OMP_NUM_THREADS:-4}"
-export MKL_NUM_THREADS="${MKL_NUM_THREADS:-2}"
-export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-2}"
-export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-2}"
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-2}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
 
 # --- 流式推理性能调优 ---
 # 首包大小（默认20，新模型用25）
@@ -62,6 +63,10 @@ export COSYVOICE2_DEBUG_TIMING="${COSYVOICE2_DEBUG_TIMING:-0}"
 export COSYVOICE2_SKIP_MASK_SANITY="${COSYVOICE2_SKIP_MASK_SANITY:-1}"
 # 关闭额外 Flow/HiFT NPU stream，严格 10 进程下 p95 更稳
 export COSYVOICE2_FLOW_HIFT_STREAM="${COSYVOICE2_FLOW_HIFT_STREAM:-0}"
+# CPU/NPU 拓扑亲和。NPU0 在当前机器上的就近 CPU 是 144-167；
+# 为空时仍按全机器 CPU 均分。
+export CPU_AFFINITY_CPUS="${CPU_AFFINITY_CPUS:-144-167}"
+export CPU_AFFINITY_SHARE="${CPU_AFFINITY_SHARE:-1}"
 
 # 性能压测时可设 NO_SAVE_AUDIO=1，只消费推理输出，不拼接/保存 wav
 NO_SAVE_ARG=""
@@ -74,6 +79,15 @@ if [ "${SYNC_START:-1}" = "1" ]; then
   SYNC_START_ARG="--sync_start --sync_start_timeout ${SYNC_START_TIMEOUT:-1200}"
 fi
 
+CPU_AFFINITY_ARG=()
+if [ -n "${CPU_AFFINITY_CPUS:-}" ]; then
+  CPU_AFFINITY_ARG=(--cpu_affinity_cpus "${CPU_AFFINITY_CPUS}")
+fi
+CPU_AFFINITY_SHARE_ARG=""
+if [ "${CPU_AFFINITY_SHARE:-0}" = "1" ]; then
+  CPU_AFFINITY_SHARE_ARG="--cpu_affinity_share"
+fi
+
 # 使能环境变量
 source /usr/local/Ascend/ascend-toolkit/set_env.sh
 # 规避找不到ttsfrd
@@ -83,17 +97,23 @@ export CPLUS_INCLUDE_PATH=/usr/local/Ascend/ascend-toolkit/8.1.RC1/toolkit/toolc
 export CPLUS_INCLUDE_PATH=/usr/local/Ascend/ascend-toolkit/8.1.RC1/toolkit/toolchain/hcc/aarch64-target-linux-gnu/include/c++/7.3.0/aarch64-target-linux-gnu:${CPLUS_INCLUDE_PATH}
 export CPLUS_INCLUDE_PATH=/usr/local/Ascend/ascend-toolkit/8.1.RC1/toolkit/toolchain/hcc/aarch64-target-linux-gnu/sys-include:${CPLUS_INCLUDE_PATH}
 
-# 清理modelscope缓存
-rm -rf ~/.cache/modelscope/
+# 默认保留 modelscope 缓存，避免每次压测都重新构建前端/FST 缓存。
+# 如需强制冷启动，可设置 CLEAR_MODELSCOPE_CACHE=1。
+if [ "${CLEAR_MODELSCOPE_CACHE:-0}" = "1" ]; then
+  rm -rf ~/.cache/modelscope/
+fi
 
 python3 infer_manual_concurrent.py \
   --model_path="${MODEL_PATH:-../weight/CosyVoice2-0.5B_sft_shenhu_25_60}" \
   --stream \
   --concurrency="${CONCURRENCY:-10}" \
-  --infer_count=25 \
-  --warm_up_times=5 \
+  --infer_count="${INFER_COUNT:-25}" \
+  --warm_up_times="${WARM_UP_TIMES:-5}" \
+  --text_file="${TEXT_FILE}" \
   --warmup_full \
   --log_dir="${LOG_DIR:-logs/manual}" \
   --enable_cpu_affinity \
+  "${CPU_AFFINITY_ARG[@]}" \
+  $CPU_AFFINITY_SHARE_ARG \
   $SYNC_START_ARG \
   $NO_SAVE_ARG

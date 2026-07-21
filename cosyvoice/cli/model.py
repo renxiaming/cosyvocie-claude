@@ -336,6 +336,7 @@ class CosyVoice2Model(CosyVoiceModel):
         # 通过环境变量控制 debug 打印（多进程并发时关闭以减少 stdout 锁竞争）
         self._debug_timing = os.environ.get('COSYVOICE2_DEBUG_TIMING', '0') == '1'
         self._no_cpu_output = os.environ.get('COSYVOICE2_NO_CPU_OUTPUT', '0') == '1'
+        self._chunk_profile = os.environ.get('COSYVOICE2_CHUNK_PROFILE', '0') == '1'
 
     def _wrap_tts_output(self, tts_speech):
         if self._no_cpu_output:
@@ -456,7 +457,7 @@ class CosyVoice2Model(CosyVoiceModel):
                     #this_tts_speech_token = torch.tensor(self.tts_speech_token_dict[this_uuid][:token_offset + self.token_hop_len + self.flow.pre_lookahead_len]).unsqueeze(dim=0)
 
                     # --- 计算 LLM 攒够这一包 token 的耗时 ---
-                    if self._debug_timing:
+                    if self._debug_timing or self._chunk_profile:
                         torch_npu.npu.synchronize()
                     llm_duration = (time.time() - llm_start_time) * 1000
 
@@ -482,7 +483,7 @@ class CosyVoice2Model(CosyVoiceModel):
                                                         token_offset=flow_token_offset,
                                                         finalize=False)
 
-                    if self._debug_timing:
+                    if self._debug_timing or self._chunk_profile:
                         torch_npu.npu.synchronize()
                     t2w_duration = (time.time() - start_t2w) * 1000
 
@@ -491,6 +492,15 @@ class CosyVoice2Model(CosyVoiceModel):
                         print(f"\n[Profiling] Chunk Offset: {token_offset}")
                         print(f" > LLM 累积耗时: {llm_duration:.2f}ms")
                         print(f" > Flow+Hift 推理耗时: {t2w_duration:.2f}ms")
+                    elif self._chunk_profile:
+                        speech_len = this_tts_speech.shape[1] / 22050
+                        rtf = (llm_duration + t2w_duration) / 1000 / speech_len
+                        print(
+                            "[CHUNK_PROFILE] offset={} speech_len={:.3f} "
+                            "llm_ms={:.2f} t2w_ms={:.2f} rtf={:.6f}".format(
+                                token_offset, speech_len, llm_duration,
+                                t2w_duration, rtf),
+                            flush=True)
 
                     #token_offset += self.token_hop_len
                     if token_offset == 0:
@@ -517,11 +527,19 @@ class CosyVoice2Model(CosyVoiceModel):
                                                 token_offset=token_offset - flow_token_start,
                                                 finalize=True)
 
-            if self._debug_timing:
+            if self._debug_timing or self._chunk_profile:
                 torch_npu.npu.synchronize()
             final_duration = (time.time() - start_final) * 1000
             if self._debug_timing:
                 print(f"[Profiling Final] Tail Logic Time: {final_duration:.1f}ms")
+            elif self._chunk_profile:
+                speech_len = this_tts_speech.shape[1] / 22050
+                rtf = final_duration / 1000 / speech_len if speech_len > 0 else 0.0
+                print(
+                    "[CHUNK_PROFILE] offset=final speech_len={:.3f} "
+                    "llm_ms=0.00 t2w_ms={:.2f} rtf={:.6f}".format(
+                        speech_len, final_duration, rtf),
+                    flush=True)
 
             yield self._wrap_tts_output(this_tts_speech)
         else:
