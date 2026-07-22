@@ -773,6 +773,7 @@ CPU_AFFINITY_SHARE=1
 - 10 进程下 CPU/BLAS 抢占会放大抖动，所以多进程默认 `OMP=2`、`MKL=1`。
 - 当前机器 NPU0 近端 CPU 观测为 `144-167`，默认 10 进程共享这 24 个 core，比硬切小段更稳。
 - 完整 warmup 能显著降低正式阶段首次遇到新文本长度/shape 的抖动。
+- `infer.py` 会在导入 `torch/torch_npu` 之前先执行 CPU 亲和和线程环境设置，避免 torch_npu 初始化阶段创建的 Host 线程落到非亲和 CPU 上。
 
 ## 8. 验收口径和已验证结果
 
@@ -811,6 +812,28 @@ middle non-final p90 RTF = 0.29962
 logs/exp_full_warmup_67_24core_rerun/run_20260722_205954
 first p90 = 399.61ms
 middle non-final p90 RTF = 0.29501
+```
+
+新增 CPU 初始化顺序优化后，默认 24 核共享配置连续两轮达成 p90 目标：
+
+```text
+logs/exp_cpu_early_affinity_default/run_20260722_223830
+first p90 = 398.48ms
+middle non-final p90 RTF = 0.29907
+
+logs/exp_cpu_early_affinity_default_rerun/run_20260722_234203
+first p90 = 394.37ms
+middle non-final p90 RTF = 0.29782
+```
+
+已尝试但不作为默认的 CPU/系统侧方案：
+
+```text
+独立 2 核/进程，144-163 分段：首包 p90 404.99ms，中间包 p90 0.30014，放弃。
+OMP_NUM_THREADS=1：首包 p90 397.65ms，但中间包 p90 0.30165，放弃。
+关闭 kernel.numa_balancing：首包 p90 398.26ms，但中间包 p90 0.30589，放弃。
+停止 irqbalance 并绑定 dev0_sq_task：首包 p90 403.93ms，中间包 p90 0.30650，放弃。
+共享 144-163 预留 164-167：单轮中间包 p90 0.29825，但复跑退化到 0.30170，放弃。
 ```
 
 注意：性能仍接近单卡 10 进程硬件边界。正式验收前需要保证 NPU 上没有其他推理进程，CPU 亲和核没有明显外部高负载，并使用默认完整 warmup。

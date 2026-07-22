@@ -12,14 +12,6 @@ import argparse
 import os
 import sys
 import time
-import torch
-import torchaudio
-import torch_npu
-from torch_npu.contrib import transfer_to_npu
-import torchair as tng
-from torchair.configs.compiler_config import CompilerConfig
-from cosyvoice.cli.cosyvoice import CosyVoice2
-from cosyvoice.utils.file_utils import load_wav
 
 
 def apply_cpu_affinity():
@@ -36,18 +28,22 @@ def apply_cpu_affinity():
             print('[WARN] Failed to set CPU affinity: {}'.format(e), flush=True)
 
 
-def configure_threads():
+def configure_thread_env():
+    """Set CPU thread env before importing torch/torch_npu."""
+    omp_threads = int(os.environ.get('OMP_NUM_THREADS', 8))
+    mkl_threads = int(os.environ.get('MKL_NUM_THREADS', 8))
+
+    os.environ['OMP_NUM_THREADS'] = str(omp_threads)
+    os.environ['MKL_NUM_THREADS'] = str(mkl_threads)
+    os.environ.setdefault('OPENBLAS_NUM_THREADS', str(mkl_threads))
+    os.environ.setdefault('NUMEXPR_NUM_THREADS', str(mkl_threads))
+
+
+def configure_torch_threads():
     """限制 PyTorch CPU 线程数，减少多进程下 CPU 竞争"""
     omp_threads = int(os.environ.get('OMP_NUM_THREADS', 8))
     mkl_threads = int(os.environ.get('MKL_NUM_THREADS', 8))
 
-    # 设置环境变量（对底层 BLAS / MKL 生效）
-    os.environ.setdefault('OMP_NUM_THREADS', str(omp_threads))
-    os.environ.setdefault('MKL_NUM_THREADS', str(mkl_threads))
-    os.environ.setdefault('OPENBLAS_NUM_THREADS', str(mkl_threads))
-    os.environ.setdefault('NUMEXPR_NUM_THREADS', str(mkl_threads))
-
-    # 设置 PyTorch 原生线程数
     torch.set_num_threads(omp_threads)
     try:
         torch.set_num_interop_threads(min(4, omp_threads))
@@ -80,10 +76,21 @@ def wait_sync_start(sync_dir, client_id, timeout):
 
 if __name__ == '__main__':
     # ================================================================
-    # 启动时立即设置 CPU 亲和性和线程数（在其他 import 之前尽可能早）
+    # 启动时立即设置 CPU 亲和性和线程环境（必须早于 torch/torch_npu import）
     # ================================================================
     apply_cpu_affinity()
-    configure_threads()
+    configure_thread_env()
+
+    import torch
+    import torchaudio
+    import torch_npu
+    from torch_npu.contrib import transfer_to_npu
+    import torchair as tng
+    from torchair.configs.compiler_config import CompilerConfig
+    from cosyvoice.cli.cosyvoice import CosyVoice2
+    from cosyvoice.utils.file_utils import load_wav
+
+    configure_torch_threads()
 
     # print("go go go!")
     # torch.set_num_threads(8)
