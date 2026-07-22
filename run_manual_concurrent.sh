@@ -13,6 +13,7 @@ export SYNC_START_TIMEOUT="${SYNC_START_TIMEOUT:-1800}"
 export NO_SAVE_AUDIO="${NO_SAVE_AUDIO:-1}"
 export LOG_DIR="${LOG_DIR:-logs/manual_hift_om_v2_sync_run}"
 export TEXT_FILE="${TEXT_FILE:-data/manual_transcript_20260720.txt}"
+export SFT_SPK_ID="${SFT_SPK_ID:-03729}"
 
 # 默认按正式 10 并发验收口径执行 1 轮；需要更长压测时可覆盖 INFER_COUNT。
 export INFER_COUNT="${INFER_COUNT:-1}"
@@ -137,6 +138,7 @@ python3 infer_manual_concurrent.py \
   --infer_count="${INFER_COUNT}" \
   --warm_up_times="${WARM_UP_TIMES}" \
   --text_file="${TEXT_FILE}" \
+  --spk_id="${SFT_SPK_ID}" \
   --warmup_full \
   --log_dir="${LOG_DIR:-logs/manual}" \
   --enable_cpu_affinity \

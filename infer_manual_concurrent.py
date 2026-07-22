@@ -83,7 +83,7 @@ def prepare_run_log_dir(log_base):
 def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times,
                     output_dir, stream, no_save_audio, warmup_full=False,
                     sync_start_dir='', sync_start_timeout=900.0,
-                    text_file=''):
+                    text_file='', spk_id=''):
     cmd = [
         python_exe,
         'infer.py',
@@ -105,6 +105,8 @@ def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times,
         ])
     if text_file:
         cmd.extend(['--text_file', text_file])
+    if spk_id:
+        cmd.extend(['--spk_id', spk_id])
     return cmd
 
 
@@ -114,14 +116,14 @@ def build_infer_cmd(python_exe, model_path, infer_count, warm_up_times,
 def spawn_client(client_id, python_exe, model_path, infer_count, warm_up_times,
                  output_base, stream, no_save_audio, run_log_dir, work_dir,
                  env_extra=None, warmup_full=False, sync_start_dir='',
-                 sync_start_timeout=900.0, text_file=''):
+                 sync_start_timeout=900.0, text_file='', spk_id=''):
     output_dir = os.path.join(output_base, 'client_{}'.format(client_id))
     os.makedirs(output_dir, exist_ok=True)
     log_path = os.path.join(run_log_dir, 'client_{}.log'.format(client_id))
     cmd = build_infer_cmd(
         python_exe, model_path, infer_count, warm_up_times, output_dir, stream,
         no_save_audio, warmup_full, sync_start_dir, sync_start_timeout,
-        text_file)
+        text_file, spk_id)
 
     # 合并额外环境变量
     child_env = os.environ.copy()
@@ -272,6 +274,8 @@ def main():
                         help='log base dir')
     parser.add_argument('--text_file', default='', type=str,
                         help='utf-8 text file passed to infer.py; one non-empty line is one inference text')
+    parser.add_argument('--spk_id', default='', type=str,
+                        help='SFT speaker id passed to infer.py')
     parser.add_argument('--stream', action='store_true',
                         help='stream infer')
     parser.add_argument('--no_save_audio', action='store_true',
@@ -386,6 +390,7 @@ def main():
         'cpu_affinity_share': args.cpu_affinity_share,
         'no_save_audio': args.no_save_audio,
         'text_file': args.text_file,
+        'spk_id': args.spk_id,
     }
 
     clients = []
@@ -427,6 +432,7 @@ def main():
                 env_extra=env_extra,
                 warmup_full=args.warmup_full,
                 text_file=args.text_file,
+                spk_id=args.spk_id,
             )
 
             # CPU 亲和性：在父进程侧对子进程 PID 设置
@@ -492,6 +498,7 @@ def main():
             sync_start_dir=child_sync_dir,
             sync_start_timeout=args.sync_start_timeout,
             text_file=args.text_file,
+            spk_id=args.spk_id,
         )
 
         # CPU 亲和性

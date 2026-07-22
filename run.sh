@@ -10,6 +10,7 @@ export COSYVOICE2_HIFT_DECODE_GEARS="${COSYVOICE2_HIFT_DECODE_GEARS:-30,50,128,1
 export NO_SAVE_AUDIO="${NO_SAVE_AUDIO:-0}"
 export TEXT_FILE="${TEXT_FILE:-data/manual_transcript_20260720.txt}"
 export INFER_COUNT="${INFER_COUNT:-1}"
+export SFT_SPK_ID="${SFT_SPK_ID:-03729}"
 
 # 默认完整 warmup 当前抄本，避免正式推理阶段首次遇到新 shape。
 if [ -z "${WARM_UP_TIMES:-}" ]; then
@@ -110,6 +111,7 @@ python3 infer.py \
   --infer_count="${INFER_COUNT}" \
   --output_dir="${OUTPUT_DIR:-testout/run_single}" \
   --text_file="${TEXT_FILE}" \
+  --spk_id="${SFT_SPK_ID}" \
   --warmup_full \
   $NO_SAVE_ARG
 # python3 register_wav.py

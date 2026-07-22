@@ -109,6 +109,8 @@ if __name__ == '__main__':
                         help='seconds to wait for formal inference start barrier')
     parser.add_argument('--text_file', default='', type=str,
                         help='utf-8 text file; one non-empty line is one inference text')
+    parser.add_argument('--spk_id', default=os.environ.get('SFT_SPK_ID', '03729'),
+                        type=str, help='SFT speaker id in spk2info.pt')
     args = parser.parse_args()
     if args.no_save_audio:
         os.environ.setdefault('COSYVOICE2_NO_CPU_OUTPUT', '1')
@@ -169,11 +171,11 @@ if __name__ == '__main__':
             for warmup_idx in range(args.warm_up_times):
                 warmup_text = prompt_texts[warmup_idx % len(prompt_texts)]
                 if args.warmup_full:
-                    for _ in cosyvoice.inference_sft(warmup_text, '03729',
+                    for _ in cosyvoice.inference_sft(warmup_text, args.spk_id,
                                                      stream=args.stream):
                         pass
                 else:
-                    next(cosyvoice.inference_sft(warmup_text, '03729',
+                    next(cosyvoice.inference_sft(warmup_text, args.spk_id,
                                                  stream=args.stream))
             print('warm up end, elapsed={:.1f}s'.format(
                 time.time() - warmup_start), flush=True)
@@ -192,12 +194,12 @@ if __name__ == '__main__':
                     infer_idx, text_idx, prompt_txt))
                 if args.no_save_audio:
                     for _ in cosyvoice.inference_sft(
-                            prompt_txt, '03729', stream=args.stream):
+                            prompt_txt, args.spk_id, stream=args.stream):
                         pass
                 else:
                     speech_chunks = []
                     for _, j in enumerate(cosyvoice.inference_sft(
-                            prompt_txt, '03729', stream=args.stream)):
+                            prompt_txt, args.spk_id, stream=args.stream)):
                         speech_chunks.append(j['tts_speech'])
                     if speech_chunks:
                         full_speech = torch.cat(speech_chunks, dim=1)

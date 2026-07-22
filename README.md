@@ -36,10 +36,13 @@ bash run.sh
 
 ```bash
 # 指定 NPU
-ASCEND_RT_VISIBLE_DEVICES=1 bash run_manual_concurrent.sh
+ASCEND_RT_VISIBLE_DEVICES=0 bash run_manual_concurrent.sh
 
 # 多进程保存音频，只用于听音质，不用于性能验收
 NO_SAVE_AUDIO=0 bash run_manual_concurrent.sh
+
+# 使用指定 SFT 音色。该音色必须已经注册到 MODEL_DIR/spk2info.pt
+SFT_SPK_ID=03729 bash run_manual_concurrent.sh
 
 # 换抄本。默认会自动完整 warmup 新抄本所有非空行
 TEXT_FILE=data/your_transcript.txt bash run_manual_concurrent.sh
@@ -157,6 +160,269 @@ experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
 - 外部模型目录必须存在，默认脚本不会自动下载或复制权重。
 - `ais_bench` 会做路径安全检查。如果 OM 文件不是当前用户或用户组可访问，可能报 owner/ownergroup 相关错误。需要保证模型文件和目录 owner/group 满足当前运行用户要求。
 - 本仓库 `.gitignore` 明确忽略新生成的运行日志、NPU 编译缓存、profiling 产物和临时权重，避免交付代码被本机产物污染。
+
+### 3.1 从开源权重处理成当前可运行模型目录
+
+如果别人只有开源 `CosyVoice2-0.5B` 权重，不能直接跑当前 10 进程脚本。需要先把权重目录处理成当前代码要求的 Ascend 推理目录。
+
+假设：
+
+```bash
+export MODEL_DIR=/path/to/CosyVoice2-0.5B_sft_shenhu_25_60
+export SOC_VERSION=Ascend910B1
+```
+
+最终目录至少需要包含：
+
+```text
+$MODEL_DIR/llm.pt
+$MODEL_DIR/flow.pt
+$MODEL_DIR/hift.pt
+$MODEL_DIR/spk2info.pt
+$MODEL_DIR/flow.decoder.estimator.fp32.onnx
+$MODEL_DIR/flow_linux_aarch64.om
+$MODEL_DIR/flow_static.om
+$MODEL_DIR/speech_tokenizer_v2.onnx
+$MODEL_DIR/speech_linux_aarch64.om
+```
+
+当前默认脚本还会使用仓库内的：
+
+```text
+experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
+```
+
+如果开源权重中的 `hift.pt` 和当前交付模型不一致，建议按第 3.6 节重新导出并编译 HiFT decode OM。
+
+### 3.2 注册 SFT speaker 音色
+
+SFT 模式通过 `spk2info.pt` 查音色 embedding。当前推理默认：
+
+```bash
+SFT_SPK_ID=03729
+```
+
+所以模型目录里必须存在：
+
+```python
+spk2info["03729"]["embedding"]
+```
+
+注册方式：
+
+```bash
+python3 register_wav.py \
+  --model_dir "$MODEL_DIR" \
+  --spk 03729=/path/to/03729_16k.wav \
+  --overwrite
+```
+
+也可以一次注册多个音色：
+
+```bash
+python3 register_wav.py \
+  --model_dir "$MODEL_DIR" \
+  --spk 03729=/path/to/03729_16k.wav \
+  --spk shenhu=/path/to/shenhu_prompt_16k.wav \
+  --overwrite
+```
+
+要求：
+
+- 输入 wav 建议是单声道、16k 采样率、干净人声。
+- 音频内容建议 3-30 秒，背景噪声越少越好。
+- `register_wav.py` 会调用 `CosyVoice2.frontend._extract_spk_embedding()`，使用 `campplus.onnx` 抽取 speaker embedding，然后写入 `$MODEL_DIR/spk2info.pt`。
+
+注册完成后可以用指定音色推理：
+
+```bash
+SFT_SPK_ID=03729 MODEL_PATH="$MODEL_DIR" bash run.sh
+SFT_SPK_ID=03729 MODEL_PATH="$MODEL_DIR" bash run_manual_concurrent.sh
+```
+
+如果换成自己的音色，例如 `customer_a`：
+
+```bash
+python3 register_wav.py \
+  --model_dir "$MODEL_DIR" \
+  --spk customer_a=/path/to/customer_a_16k.wav
+
+SFT_SPK_ID=customer_a MODEL_PATH="$MODEL_DIR" bash run.sh
+```
+
+### 3.3 导出 Flow estimator ONNX
+
+仓库提供了参数化脚本：
+
+```bash
+MODEL_DIR="$MODEL_DIR" bash export.sh
+```
+
+等价于：
+
+```bash
+export PYTHONPATH=third_party/Matcha-TTS:transformers/src:${PYTHONPATH:-}
+python3 cosyvoice/bin/export_onnx.py --model_dir "$MODEL_DIR"
+```
+
+导出参数在 `cosyvoice/bin/export_onnx.py` 中固定：
+
+```text
+opset_version=18
+input_names=x,mask,mu,t,spks,cond
+output_names=estimator_out
+dynamic_axes:
+  x/mask/mu/cond/estimator_out 的第 2 维为 seq_len
+dummy input:
+  x     [2, 80, seq_len]
+  mask  [2, 1, seq_len]
+  mu    [2, 80, seq_len]
+  t     [2]
+  spks  [2, 80]
+  cond  [2, 80, seq_len]
+```
+
+输出：
+
+```text
+$MODEL_DIR/flow.decoder.estimator.fp32.onnx
+```
+
+### 3.4 编译 Flow OM
+
+当前代码会优先使用 `flow_static.om`，并按 `COSYVOICE2_FLOW_GEARS` 手动 padding 到固定档位；没有命中时才退回动态 `flow_linux_aarch64.om`。
+
+当前默认 Flow gear：
+
+```bash
+COSYVOICE2_FLOW_GEARS=50,74,98,122,146,170,200,230,260,290,320,350,380,410
+```
+
+ATC 编译模板如下。不同 CANN 版本对 `--dynamic_dims`/动态 shape 参数格式可能有差异，核心要求是输入名和 shape 必须与 ONNX 一致，动态维度必须覆盖上面的 gear。
+
+```bash
+atc \
+  --framework=5 \
+  --model="$MODEL_DIR/flow.decoder.estimator.fp32.onnx" \
+  --output="$MODEL_DIR/flow_static" \
+  --soc_version="$SOC_VERSION" \
+  --input_format=ND \
+  --input_shape="x:2,80,-1;mask:2,1,-1;mu:2,80,-1;t:2;spks:2,80;cond:2,80,-1" \
+  --dynamic_dims="50;74;98;122;146;170;200;230;260;290;320;350;380;410" \
+  --precision_mode=force_fp16
+```
+
+输出文件应为：
+
+```text
+$MODEL_DIR/flow_static.om
+```
+
+动态 Flow OM 可按同一个 ONNX 编译，输出名需要符合代码加载约定：
+
+```bash
+atc \
+  --framework=5 \
+  --model="$MODEL_DIR/flow.decoder.estimator.fp32.onnx" \
+  --output="$MODEL_DIR/flow_linux_aarch64" \
+  --soc_version="$SOC_VERSION" \
+  --input_format=ND \
+  --input_shape="x:2,80,-1;mask:2,1,-1;mu:2,80,-1;t:2;spks:2,80;cond:2,80,-1" \
+  --precision_mode=force_fp16
+```
+
+输出文件应为：
+
+```text
+$MODEL_DIR/flow_linux_aarch64.om
+```
+
+### 3.5 编译 speech tokenizer OM
+
+当前前端 `_extract_speech_token()` 期望 speech OM 输入为：
+
+```text
+feats        [1, 128, T] float32
+feats_length [1] int64
+```
+
+输出：
+
+```text
+indices int64
+```
+
+ATC 编译模板：
+
+```bash
+atc \
+  --framework=5 \
+  --model="$MODEL_DIR/speech_tokenizer_v2.onnx" \
+  --output="$MODEL_DIR/speech_linux_aarch64" \
+  --soc_version="$SOC_VERSION" \
+  --input_format=ND \
+  --input_shape="feats:1,128,-1;feats_length:1" \
+  --precision_mode=force_fp16
+```
+
+输出文件应为：
+
+```text
+$MODEL_DIR/speech_linux_aarch64.om
+```
+
+### 3.6 重新导出并编译 HiFT decode OM
+
+如果使用的 `hift.pt` 和当前交付模型不同，重新导出 HiFT decode ONNX：
+
+```bash
+python3 tools/export_hift_decode_onnx.py \
+  --model_dir "$MODEL_DIR" \
+  --output experiments/hift_decode_om_20260706_230701/hift.decode.fp32.onnx \
+  --mel_len 50 \
+  --opset 18
+```
+
+导出参数：
+
+```text
+input_names=x,s_stft
+output_names=magnitude,phase
+dynamic_axes:
+  x 第 2 维为 mel_len
+  s_stft/magnitude/phase 第 2 维为 stft_len
+dummy input:
+  x      [1, 80, mel_len]
+  s_stft [1, 18, 120 * mel_len + 1]
+```
+
+当前默认 HiFT gear：
+
+```bash
+COSYVOICE2_HIFT_DECODE_GEARS=30,50,128,130,160
+```
+
+ATC 编译模板：
+
+```bash
+atc \
+  --framework=5 \
+  --model=experiments/hift_decode_om_20260706_230701/hift.decode.fp32.onnx \
+  --output=experiments/hift_decode_om_20260706_230701/hift_decode_static_v2 \
+  --soc_version="$SOC_VERSION" \
+  --input_format=ND \
+  --input_shape="x:1,80,-1;s_stft:1,18,-1" \
+  --dynamic_dims="30,3601;50,6001;128,15361;130,15601;160,19201" \
+  --precision_mode=force_fp16
+```
+
+这里 `stft_len = 120 * mel_len + 1`。如果新增 HiFT gear，需要同时更新：
+
+```bash
+COSYVOICE2_HIFT_DECODE_GEARS
+```
+
+以及 ATC 的动态档位。
 
 ## 4. HiFT decode 导出 OM 和运行时接入
 
@@ -361,12 +627,68 @@ cosyvoice/cli/model.py
 
 主仓库通过 `PYTHONPATH=transformers/src:$PYTHONPATH` 使用本地 `transformers`。因此当前推理依赖仓库内 `transformers/src/transformers/models/qwen2/modeling_qwen2.py`，而不是环境里 pip 安装的原生 HuggingFace 版本。
 
+结论：可以把当前 `transformers` 作为你 GitHub 上的一个子仓库/submodule 上传。这样别人 `git clone --recursive` 后会直接拿到已经改好的 Qwen2 Ascend 代码，不需要手动修改 `transformers` 项目。
+
+必须注意：主仓库现在记录的是 `transformers` 的 commit 指针。如果 `.gitmodules` 没有配置 `transformers` 的 URL，或者这个 commit 没有推到你的 GitHub fork，别人 clone 后无法拉取该子模块。
+
+推荐交付方式是“上传当前 transformers 子仓库”。手工改 transformers 只作为兜底复现方案，因为 Qwen2 Ascend 适配集中在一个大文件里，容易漏改。
+
+推荐发布方式：
+
+```bash
+# 1. 在 GitHub 创建一个 transformers fork，例如：
+#    https://github.com/<your-user>/transformers-cosyvoice2-ascend.git
+
+# 2. 进入当前本地 transformers 子仓库
+cd transformers
+git remote add github https://github.com/<your-user>/transformers-cosyvoice2-ascend.git
+git push github e352348b1442775fda3d6faf2aa716d6dd581ff5:main
+cd ..
+
+# 3. 在主仓库登记 transformers submodule URL
+git config -f .gitmodules submodule.transformers.path transformers
+git config -f .gitmodules submodule.transformers.url https://github.com/<your-user>/transformers-cosyvoice2-ascend.git
+git add .gitmodules transformers
+git commit -m "add transformers ascend submodule"
+```
+
+别人复现时：
+
+```bash
+git clone --recursive https://github.com/<your-user>/<your-cosyvoice-repo>.git
+cd <your-cosyvoice-repo>
+git submodule update --init --recursive
+git -C transformers rev-parse HEAD
+```
+
+最后一行必须输出：
+
+```text
+e352348b1442775fda3d6faf2aa716d6dd581ff5
+```
+
 当前子仓库提交链：
 
 ```text
 8e3e145b42 [`GPTNeoX`] Fix BC issue with 4.36 (#28602)
 6581349d4b adapt ascend in transformers
 e352348b14 Add Qwen hidden-only runner
+```
+
+如果需要把当前修改导出成 patch，执行：
+
+```bash
+git -C transformers format-patch 8e3e145b42..e352348b1442775fda3d6faf2aa716d6dd581ff5 \
+  -o ../docs/transformers_patches
+```
+
+别人从 upstream 复现时：
+
+```bash
+git clone https://github.com/huggingface/transformers.git transformers
+cd transformers
+git checkout 8e3e145b42
+git am ../docs/transformers_patches/*.patch
 ```
 
 ### 6.1 从开源 HuggingFace Transformers 获取基础版本
@@ -399,11 +721,12 @@ git checkout 8e3e145b42
 transformers/src/transformers/models/qwen2/modeling_qwen2.py
 ```
 
-核心改动：
+手工改代码时，只改这个文件。核心改动如下。
 
-1. 引入 Ascend 依赖。
+1. 文件头部引入 Ascend 依赖。
 
    ```python
+   import time
    import torch_npu
    import torchair as tng
    from torchair.configs.compiler_config import CompilerConfig
@@ -422,7 +745,18 @@ transformers/src/transformers/models/qwen2/modeling_qwen2.py
 
 3. 改写 RoPE 计算。
 
-   当前版本在 `Qwen2Model` 级别缓存 `rotary_emb`，通过 `_prepare_decoder_rotary_cos_sin()` 按 `position_ids` 提前取出 cos/sin，再传入 attention，避免每层重复处理。
+   修改 `Qwen2RotaryEmbedding.forward()`，允许 `x=None` 时直接返回缓存的 cos/sin。
+
+   修改 `apply_rotary_pos_emb()`，去掉函数内部 `cos[position_ids]` 和 `sin[position_ids]` 的每层索引逻辑，改为接收已经按 position 取好的 cos/sin。
+
+   在 `Qwen2Model` 中新增：
+
+   ```python
+   self.rotary_emb = Qwen2RotaryEmbedding(...)
+   self.rotary_emb_cos, self.rotary_emb_sin = self.rotary_emb(None, seq_len=self.max_position_embeddings)
+   ```
+
+   并新增 `_prepare_decoder_rotary_cos_sin(position_ids)`，在模型入口一次性根据 `position_ids` 取 cos/sin，然后传给每层 attention。
 
 4. 用 Ascend FlashAttention 替换 PyTorch SDPA。
 
@@ -431,6 +765,7 @@ transformers/src/transformers/models/qwen2/modeling_qwen2.py
    - prefill 阶段 `q_len > 1` 使用 `torch_npu.npu_prompt_flash_attention()`。
    - decode 阶段 `q_len == 1` 使用 `torch_npu.npu_incre_flash_attention()`。
    - attention layout 改为 `BSND`，并显式传入 `actual_seq_len`、`kv_padding_size`。
+   - `query/key/value` shape 从 HuggingFace 原始 `[B, H, S, D]` 改为 `[B, S, H, D]`。
 
 5. 改造 KV cache 更新。
 
@@ -451,7 +786,33 @@ transformers/src/transformers/models/qwen2/modeling_qwen2.py
 
    直接更新固定 cache buffer，适配增量 attention。
 
-6. 增加 TorchAIR cache_compile。
+6. 改造 decoder layer 的 residual/norm 路径。
+
+   原始 HuggingFace 每层是：
+
+   ```python
+   residual = hidden_states
+   hidden_states = self.input_layernorm(hidden_states)
+   ...
+   hidden_states = residual + hidden_states
+   ```
+
+   当前改成融合 AddRMSNorm 所需的双返回：
+
+   ```python
+   hidden_states, residual = self.input_layernorm(hidden_states, past_residual)
+   ...
+   hidden_states, residual = self.post_attention_layernorm(hidden_states, residual)
+   outputs = (residual, hidden_states,)
+   ```
+
+   `Qwen2Model._forward()` 遍历层时维护 `residual`，最后调用：
+
+   ```python
+   hidden_states, _ = self.norm(hidden_states, residual)
+   ```
+
+7. 增加 TorchAIR cache_compile。
 
    在 `Qwen2Model.__init__()` 中创建：
 
@@ -465,7 +826,23 @@ transformers/src/transformers/models/qwen2/modeling_qwen2.py
    - `> 1`：prefill。
    - `== 1`：decode。
 
-7. 在 `Qwen2ForCausalLM.forward()` 中使用 `prepare_data()` 准备 Ascend cache/position 参数，再调用底层 `Qwen2Model`。
+8. 固定 KV cache buffer。
+
+   `Qwen2Model._forward()` 中如果还没有 `past_key_values`，创建每层固定 shape cache：
+
+   ```python
+   [batch, max_position_embeddings, num_key_value_heads, head_dim]
+   ```
+
+   每次推理用 `updated_kv_positions` 写入当前位置，避免 HuggingFace 原始 `DynamicCache` 不断 concat 带来的内存申请和 shape 抖动。
+
+9. 在 `Qwen2ForCausalLM.forward()` 中使用 `prepare_data()` 准备 Ascend cache/position 参数，再调用底层 `Qwen2Model`。
+
+   `prepare_data()` 的作用：
+
+   - 根据当前 `attention_mask` 和 `position_ids` 计算 `updated_kv_positions`。
+   - 计算 `kv_padding_size`，传给 `npu_incre_flash_attention()`。
+   - 为 prefill/decode 统一组织 cache 输入。
 
 ### 6.3 增加 safe hidden-only runner
 
@@ -509,6 +886,7 @@ if lm_head is None:
 - hidden-only 使用独立的 `cache_compile` 入口，不复用原 `decode/prefill` 编译缓存。
 - 返回结构保持为两个对象：`(out, hidden_states)`，避免早期 unsafe hidden-only 改成单返回导致 torchair 缓存返回结构不稳定。
 - CosyVoice 侧只取 `last_hidden_state` 和 `past_key_values`。
+- `Qwen2ForCausalLM.forward()` 不走 hidden-only；hidden-only 由 CosyVoice 侧显式调用 `self.model.model.forward_hidden_only()`。这样原始文本生成能力仍可保留，TTS 推理路径单独优化。
 
 CosyVoice 侧接入文件：
 
@@ -610,6 +988,8 @@ middle non-final p90 RTF = 0.29501
 ```text
 run_manual_concurrent.sh
 run.sh
+export.sh
+register_wav.py
 infer.py
 infer_manual_concurrent.py
 cosyvoice/cli/cosyvoice.py
@@ -622,15 +1002,43 @@ cosyvoice/utils/common.py
 cosyvoice/utils/mask.py
 data/manual_transcript_20260720.txt
 experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
+tools/export_hift_decode_onnx.py
 transformers
 ```
+
+已从交付版本移除的旧入口/产物：
+
+```text
+run copy.sh
+run1.sh
+run_infer_py.sh
+run_streaming.sh
+run_streaming copy.sh
+infer_streaming.py
+run_stream_chunk_web.sh
+stream_chunk_web.py
+stream_chunk_probe.html
+STREAM_CHUNK_WEB_README.md
+fusion_result.json
+exception_cb_index_*.bin
+xmren_log.log
+```
+
+移除原因：
+
+- `run.sh` 和 `run_manual_concurrent.sh` 已经覆盖单进程和 10 进程交付推理。
+- 旧 streaming/web probe 脚本仍使用早期 hard-coded 模型路径、旧音色名或 HiFT torch.compile 路径，容易误导复现。
+- `fusion_result.json`、`exception_cb_index_*.bin`、`xmren_log.log` 是本机运行/编译产物，不属于代码交付。
 
 `.gitignore` 会忽略：
 
 - `logs/`
 - `testout/`
+- `*.log`
 - `kernel_meta/`
 - `extra-info/`
+- `fusion_result.json`
+- `exception_cb_index_*.bin`
 - `.torchair_cache/`
 - `experiments/torchair_cache_hidden_safe/`
 - profiling / CANN 临时产物

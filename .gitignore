@@ -30,6 +30,8 @@ testout/
 tensorboard/
 raw_wav/
 exp/
+*.log
+stream_chunk_probe.html
 
 # Ascend / CANN generated artifacts
 kernel_meta/
