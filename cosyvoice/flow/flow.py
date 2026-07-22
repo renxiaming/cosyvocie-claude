@@ -124,7 +124,7 @@ class MaskedDiffWithXvec(torch.nn.Module):
         # concat text and prompt_text
         token_len1, token_len2 = prompt_token.shape[1], token.shape[1]
         token, token_len = torch.concat([prompt_token, token], dim=1), prompt_token_len + token_len
-        mask = (~make_pad_mask(token_len)).unsqueeze(-1).to(embedding)
+        mask = (~make_pad_mask(token_len, max_len=token.shape[1])).unsqueeze(-1).to(embedding)
         token = self.input_embedding(torch.clamp(token, min=0)) * mask
 
         # text encode
@@ -138,7 +138,8 @@ class MaskedDiffWithXvec(torch.nn.Module):
         conds[:, :mel_len1] = prompt_feat
         conds = conds.transpose(1, 2)
 
-        mask = (~make_pad_mask(torch.tensor([mel_len1 + mel_len2]))).to(h)
+        mel_len = mel_len1 + mel_len2
+        mask = (~make_pad_mask(torch.tensor([mel_len], device=h.device), max_len=mel_len)).to(h)
         feat, flow_cache = self.decoder(
             mu=h.transpose(1, 2).contiguous(),
             mask=mask.unsqueeze(1),
@@ -212,7 +213,7 @@ class CausalMaskedDiffWithXvec(torch.nn.Module):
 
         # concat text and prompt_text
         token, token_len = torch.concat([prompt_token, token], dim=1), prompt_token_len + token_len
-        mask = (~make_pad_mask(token_len)).unsqueeze(-1).to(embedding)
+        mask = (~make_pad_mask(token_len, max_len=token.shape[1])).unsqueeze(-1).to(embedding)
         token = self.input_embedding(torch.clamp(token, min=0)) * mask
 
         # text encode
@@ -227,7 +228,8 @@ class CausalMaskedDiffWithXvec(torch.nn.Module):
         conds[:, :mel_len1] = prompt_feat
         conds = conds.transpose(1, 2)
 
-        mask = (~make_pad_mask(torch.tensor([mel_len1 + mel_len2]))).to(h)
+        mel_len = mel_len1 + mel_len2
+        mask = (~make_pad_mask(torch.tensor([mel_len], device=h.device), max_len=mel_len)).to(h)
         if os.environ.get('COSYVOICE2_VERBOSE_FLOW', '0') == '1':
             print("flow step2")
         flow_steps = int(os.environ.get('COSYVOICE2_FLOW_STEPS', '2'))

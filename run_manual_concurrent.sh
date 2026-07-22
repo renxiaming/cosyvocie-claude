@@ -14,6 +14,33 @@ export NO_SAVE_AUDIO="${NO_SAVE_AUDIO:-1}"
 export LOG_DIR="${LOG_DIR:-logs/manual_hift_om_v2_sync_run}"
 export TEXT_FILE="${TEXT_FILE:-data/manual_transcript_20260720.txt}"
 
+# 默认按正式 10 并发验收口径执行 1 轮；需要更长压测时可覆盖 INFER_COUNT。
+export INFER_COUNT="${INFER_COUNT:-1}"
+
+# 默认完整 warmup 当前抄本，覆盖正式推理会遇到的文本长度/shape。
+# 如需缩短启动时间，可显式覆盖 WARM_UP_TIMES。
+if [ -z "${WARM_UP_TIMES:-}" ]; then
+  if [ -f "${TEXT_FILE}" ]; then
+    DEFAULT_WARM_UP_TIMES="$(awk 'NF {count++} END {print count + 0}' "${TEXT_FILE}")"
+    if [ "${DEFAULT_WARM_UP_TIMES}" -gt 0 ]; then
+      export WARM_UP_TIMES="${DEFAULT_WARM_UP_TIMES}"
+    else
+      export WARM_UP_TIMES=5
+    fi
+  else
+    export WARM_UP_TIMES=5
+  fi
+fi
+
+# 提高调度优先级，降低 10 进程并发下的 CPU 抢占抖动。无权限时仅告警并继续。
+export COSYVOICE2_NICE_LEVEL="${COSYVOICE2_NICE_LEVEL:--10}"
+if [ "${COSYVOICE2_APPLY_NICE:-1}" = "1" ]; then
+  if command -v renice >/dev/null 2>&1; then
+    renice -n "${COSYVOICE2_NICE_LEVEL}" -p $$ >/dev/null 2>&1 || \
+      echo "[WARN] failed to renice current process to ${COSYVOICE2_NICE_LEVEL}, continue with current priority" >&2
+  fi
+fi
+
 # NPU 设备绑定
 export ASCEND_RT_VISIBLE_DEVICES="${ASCEND_RT_VISIBLE_DEVICES:-0}"
 export PYTHONPATH=third_party/Matcha-TTS:$PYTHONPATH
@@ -107,8 +134,8 @@ python3 infer_manual_concurrent.py \
   --model_path="${MODEL_PATH:-../weight/CosyVoice2-0.5B_sft_shenhu_25_60}" \
   --stream \
   --concurrency="${CONCURRENCY:-10}" \
-  --infer_count="${INFER_COUNT:-25}" \
-  --warm_up_times="${WARM_UP_TIMES:-5}" \
+  --infer_count="${INFER_COUNT}" \
+  --warm_up_times="${WARM_UP_TIMES}" \
   --text_file="${TEXT_FILE}" \
   --warmup_full \
   --log_dir="${LOG_DIR:-logs/manual}" \

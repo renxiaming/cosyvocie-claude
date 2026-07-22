@@ -1,3 +1,184 @@
+[CosyVoice2 Ascend 910B 交付复现说明](#cosyvoice2-ascend-910b-交付复现说明)
+
+## CosyVoice2 Ascend 910B 交付复现说明
+
+本仓库当前交付的是 CosyVoice2 0.5B 在 Ascend 910B 单卡 10 进程流式推理上的优化版本。默认目标口径：
+
+- 不改变首包和中间包 chunk 大小。
+- 单卡 10 进程同步正式推理。
+- 首包 p90 < 400ms。
+- 中间包 p90 RTF < 0.3。
+- 中间包统计口径排除 final tail。final tail 是收尾包，长度和 cache 状态不同，不能混入中间包验收。
+
+### 目录和依赖
+
+默认模型路径：
+
+```bash
+../weight/CosyVoice2-0.5B_sft_shenhu_25_60
+```
+
+默认验收抄本：
+
+```bash
+data/manual_transcript_20260720.txt
+```
+
+默认 HiFT decode OM：
+
+```bash
+experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
+```
+
+运行前确认：
+
+```bash
+conda activate voxcpm
+cd /data/xmren/work/work/test/model/CosyVoice-claude
+npu-smi info
+```
+
+如果模型文件是从其他用户复制过来的，`ais_bench` 可能要求当前用户属于文件 owner 或 owner group。需要保证模型目录和 OM 文件对当前运行用户可读，并满足 Ascend path security check 的 owner/group 要求。
+
+### 10 进程正式压测
+
+默认入口：
+
+```bash
+bash run_manual_concurrent.sh
+```
+
+默认行为：
+
+- 使用 `ASCEND_RT_VISIBLE_DEVICES=0`。
+- 启动 10 个独立 `infer.py` 进程。
+- 每个进程绑定到 NPU0 近端 CPU `144-167`，10 进程共享这组 core。
+- 所有进程先完整 warmup 当前 `TEXT_FILE`。
+- 所有进程 warmup 完成后通过 sync barrier 同步开始正式推理。
+- 默认 `NO_SAVE_AUDIO=1`，性能压测不保存音频，避免 wav 保存和 device-to-host copy 影响 RTF。
+- 默认 `INFER_COUNT=1`，即每个 client 正式跑一遍抄本。
+
+常用覆盖参数：
+
+```bash
+# 指定 NPU
+ASCEND_RT_VISIBLE_DEVICES=1 bash run_manual_concurrent.sh
+
+# 保存音频，主要用于听音质，不用于性能验收
+NO_SAVE_AUDIO=0 bash run_manual_concurrent.sh
+
+# 换抄本；默认 warmup 会自动覆盖该文件所有非空行
+TEXT_FILE=data/your_transcript.txt bash run_manual_concurrent.sh
+
+# 缩短 warmup 调试，不建议用于正式验收
+WARM_UP_TIMES=5 bash run_manual_concurrent.sh
+```
+
+### 单进程推理
+
+默认入口：
+
+```bash
+bash run.sh
+```
+
+默认行为：
+
+- 使用同一套 HiFT OM、Qwen hidden-only、fast topk、device-token decode、Flow mask sync 优化。
+- 默认完整 warmup 当前 `TEXT_FILE`。
+- 默认保存音频到 `testout/run_single`。
+- 默认 `INFER_COUNT=1`。
+
+性能测试单进程可关闭保存：
+
+```bash
+NO_SAVE_AUDIO=1 bash run.sh
+```
+
+### 当前固化的核心优化
+
+1. HiFT decode OM 化
+
+`run_manual_concurrent.sh` 和 `run.sh` 默认加载：
+
+```bash
+COSYVOICE2_HIFT_DECODE_OM=experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
+COSYVOICE2_HIFT_DECODE_GEARS=30,50,128,130,160
+```
+
+作用是把 HiFT vocoder 的 decode 从 PyTorch eager/compile 路径替换成固定 OM 推理，减少多进程下 runtime 开销和图资源抖动。
+
+2. Qwen safe hidden-only
+
+默认开启：
+
+```bash
+COSYVOICE2_QWEN_HIDDEN_ONLY=1
+TORCHAIR_CACHE_HOME=experiments/torchair_cache_hidden_safe
+```
+
+CosyVoice2 后续只使用 Qwen hidden states，再接自己的 `llm_decoder` 生成 speech token。当前实现跳过 Qwen 原文本 `lm_head`，但使用独立 hidden-only 编译入口，避免复用原 decode/prefill cache 导致返回结构不稳定。可回退：
+
+```bash
+COSYVOICE2_QWEN_HIDDEN_ONLY=0 bash run_manual_concurrent.sh
+```
+
+3. LLM token decode 轻量化
+
+默认开启：
+
+```bash
+COSYVOICE2_SAMPLING_MODE=fast_topk
+COSYVOICE2_FAST_TOPK_K=25
+COSYVOICE2_DEVICE_TOKEN_DECODE=1
+```
+
+作用是减少原始 RAS/top-p 全量排序和逐 token host `.item()` 同步。`FAST_TOPK_K=25` 是当前交付默认，未固化 TopK=10，因为它会改变采样分布，音质风险更高。
+
+4. no-save 压测路径不做 CPU 输出同步
+
+`NO_SAVE_AUDIO=1` 时，`infer.py` 会设置：
+
+```bash
+COSYVOICE2_NO_CPU_OUTPUT=1
+```
+
+推理代码只消费生成结果，不把每个 chunk 立即 `.cpu()` 并保存 wav，避免把 host copy/IO 混入 RTF。
+
+5. Flow mask 构造减少 host sync
+
+`cosyvoice/flow/flow.py` 中 `make_pad_mask` 显式传入 `max_len`，避免内部 `lengths.max().item()` 造成 NPU 到 Host 同步。这个改动不改变模型输出，只减少运行时同步点。
+
+6. 完整 warmup 当前抄本
+
+两个启动脚本默认自动统计 `TEXT_FILE` 的非空行数作为 `WARM_UP_TIMES`，并开启 `--warmup_full`。这样正式推理前已覆盖当前抄本的主要文本长度和动态 shape，避免第 6 条之后才首次遇到新 shape 导致首包和中间包抖动。
+
+### 已验证结果
+
+默认 5 条 warmup 时，正式推理会在未 warmup 文本上出现边界抖动：
+
+```text
+logs/manual_hift_om_v2_sync_run/run_20260722_203656
+first p90 = 403.82ms
+middle non-final p90 RTF = 0.30252
+```
+
+完整 warmup 后连续两轮 10 进程同步推理达成 p90 目标：
+
+```text
+logs/exp_full_warmup_67_24core/run_20260722_205133
+first p90 = 393.98ms
+middle non-final p90 RTF = 0.29962
+
+logs/exp_full_warmup_67_24core_rerun/run_20260722_205954
+first p90 = 399.61ms
+middle non-final p90 RTF = 0.29501
+```
+
+注意：性能仍然接近硬件边界。正式验收前应保证 NPU0 无其他进程、CPU 亲和核未被其他高负载任务占用，并使用默认完整 warmup。
+
+---
+
 [![SVG Banners](https://svg-banners.vercel.app/api?type=origin&text1=CosyVoice🤠&text2=Text-to-Speech%20💖%20Large%20Language%20Model&width=800&height=210)](https://github.com/Akshay090/svg-banners)
 
 ## 👉🏻 CosyVoice 👈🏻

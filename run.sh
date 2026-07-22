@@ -9,6 +9,21 @@ export COSYVOICE2_HIFT_DECODE_GEARS="${COSYVOICE2_HIFT_DECODE_GEARS:-30,50,128,1
 # 单进程默认保存音频，性能压测可设 NO_SAVE_AUDIO=1
 export NO_SAVE_AUDIO="${NO_SAVE_AUDIO:-0}"
 export TEXT_FILE="${TEXT_FILE:-data/manual_transcript_20260720.txt}"
+export INFER_COUNT="${INFER_COUNT:-1}"
+
+# 默认完整 warmup 当前抄本，避免正式推理阶段首次遇到新 shape。
+if [ -z "${WARM_UP_TIMES:-}" ]; then
+  if [ -f "${TEXT_FILE}" ]; then
+    DEFAULT_WARM_UP_TIMES="$(awk 'NF {count++} END {print count + 0}' "${TEXT_FILE}")"
+    if [ "${DEFAULT_WARM_UP_TIMES}" -gt 0 ]; then
+      export WARM_UP_TIMES="${DEFAULT_WARM_UP_TIMES}"
+    else
+      export WARM_UP_TIMES=5
+    fi
+  else
+    export WARM_UP_TIMES=5
+  fi
+fi
 
 # 避免 HuggingFace tokenizer 在线程池初始化后 fork 引发死锁风险。
 export TOKENIZERS_PARALLELISM="${TOKENIZERS_PARALLELISM:-false}"
@@ -91,9 +106,10 @@ fi
 python3 infer.py \
   --model_path="${MODEL_PATH:-../weight/CosyVoice2-0.5B_sft_shenhu_25_60}" \
   --stream \
-  --warm_up_times="${WARM_UP_TIMES:-5}" \
-  --infer_count="${INFER_COUNT:-5}" \
+  --warm_up_times="${WARM_UP_TIMES}" \
+  --infer_count="${INFER_COUNT}" \
   --output_dir="${OUTPUT_DIR:-testout/run_single}" \
   --text_file="${TEXT_FILE}" \
+  --warmup_full \
   $NO_SAVE_ARG
 # python3 register_wav.py

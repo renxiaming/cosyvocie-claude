@@ -1,59 +1,67 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+.pytest_cache/
+.ipynb_checkpoints/
 
-# Visual Studio Code files
-.vscode
-.vs
-
-# PyCharm files
-.idea
-
-# Eclipse Project settings
-*.*project
-.settings
-
-# Sublime Text settings
+# Editors / OS
+.vscode/
+.vs/
+.idea/
+.settings/
 *.sublime-workspace
 *.sublime-project
-
-# Editor temporaries
 *.swn
 *.swo
 *.swp
 *.swm
 *~
-
-# IPython notebook checkpoints
-.ipynb_checkpoints
-
-# macOS dir files
 .DS_Store
 
-exp
-data
-raw_wav
-tensorboard
-**/*build*
-logs/
-testout/
-edm_capture_artifacts.bak_*/
-kernel_meta.bak_*/
-
-# Clangd files
-.cache
+# Local caches
+.cache/
+.torchair_cache/
 compile_commands.json
 
-# train/inference files
+# Runtime outputs
+logs/
+testout/
+tensorboard/
+raw_wav/
+exp/
+
+# Ascend / CANN generated artifacts
+kernel_meta/
+kernel_meta.bak_*/
+extra-info/
+edm_capture_artifacts.bak_*/
+fusion_result.json
+exception_cb_index_*.bin
+
+# Training / inference generated files
 *.wav
 *.m4a
 *.aac
 *.pt
-pretrained_models/*
-*_pb2_grpc.py
-*_pb2.py
 *.tar
 *.whl
+*_pb2_grpc.py
+*_pb2.py
 
-experiments/
+# External model weights should stay outside this repo.
+pretrained_models/*
+
+# Keep the delivery transcript tracked; ignore other local data files by default.
+data/*
+!data/manual_transcript_20260720.txt
+
+# experiments contains tracked HiFT OM assets required by delivery.
+# New experiment outputs remain ignored unless explicitly force-added.
+experiments/*
+!experiments/hift_decode_om_20260706_230701/
+!experiments/hift_decode_om_20260706_230701/hift.decode.fp32.onnx
+!experiments/hift_decode_om_20260706_230701/hift_decode_static.om
+!experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
+!experiments/hift_decode_om_20260706_230701/real_hift_decode_shapes.txt
+!experiments/hift_decode_om_20260706_230701/*.log
