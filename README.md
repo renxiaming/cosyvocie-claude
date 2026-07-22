@@ -1,16 +1,52 @@
-[CosyVoice2 Ascend 910B 交付复现说明](#cosyvoice2-ascend-910b-交付复现说明)
+# CosyVoice2 Ascend 910B 推理加速交付说明
 
-## CosyVoice2 Ascend 910B 交付复现说明
+本文档说明当前仓库如何从开源 CosyVoice2 代码演进到交付版本、每类模型文件如何处理、代码做了哪些关键修改，以及如何复现单卡 10 进程流式推理指标。
 
-本仓库当前交付的是 CosyVoice2 0.5B 在 Ascend 910B 单卡 10 进程流式推理上的优化版本。默认目标口径：
+当前交付目标：
 
-- 不改变首包和中间包 chunk 大小。
-- 单卡 10 进程同步正式推理。
-- 首包 p90 < 400ms。
-- 中间包 p90 RTF < 0.3。
-- 中间包统计口径排除 final tail。final tail 是收尾包，长度和 cache 状态不同，不能混入中间包验收。
+- 不改变当前业务 chunk 配置：首包 `25`，中间包 hop `60`。
+- 单张 Ascend 910B，10 个独立进程同时正式推理。
+- 正式推理首包 p90 `< 400ms`。
+- 正式推理中间包 p90 RTF `< 0.3`。
+- 中间包统计口径排除 final tail。final tail 是每句话结束时的收尾包，长度、cache 状态和普通中间包不同，不能混入中间包验收。
 
-### 目录和依赖
+## 1. 快速复现
+
+进入环境和代码目录：
+
+```bash
+conda activate voxcpm
+cd /data/xmren/work/work/test/model/CosyVoice-claude
+npu-smi info
+```
+
+10 进程正式压测：
+
+```bash
+bash run_manual_concurrent.sh
+```
+
+单进程推理并保存音频：
+
+```bash
+bash run.sh
+```
+
+常用覆盖方式：
+
+```bash
+# 指定 NPU
+ASCEND_RT_VISIBLE_DEVICES=1 bash run_manual_concurrent.sh
+
+# 多进程保存音频，只用于听音质，不用于性能验收
+NO_SAVE_AUDIO=0 bash run_manual_concurrent.sh
+
+# 换抄本。默认会自动完整 warmup 新抄本所有非空行
+TEXT_FILE=data/your_transcript.txt bash run_manual_concurrent.sh
+
+# 调试时缩短 warmup；正式验收不要这样做
+WARM_UP_TIMES=5 bash run_manual_concurrent.sh
+```
 
 默认模型路径：
 
@@ -30,132 +66,522 @@ data/manual_transcript_20260720.txt
 experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
 ```
 
-运行前确认：
+## 2. 从开源代码到当前版本的整体步骤
 
-```bash
-conda activate voxcpm
-cd /data/xmren/work/work/test/model/CosyVoice-claude
-npu-smi info
+当前版本不是纯开源 CosyVoice2 直接运行，而是在开源结构上做了 Ascend 910B 推理适配和多进程低延迟优化。
+
+1. 获取开源 CosyVoice2 代码。
+
+   基础结构保持 FunAudioLLM/CosyVoice 的目录组织，包括 `cosyvoice/`、`third_party/Matcha-TTS/`、`runtime/`、`examples/` 等。
+
+2. 使用本地 Ascend 适配过的 `transformers` 子仓库。
+
+   主仓库中的 `transformers` 是 gitlink/submodule 形式。当前指针：
+
+   ```text
+   transformers -> e352348b1442775fda3d6faf2aa716d6dd581ff5
+   ```
+
+   相比早期可跑通版本 `05e48ed` 使用的指针：
+
+   ```text
+   transformers -> 6581349d4be9fb6853d7b8b1fc204883c10f19db
+   ```
+
+   当前又增加了 hidden-only runner。具体修改见第 6 节。
+
+3. 准备业务模型目录。
+
+   模型目录默认放在仓库外：
+
+   ```bash
+   ../weight/CosyVoice2-0.5B_sft_shenhu_25_60
+   ```
+
+   大模型权重、Flow OM、speech token OM 等文件不放进本仓库，避免把数 GB 模型权重提交到代码仓库。
+
+4. 保留 Flow 和 speech token 的原有 OM 推理。
+
+   `CosyVoice2(..., load_om=True)` 会加载模型目录下的：
+
+   ```text
+   flow_linux_aarch64.om
+   flow_static.om
+   speech_linux_aarch64.om
+   ```
+
+   这部分沿用 Ascend 适配版本的 OM 路径。
+
+5. 额外把 HiFT vocoder 的 `decode` 子图导出并编译成 OM。
+
+   该文件放在本仓库：
+
+   ```text
+   experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
+   ```
+
+   代码运行时用环境变量加载，替换 PyTorch eager/torch.compile 的 HiFT decode 路径。
+
+6. 改造 Qwen LLM 推理路径。
+
+   CosyVoice2 的 Qwen 输出只需要 hidden states，后面接 CosyVoice 自己的 `llm_decoder` 生成 speech token；Qwen 原文本 `lm_head` 对 TTS 推理没有实际用途。当前版本增加 safe hidden-only runner，跳过 Qwen `lm_head`，但保持独立 torchair 编译入口，避免早期 hidden-only 复用编译缓存导致音频杂音。
+
+7. 增加严格同步、多进程 CPU 亲和、完整 warmup 和 no-save 压测路径。
+
+   默认入口 `run_manual_concurrent.sh` 会启动 10 个独立进程，各自完整 warmup 当前抄本，然后统一进入正式推理，避免“部分进程先跑完，部分进程还没开始”的假低 RTF。
+
+## 3. 模型文件处理说明
+
+默认外部模型目录中的核心文件如下：
+
+| 文件 | 当前处理方式 | 是否提交本仓库 | 用途 |
+|---|---|---:|---|
+| `llm.pt` | 保留在外部模型目录 | 否 | CosyVoice LLM 权重 |
+| `flow.pt` | 保留在外部模型目录 | 否 | Flow PyTorch 权重，主要用于构建模型对象 |
+| `hift.pt` | 保留在外部模型目录 | 否 | HiFT PyTorch 权重，除 decode OM 外仍需模型结构和部分逻辑 |
+| `spk2info.pt` / `spk2info1.pt` | 保留在外部模型目录 | 否 | SFT 音色信息 |
+| `flow_linux_aarch64.om` | 运行时通过 `load_om=True` 加载 | 否 | Flow 动态 OM |
+| `flow_static.om` | 运行时通过 `load_om=True` 加载 | 否 | Flow 静态 OM |
+| `speech_linux_aarch64.om` | 运行时通过 `load_om=True` 加载 | 否 | speech tokenizer/token 模块 OM |
+| `speech_tokenizer_v2.onnx` / `speech_token_md.onnx` | 保留在外部模型目录 | 否 | speech token 相关 ONNX 文件 |
+| `flow.decoder.estimator.fp32.onnx` | 保留在外部模型目录 | 否 | Flow estimator ONNX 源文件 |
+| `CosyVoice-BlankEN/model.safetensors` | 保留在外部模型目录 | 否 | Qwen/HF 模型相关文件 |
+| `vllm/model.safetensors` | 保留在外部模型目录 | 否 | 早期 vLLM/MindIE 方向探索产物，当前默认推理不使用 |
+| `experiments/hift_decode_om_20260706_230701/hift.decode.fp32.onnx` | 本仓库跟踪 | 是 | HiFT decode 导出的 ONNX |
+| `experiments/hift_decode_om_20260706_230701/hift_decode_static.om` | 本仓库跟踪 | 是 | 早期 HiFT decode OM，首版验证产物 |
+| `experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om` | 本仓库跟踪 | 是 | 当前默认使用的 HiFT decode OM |
+| `experiments/hift_decode_om_20260706_230701/real_hift_decode_shapes.txt` | 本仓库跟踪 | 是 | 实测 HiFT decode shape/gear 记录 |
+
+注意：
+
+- 外部模型目录必须存在，默认脚本不会自动下载或复制权重。
+- `ais_bench` 会做路径安全检查。如果 OM 文件不是当前用户或用户组可访问，可能报 owner/ownergroup 相关错误。需要保证模型文件和目录 owner/group 满足当前运行用户要求。
+- 本仓库 `.gitignore` 明确忽略新生成的运行日志、NPU 编译缓存、profiling 产物和临时权重，避免交付代码被本机产物污染。
+
+## 4. HiFT decode 导出 OM 和运行时接入
+
+HiFT 原始路径在 `cosyvoice/hifigan/generator.py` 中：
+
+```python
+magnitude, phase = self.decode(x=speech_feat, s_stft=s_stft, index=index)
 ```
 
-如果模型文件是从其他用户复制过来的，`ais_bench` 可能要求当前用户属于文件 owner 或 owner group。需要保证模型目录和 OM 文件对当前运行用户可读，并满足 Ascend path security check 的 owner/group 要求。
+当前处理方式：
 
-### 10 进程正式压测
+1. 从真实流式推理中采集 HiFT decode 输入 shape。
 
-默认入口：
+   记录文件：
 
-```bash
-bash run_manual_concurrent.sh
+   ```text
+   experiments/hift_decode_om_20260706_230701/real_hift_decode_shapes.txt
+   ```
+
+   当前记录覆盖的 mel 长度包括：
+
+   ```text
+   30, 50, 128
+   ```
+
+   运行时脚本配置的 gear：
+
+   ```bash
+   COSYVOICE2_HIFT_DECODE_GEARS=30,50,128,130,160
+   ```
+
+2. 导出 `HiFTGenerator.decode` 为 ONNX。
+
+   交付文件：
+
+   ```text
+   experiments/hift_decode_om_20260706_230701/hift.decode.fp32.onnx
+   ```
+
+3. 通过 ATC 编译 OM。
+
+   当前默认使用：
+
+   ```text
+   experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
+   ```
+
+4. 在 `CosyVoice2` 初始化时加载 HiFT OM。
+
+   文件：
+
+   ```text
+   cosyvoice/cli/cosyvoice.py
+   ```
+
+   逻辑：
+
+   ```python
+   hift_decode_om = os.environ.get('COSYVOICE2_HIFT_DECODE_OM', '')
+   if hift_decode_om:
+       self.model.hift.load_decode_om(hift_decode_om, restore_session=flow_om)
+   ```
+
+5. 在 `HiFTGenerator` 内部实现 OM 推理和 fallback。
+
+   文件：
+
+   ```text
+   cosyvoice/hifigan/generator.py
+   ```
+
+   新增逻辑：
+
+   - `load_decode_om()`：用 `ais_bench.InferSession` 加载 OM，并读取 `COSYVOICE2_HIFT_DECODE_GEARS`。
+   - `decode_by_om()`：把输入按 gear padding，执行 OM 推理，再裁回原始 `s_stft` 长度。
+   - `forward()`：如果 `decode_om is not None`，走 OM；否则回退原 PyTorch `decode()`。
+   - OM 推理后调用 `restore_session.set_context()`，把上下文切回 Flow OM，避免多个 `InferSession` 混用时上下文错乱。
+
+当前限制：
+
+- 如果实际 mel 长度超过 `COSYVOICE2_HIFT_DECODE_GEARS` 覆盖范围，会抛出 `no hift decode om gear`。
+- 当前 chunk 配置下已覆盖默认流式推理档位。换 chunk 或换 HiFT 结构，需要重新采集 shape 并补导出/补编译。
+
+## 5. CosyVoice 主仓库代码改动
+
+### 5.1 启动脚本
+
+多进程入口：
+
+```text
+run_manual_concurrent.sh
 ```
 
-默认行为：
-
-- 使用 `ASCEND_RT_VISIBLE_DEVICES=0`。
-- 启动 10 个独立 `infer.py` 进程。
-- 每个进程绑定到 NPU0 近端 CPU `144-167`，10 进程共享这组 core。
-- 所有进程先完整 warmup 当前 `TEXT_FILE`。
-- 所有进程 warmup 完成后通过 sync barrier 同步开始正式推理。
-- 默认 `NO_SAVE_AUDIO=1`，性能压测不保存音频，避免 wav 保存和 device-to-host copy 影响 RTF。
-- 默认 `INFER_COUNT=1`，即每个 client 正式跑一遍抄本。
-
-常用覆盖参数：
+默认配置：
 
 ```bash
-# 指定 NPU
-ASCEND_RT_VISIBLE_DEVICES=1 bash run_manual_concurrent.sh
-
-# 保存音频，主要用于听音质，不用于性能验收
-NO_SAVE_AUDIO=0 bash run_manual_concurrent.sh
-
-# 换抄本；默认 warmup 会自动覆盖该文件所有非空行
-TEXT_FILE=data/your_transcript.txt bash run_manual_concurrent.sh
-
-# 缩短 warmup 调试，不建议用于正式验收
-WARM_UP_TIMES=5 bash run_manual_concurrent.sh
+ASCEND_RT_VISIBLE_DEVICES=0
+CONCURRENCY=10
+INFER_COUNT=1
+NO_SAVE_AUDIO=1
+SYNC_START=1
+SYNC_START_TIMEOUT=1800
+CPU_AFFINITY_CPUS=144-167
+CPU_AFFINITY_SHARE=1
+OMP_NUM_THREADS=2
+MKL_NUM_THREADS=1
+COSYVOICE2_FIRST_CHUNK_SIZE=25
+COSYVOICE2_TOKEN_HOP_LEN=60
+COSYVOICE2_FLOW_CONTEXT_TOKENS=25
+COSYVOICE2_FLOW_HIFT_STREAM=0
 ```
 
-### 单进程推理
+脚本会自动统计 `TEXT_FILE` 非空行数作为默认 `WARM_UP_TIMES`。当前交付抄本 67 行，所以默认完整 warmup 67 次。
 
-默认入口：
+单进程入口：
 
-```bash
-bash run.sh
+```text
+run.sh
 ```
 
-默认行为：
+单进程同样使用 HiFT OM、Qwen hidden-only、fast topk、device-token decode、完整 warmup。区别是单进程默认 `NO_SAVE_AUDIO=0`，会保存音频到 `testout/run_single`。
 
-- 使用同一套 HiFT OM、Qwen hidden-only、fast topk、device-token decode、Flow mask sync 优化。
-- 默认完整 warmup 当前 `TEXT_FILE`。
-- 默认保存音频到 `testout/run_single`。
-- 默认 `INFER_COUNT=1`。
+### 5.2 并发调度和同步
 
-性能测试单进程可关闭保存：
+文件：
 
-```bash
-NO_SAVE_AUDIO=1 bash run.sh
+```text
+infer_manual_concurrent.py
+infer.py
 ```
 
-### 当前固化的核心优化
+关键改动：
 
-1. HiFT decode OM 化
+- `infer_manual_concurrent.py` 负责启动 N 个独立 `infer.py` 子进程，模拟 N 个终端独立推理。
+- 支持 `--cpu_affinity_cpus` 和 `--cpu_affinity_share`，将进程绑定到指定 CPU 范围。
+- 支持 `--sync_start`，父进程等待所有 client 写入 `client_N.ready` 后再写 `go` 文件。
+- `infer.py` 在 warmup 后进入 `wait_sync_start()`，看到 `go` 后才进入正式推理。
+- 支持 `--text_file`，一行一条推理文本。
+- 支持 `--warmup_full`，warmup 阶段完整消费流式输出，而不是只取首包。
+- 支持 `--no_save_audio`，用于性能压测。
 
-`run_manual_concurrent.sh` 和 `run.sh` 默认加载：
+### 5.3 no-save 路径减少 CPU 同步
 
-```bash
-COSYVOICE2_HIFT_DECODE_OM=experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
-COSYVOICE2_HIFT_DECODE_GEARS=30,50,128,130,160
+文件：
+
+```text
+infer.py
+cosyvoice/cli/model.py
 ```
 
-作用是把 HiFT vocoder 的 decode 从 PyTorch eager/compile 路径替换成固定 OM 推理，减少多进程下 runtime 开销和图资源抖动。
-
-2. Qwen safe hidden-only
-
-默认开启：
-
-```bash
-COSYVOICE2_QWEN_HIDDEN_ONLY=1
-TORCHAIR_CACHE_HOME=experiments/torchair_cache_hidden_safe
-```
-
-CosyVoice2 后续只使用 Qwen hidden states，再接自己的 `llm_decoder` 生成 speech token。当前实现跳过 Qwen 原文本 `lm_head`，但使用独立 hidden-only 编译入口，避免复用原 decode/prefill cache 导致返回结构不稳定。可回退：
-
-```bash
-COSYVOICE2_QWEN_HIDDEN_ONLY=0 bash run_manual_concurrent.sh
-```
-
-3. LLM token decode 轻量化
-
-默认开启：
-
-```bash
-COSYVOICE2_SAMPLING_MODE=fast_topk
-COSYVOICE2_FAST_TOPK_K=25
-COSYVOICE2_DEVICE_TOKEN_DECODE=1
-```
-
-作用是减少原始 RAS/top-p 全量排序和逐 token host `.item()` 同步。`FAST_TOPK_K=25` 是当前交付默认，未固化 TopK=10，因为它会改变采样分布，音质风险更高。
-
-4. no-save 压测路径不做 CPU 输出同步
-
-`NO_SAVE_AUDIO=1` 时，`infer.py` 会设置：
+`infer.py` 在 `--no_save_audio` 时设置：
 
 ```bash
 COSYVOICE2_NO_CPU_OUTPUT=1
 ```
 
-推理代码只消费生成结果，不把每个 chunk 立即 `.cpu()` 并保存 wav，避免把 host copy/IO 混入 RTF。
+`CosyVoice2Model._wrap_tts_output()` 根据该变量决定是否 `.cpu()`：
 
-5. Flow mask 构造减少 host sync
+```python
+if self._no_cpu_output:
+    return {'tts_speech': tts_speech}
+return {'tts_speech': tts_speech.cpu()}
+```
 
-`cosyvoice/flow/flow.py` 中 `make_pad_mask` 显式传入 `max_len`，避免内部 `lengths.max().item()` 造成 NPU 到 Host 同步。这个改动不改变模型输出，只减少运行时同步点。
+这样性能压测时不会把每个 chunk 的 device-to-host copy 和 wav 保存开销计入 RTF。保存音频时仍保持原行为。
 
-6. 完整 warmup 当前抄本
+### 5.4 Flow mask 同步点优化
 
-两个启动脚本默认自动统计 `TEXT_FILE` 的非空行数作为 `WARM_UP_TIMES`，并开启 `--warmup_full`。这样正式推理前已覆盖当前抄本的主要文本长度和动态 shape，避免第 6 条之后才首次遇到新 shape 导致首包和中间包抖动。
+文件：
 
-### 已验证结果
+```text
+cosyvoice/flow/flow.py
+cosyvoice/utils/mask.py
+```
 
-默认 5 条 warmup 时，正式推理会在未 warmup 文本上出现边界抖动：
+改动：
+
+- `make_pad_mask(token_len, max_len=token.shape[1])` 显式传入 `max_len`，避免内部 `lengths.max().item()` 触发 NPU 到 Host 同步。
+- `torch.tensor([mel_len], device=h.device)` 放到目标 device 上，减少不必要的 Host tensor。
+- `COSYVOICE2_SKIP_MASK_SANITY=1` 时跳过推理期 mask 全 false 检查，避免 `.item()` 强制同步。
+
+这些改动不改变模型数学结果，主要减少同步点和日志/检查开销。
+
+### 5.5 LLM 采样和 token tensor 优化
+
+文件：
+
+```text
+cosyvoice/llm/llm.py
+cosyvoice/utils/common.py
+cosyvoice/cli/model.py
+```
+
+改动：
+
+- `COSYVOICE2_SAMPLING_MODE=fast_topk` 时使用 `fast_topk_sampling()`，避免原始 RAS/top-p 的全量排序路径。
+- `COSYVOICE2_DEVICE_TOKEN_DECODE=1` 时，LLM decode 阶段直接保留 device token tensor，减少逐 token `.item()` 同步。
+- `_speech_tokens_to_tensor()` 支持 token 列表里是 Tensor 的情况，避免中间把 token 拉回 CPU。
+- 默认保留 `COSYVOICE2_FAST_TOPK_K=25`。TopK=10 曾作为探索方向，但会改变采样分布，未作为交付默认。
+
+## 6. transformers 子仓库如何从开源版本改到当前版本
+
+主仓库通过 `PYTHONPATH=transformers/src:$PYTHONPATH` 使用本地 `transformers`。因此当前推理依赖仓库内 `transformers/src/transformers/models/qwen2/modeling_qwen2.py`，而不是环境里 pip 安装的原生 HuggingFace 版本。
+
+当前子仓库提交链：
+
+```text
+8e3e145b42 [`GPTNeoX`] Fix BC issue with 4.36 (#28602)
+6581349d4b adapt ascend in transformers
+e352348b14 Add Qwen hidden-only runner
+```
+
+### 6.1 从开源 HuggingFace Transformers 获取基础版本
+
+基础提交是 HuggingFace upstream 中的：
+
+```text
+8e3e145b42
+```
+
+可复现步骤：
+
+```bash
+git clone https://github.com/huggingface/transformers.git transformers
+cd transformers
+git checkout 8e3e145b42
+```
+
+### 6.2 应用 Ascend Qwen2 适配
+
+本地提交：
+
+```text
+6581349d4be9fb6853d7b8b1fc204883c10f19db adapt ascend in transformers
+```
+
+主要改动文件：
+
+```text
+transformers/src/transformers/models/qwen2/modeling_qwen2.py
+```
+
+核心改动：
+
+1. 引入 Ascend 依赖。
+
+   ```python
+   import torch_npu
+   import torchair as tng
+   from torchair.configs.compiler_config import CompilerConfig
+   ```
+
+2. 用 NPU fused RMSNorm / AddRMSNorm 替换原 PyTorch RMSNorm。
+
+   原始 HuggingFace 实现会手写 `pow -> mean -> rsqrt -> mul`。当前版本改为：
+
+   ```python
+   torch_npu.npu_rms_norm(...)
+   torch_npu.npu_add_rms_norm(...)
+   ```
+
+   目的：减少算子数量，利用 Ascend 融合算子。
+
+3. 改写 RoPE 计算。
+
+   当前版本在 `Qwen2Model` 级别缓存 `rotary_emb`，通过 `_prepare_decoder_rotary_cos_sin()` 按 `position_ids` 提前取出 cos/sin，再传入 attention，避免每层重复处理。
+
+4. 用 Ascend FlashAttention 替换 PyTorch SDPA。
+
+   在 `Qwen2SdpaAttention.forward()` 中：
+
+   - prefill 阶段 `q_len > 1` 使用 `torch_npu.npu_prompt_flash_attention()`。
+   - decode 阶段 `q_len == 1` 使用 `torch_npu.npu_incre_flash_attention()`。
+   - attention layout 改为 `BSND`，并显式传入 `actual_seq_len`、`kv_padding_size`。
+
+5. 改造 KV cache 更新。
+
+   新增参数：
+
+   ```python
+   updated_kv_positions
+   kv_padding_size
+   actual_seq_len
+   ```
+
+   decode 时通过：
+
+   ```python
+   torch_npu.scatter_update_(past_key_value.key_cache[layer], ...)
+   torch_npu.scatter_update_(past_key_value.value_cache[layer], ...)
+   ```
+
+   直接更新固定 cache buffer，适配增量 attention。
+
+6. 增加 TorchAIR cache_compile。
+
+   在 `Qwen2Model.__init__()` 中创建：
+
+   ```python
+   self.cached_decode = tng.inference.cache_compile(self.decode, config=config)
+   self.cached_prefill = tng.inference.cache_compile(self.prefill, config=config)
+   ```
+
+   `forward()` 根据 `inputs_embeds.size(1)` 自动分流：
+
+   - `> 1`：prefill。
+   - `== 1`：decode。
+
+7. 在 `Qwen2ForCausalLM.forward()` 中使用 `prepare_data()` 准备 Ascend cache/position 参数，再调用底层 `Qwen2Model`。
+
+### 6.3 增加 safe hidden-only runner
+
+本地提交：
+
+```text
+e352348b1442775fda3d6faf2aa716d6dd581ff5 Add Qwen hidden-only runner
+```
+
+修改文件：
+
+```text
+transformers/src/transformers/models/qwen2/modeling_qwen2.py
+```
+
+新增内容：
+
+```python
+self.cached_decode_hidden = tng.inference.cache_compile(self.decode_hidden, config=config)
+self.cached_prefill_hidden = tng.inference.cache_compile(self.prefill_hidden, config=config)
+```
+
+并新增：
+
+```python
+forward_hidden_only()
+decode_hidden()
+prefill_hidden()
+```
+
+`decode_hidden()` 和 `prefill_hidden()` 调用 `_forward(..., lm_head=None)`。在 `_forward()` 中：
+
+```python
+hidden_states = out[0]
+if lm_head is None:
+    return out, hidden_states
+```
+
+关键点：
+
+- hidden-only 使用独立的 `cache_compile` 入口，不复用原 `decode/prefill` 编译缓存。
+- 返回结构保持为两个对象：`(out, hidden_states)`，避免早期 unsafe hidden-only 改成单返回导致 torchair 缓存返回结构不稳定。
+- CosyVoice 侧只取 `last_hidden_state` 和 `past_key_values`。
+
+CosyVoice 侧接入文件：
+
+```text
+cosyvoice/llm/llm.py
+```
+
+逻辑：
+
+```python
+if self.hidden_only and hasattr(self.model.model, 'forward_hidden_only'):
+    ...
+    outs, last_hidden_state = self.model.model.forward_hidden_only(...)
+    return last_hidden_state, outs.past_key_values
+```
+
+回退方式：
+
+```bash
+COSYVOICE2_QWEN_HIDDEN_ONLY=0 bash run_manual_concurrent.sh
+```
+
+## 7. 默认性能配置和原因
+
+多进程默认参数在 `run_manual_concurrent.sh` 中固化：
+
+```bash
+COSYVOICE2_HIFT_DECODE_OM=experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
+COSYVOICE2_HIFT_DECODE_GEARS=30,50,128,130,160
+COSYVOICE2_QWEN_HIDDEN_ONLY=1
+COSYVOICE2_SAMPLING_MODE=fast_topk
+COSYVOICE2_FAST_TOPK_K=25
+COSYVOICE2_DEVICE_TOKEN_DECODE=1
+COSYVOICE2_FIRST_CHUNK_SIZE=25
+COSYVOICE2_TOKEN_HOP_LEN=60
+COSYVOICE2_FLOW_CONTEXT_TOKENS=25
+COSYVOICE2_FLOW_HIFT_STREAM=0
+COSYVOICE2_SKIP_MASK_SANITY=1
+TASK_QUEUE_ENABLE=2
+ENABLE_DYNAMIC_SHAPE_MULTI_STREAM=1
+OMP_NUM_THREADS=2
+MKL_NUM_THREADS=1
+CPU_AFFINITY_CPUS=144-167
+CPU_AFFINITY_SHARE=1
+```
+
+选择这些默认值的原因：
+
+- 10 进程下额外 Flow/HiFT stream 会增加 SQ/CQ 压力，所以默认 `COSYVOICE2_FLOW_HIFT_STREAM=0`。
+- 10 进程下 CPU/BLAS 抢占会放大抖动，所以多进程默认 `OMP=2`、`MKL=1`。
+- 当前机器 NPU0 近端 CPU 观测为 `144-167`，默认 10 进程共享这 24 个 core，比硬切小段更稳。
+- 完整 warmup 能显著降低正式阶段首次遇到新文本长度/shape 的抖动。
+
+## 8. 验收口径和已验证结果
+
+正式统计只解析 `[INFO] infer round ...` 之后的输出，排除 warmup。
+
+首包：
+
+- 每条文本第一个 `yield speech len ..., rtf ...`。
+- 首包耗时按 `speech_len * rtf * 1000` 计算 ms。
+
+中间包：
+
+- 每条文本非首包、非 final tail 的 chunk。
+- RTF 直接使用日志里的 `rtf`。
+
+final tail：
+
+- 每条文本最后一个 chunk。
+- 单独统计，不混入中间包验收。
+
+默认 5 条 warmup 时会在未 warmup 文本上出现边界抖动：
 
 ```text
 logs/manual_hift_om_v2_sync_run/run_20260722_203656
@@ -163,7 +589,7 @@ first p90 = 403.82ms
 middle non-final p90 RTF = 0.30252
 ```
 
-完整 warmup 后连续两轮 10 进程同步推理达成 p90 目标：
+完整 warmup 当前 67 行抄本后，连续两轮 10 进程同步推理达成 p90 目标：
 
 ```text
 logs/exp_full_warmup_67_24core/run_20260722_205133
@@ -175,9 +601,47 @@ first p90 = 399.61ms
 middle non-final p90 RTF = 0.29501
 ```
 
-注意：性能仍然接近硬件边界。正式验收前应保证 NPU0 无其他进程、CPU 亲和核未被其他高负载任务占用，并使用默认完整 warmup。
+注意：性能仍接近单卡 10 进程硬件边界。正式验收前需要保证 NPU 上没有其他推理进程，CPU 亲和核没有明显外部高负载，并使用默认完整 warmup。
+
+## 9. 交付文件和运行产物清理策略
+
+已纳入版本控制的交付关键文件：
+
+```text
+run_manual_concurrent.sh
+run.sh
+infer.py
+infer_manual_concurrent.py
+cosyvoice/cli/cosyvoice.py
+cosyvoice/cli/model.py
+cosyvoice/hifigan/generator.py
+cosyvoice/llm/llm.py
+cosyvoice/flow/flow.py
+cosyvoice/flow/flow_matching.py
+cosyvoice/utils/common.py
+cosyvoice/utils/mask.py
+data/manual_transcript_20260720.txt
+experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
+transformers
+```
+
+`.gitignore` 会忽略：
+
+- `logs/`
+- `testout/`
+- `kernel_meta/`
+- `extra-info/`
+- `.torchair_cache/`
+- `experiments/torchair_cache_hidden_safe/`
+- profiling / CANN 临时产物
+- 新生成的音频和大权重文件
+
+如果重新跑压测，生成的日志和音频不会污染 git 状态。
 
 ---
+
+以下为上游 CosyVoice 原始 README 内容，保留用于查询开源项目基础用法。
+
 
 [![SVG Banners](https://svg-banners.vercel.app/api?type=origin&text1=CosyVoice🤠&text2=Text-to-Speech%20💖%20Large%20Language%20Model&width=800&height=210)](https://github.com/Akshay090/svg-banners)
 
