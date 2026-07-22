@@ -623,29 +623,112 @@ cosyvoice/cli/model.py
 - `_speech_tokens_to_tensor()` 支持 token 列表里是 Tensor 的情况，避免中间把 token 拉回 CPU。
 - 默认保留 `COSYVOICE2_FAST_TOPK_K=25`。TopK=10 曾作为探索方向，但会改变采样分布，未作为交付默认。
 
-## 6. transformers 子仓库如何从开源版本改到当前版本
+## 6. transformers 从官方版本替换到当前版本
 
-主仓库通过 `PYTHONPATH=transformers/src:$PYTHONPATH` 使用本地 `transformers`。因此当前推理依赖仓库内 `transformers/src/transformers/models/qwen2/modeling_qwen2.py`，而不是环境里 pip 安装的原生 HuggingFace 版本。
-
-结论：可以把当前 `transformers` 作为你 GitHub 上的一个子仓库/submodule 上传。这样别人 `git clone --recursive` 后会直接拿到已经改好的 Qwen2 Ascend 代码，不需要手动修改 `transformers` 项目。
-
-必须注意：主仓库现在记录的是 `transformers` 的 commit 指针。如果 `.gitmodules` 没有配置 `transformers` 的 URL，或者这个 commit 没有推到你的 GitHub fork，别人 clone 后无法拉取该子模块。
-
-推荐交付方式是“上传当前 transformers 子仓库”。手工改 transformers 只作为兜底复现方案，因为 Qwen2 Ascend 适配集中在一个大文件里，容易漏改。
-
-推荐发布方式：
+当前推理必须使用本仓库适配过的 Qwen2 transformers 文件。主仓库通过：
 
 ```bash
-# 1. 在 GitHub 创建一个 transformers fork，例如：
-#    https://github.com/<your-user>/transformers-cosyvoice2-ascend.git
+export PYTHONPATH=transformers/src:${PYTHONPATH:-}
+```
 
-# 2. 进入当前本地 transformers 子仓库
+优先加载本地 `transformers`，而不是环境里 pip 安装的 HuggingFace transformers。
+
+### 6.1 改动文件清单
+
+只改了一个 transformers 文件：
+
+```text
+transformers/src/transformers/models/qwen2/modeling_qwen2.py
+```
+
+本仓库已经单独保存了一份改好的替换文件：
+
+```text
+docs/transformers_replacement/src/transformers/models/qwen2/modeling_qwen2.py
+```
+
+这份文件对应当前 transformers 子仓库提交：
+
+```text
+e352348b1442775fda3d6faf2aa716d6dd581ff5
+```
+
+官方 transformers 基础版本是：
+
+```text
+8e3e145b42
+```
+
+### 6.2 从官方 transformers 复现到当前版本
+
+从官方 HuggingFace transformers 拉代码：
+
+```bash
+git clone https://github.com/huggingface/transformers.git transformers
+cd transformers
+git checkout 8e3e145b42
+cd ..
+```
+
+然后只做一次文件替换：
+
+```bash
+install -D \
+  docs/transformers_replacement/src/transformers/models/qwen2/modeling_qwen2.py \
+  transformers/src/transformers/models/qwen2/modeling_qwen2.py
+```
+
+替换关系如下：
+
+```text
+把官方文件：
+transformers/src/transformers/models/qwen2/modeling_qwen2.py
+
+替换成：
+docs/transformers_replacement/src/transformers/models/qwen2/modeling_qwen2.py
+```
+
+替换后可以在 transformers 子仓库里单独提交：
+
+```bash
+cd transformers
+git add src/transformers/models/qwen2/modeling_qwen2.py
+git commit -m "adapt qwen2 for cosyvoice2 ascend hidden-only"
+cd ..
+```
+
+### 6.3 为什么要替换这个文件
+
+这个文件里包含当前性能路径依赖的 Qwen2 改动：
+
+```text
+Ascend NPU RMSNorm / AddRMSNorm
+Ascend prompt/incremental FlashAttention
+固定 KV cache buffer
+TorchAIR cache_compile prefill/decode
+safe hidden-only runner，跳过 lm_head，只返回 hidden states
+```
+
+CosyVoice 侧通过 `cosyvoice/llm/llm.py` 调用：
+
+```python
+self.model.model.forward_hidden_only(...)
+```
+
+如果不替换这个文件，`COSYVOICE2_QWEN_HIDDEN_ONLY=1` 不会生效，当前 10 进程低延迟路径无法复现。
+
+### 6.4 可选：把 transformers 作为子仓库上传
+
+如果你希望别人 clone 后不手动替换文件，可以把替换后的 `transformers` 目录作为单独 GitHub 仓库上传，然后在主仓库 `.gitmodules` 里登记这个 URL。
+
+示例：
+
+```bash
 cd transformers
 git remote add github https://github.com/<your-user>/transformers-cosyvoice2-ascend.git
-git push github e352348b1442775fda3d6faf2aa716d6dd581ff5:main
+git push github HEAD:main
 cd ..
 
-# 3. 在主仓库登记 transformers submodule URL
 git config -f .gitmodules submodule.transformers.path transformers
 git config -f .gitmodules submodule.transformers.url https://github.com/<your-user>/transformers-cosyvoice2-ascend.git
 git add .gitmodules transformers
@@ -658,255 +741,6 @@ git commit -m "add transformers ascend submodule"
 git clone --recursive https://github.com/<your-user>/<your-cosyvoice-repo>.git
 cd <your-cosyvoice-repo>
 git submodule update --init --recursive
-git -C transformers rev-parse HEAD
-```
-
-最后一行必须输出：
-
-```text
-e352348b1442775fda3d6faf2aa716d6dd581ff5
-```
-
-当前子仓库提交链：
-
-```text
-8e3e145b42 [`GPTNeoX`] Fix BC issue with 4.36 (#28602)
-6581349d4b adapt ascend in transformers
-e352348b14 Add Qwen hidden-only runner
-```
-
-如果需要把当前修改导出成 patch，执行：
-
-```bash
-git -C transformers format-patch 8e3e145b42..e352348b1442775fda3d6faf2aa716d6dd581ff5 \
-  -o ../docs/transformers_patches
-```
-
-别人从 upstream 复现时：
-
-```bash
-git clone https://github.com/huggingface/transformers.git transformers
-cd transformers
-git checkout 8e3e145b42
-git am ../docs/transformers_patches/*.patch
-```
-
-### 6.1 从开源 HuggingFace Transformers 获取基础版本
-
-基础提交是 HuggingFace upstream 中的：
-
-```text
-8e3e145b42
-```
-
-可复现步骤：
-
-```bash
-git clone https://github.com/huggingface/transformers.git transformers
-cd transformers
-git checkout 8e3e145b42
-```
-
-### 6.2 应用 Ascend Qwen2 适配
-
-本地提交：
-
-```text
-6581349d4be9fb6853d7b8b1fc204883c10f19db adapt ascend in transformers
-```
-
-主要改动文件：
-
-```text
-transformers/src/transformers/models/qwen2/modeling_qwen2.py
-```
-
-手工改代码时，只改这个文件。核心改动如下。
-
-1. 文件头部引入 Ascend 依赖。
-
-   ```python
-   import time
-   import torch_npu
-   import torchair as tng
-   from torchair.configs.compiler_config import CompilerConfig
-   ```
-
-2. 用 NPU fused RMSNorm / AddRMSNorm 替换原 PyTorch RMSNorm。
-
-   原始 HuggingFace 实现会手写 `pow -> mean -> rsqrt -> mul`。当前版本改为：
-
-   ```python
-   torch_npu.npu_rms_norm(...)
-   torch_npu.npu_add_rms_norm(...)
-   ```
-
-   目的：减少算子数量，利用 Ascend 融合算子。
-
-3. 改写 RoPE 计算。
-
-   修改 `Qwen2RotaryEmbedding.forward()`，允许 `x=None` 时直接返回缓存的 cos/sin。
-
-   修改 `apply_rotary_pos_emb()`，去掉函数内部 `cos[position_ids]` 和 `sin[position_ids]` 的每层索引逻辑，改为接收已经按 position 取好的 cos/sin。
-
-   在 `Qwen2Model` 中新增：
-
-   ```python
-   self.rotary_emb = Qwen2RotaryEmbedding(...)
-   self.rotary_emb_cos, self.rotary_emb_sin = self.rotary_emb(None, seq_len=self.max_position_embeddings)
-   ```
-
-   并新增 `_prepare_decoder_rotary_cos_sin(position_ids)`，在模型入口一次性根据 `position_ids` 取 cos/sin，然后传给每层 attention。
-
-4. 用 Ascend FlashAttention 替换 PyTorch SDPA。
-
-   在 `Qwen2SdpaAttention.forward()` 中：
-
-   - prefill 阶段 `q_len > 1` 使用 `torch_npu.npu_prompt_flash_attention()`。
-   - decode 阶段 `q_len == 1` 使用 `torch_npu.npu_incre_flash_attention()`。
-   - attention layout 改为 `BSND`，并显式传入 `actual_seq_len`、`kv_padding_size`。
-   - `query/key/value` shape 从 HuggingFace 原始 `[B, H, S, D]` 改为 `[B, S, H, D]`。
-
-5. 改造 KV cache 更新。
-
-   新增参数：
-
-   ```python
-   updated_kv_positions
-   kv_padding_size
-   actual_seq_len
-   ```
-
-   decode 时通过：
-
-   ```python
-   torch_npu.scatter_update_(past_key_value.key_cache[layer], ...)
-   torch_npu.scatter_update_(past_key_value.value_cache[layer], ...)
-   ```
-
-   直接更新固定 cache buffer，适配增量 attention。
-
-6. 改造 decoder layer 的 residual/norm 路径。
-
-   原始 HuggingFace 每层是：
-
-   ```python
-   residual = hidden_states
-   hidden_states = self.input_layernorm(hidden_states)
-   ...
-   hidden_states = residual + hidden_states
-   ```
-
-   当前改成融合 AddRMSNorm 所需的双返回：
-
-   ```python
-   hidden_states, residual = self.input_layernorm(hidden_states, past_residual)
-   ...
-   hidden_states, residual = self.post_attention_layernorm(hidden_states, residual)
-   outputs = (residual, hidden_states,)
-   ```
-
-   `Qwen2Model._forward()` 遍历层时维护 `residual`，最后调用：
-
-   ```python
-   hidden_states, _ = self.norm(hidden_states, residual)
-   ```
-
-7. 增加 TorchAIR cache_compile。
-
-   在 `Qwen2Model.__init__()` 中创建：
-
-   ```python
-   self.cached_decode = tng.inference.cache_compile(self.decode, config=config)
-   self.cached_prefill = tng.inference.cache_compile(self.prefill, config=config)
-   ```
-
-   `forward()` 根据 `inputs_embeds.size(1)` 自动分流：
-
-   - `> 1`：prefill。
-   - `== 1`：decode。
-
-8. 固定 KV cache buffer。
-
-   `Qwen2Model._forward()` 中如果还没有 `past_key_values`，创建每层固定 shape cache：
-
-   ```python
-   [batch, max_position_embeddings, num_key_value_heads, head_dim]
-   ```
-
-   每次推理用 `updated_kv_positions` 写入当前位置，避免 HuggingFace 原始 `DynamicCache` 不断 concat 带来的内存申请和 shape 抖动。
-
-9. 在 `Qwen2ForCausalLM.forward()` 中使用 `prepare_data()` 准备 Ascend cache/position 参数，再调用底层 `Qwen2Model`。
-
-   `prepare_data()` 的作用：
-
-   - 根据当前 `attention_mask` 和 `position_ids` 计算 `updated_kv_positions`。
-   - 计算 `kv_padding_size`，传给 `npu_incre_flash_attention()`。
-   - 为 prefill/decode 统一组织 cache 输入。
-
-### 6.3 增加 safe hidden-only runner
-
-本地提交：
-
-```text
-e352348b1442775fda3d6faf2aa716d6dd581ff5 Add Qwen hidden-only runner
-```
-
-修改文件：
-
-```text
-transformers/src/transformers/models/qwen2/modeling_qwen2.py
-```
-
-新增内容：
-
-```python
-self.cached_decode_hidden = tng.inference.cache_compile(self.decode_hidden, config=config)
-self.cached_prefill_hidden = tng.inference.cache_compile(self.prefill_hidden, config=config)
-```
-
-并新增：
-
-```python
-forward_hidden_only()
-decode_hidden()
-prefill_hidden()
-```
-
-`decode_hidden()` 和 `prefill_hidden()` 调用 `_forward(..., lm_head=None)`。在 `_forward()` 中：
-
-```python
-hidden_states = out[0]
-if lm_head is None:
-    return out, hidden_states
-```
-
-关键点：
-
-- hidden-only 使用独立的 `cache_compile` 入口，不复用原 `decode/prefill` 编译缓存。
-- 返回结构保持为两个对象：`(out, hidden_states)`，避免早期 unsafe hidden-only 改成单返回导致 torchair 缓存返回结构不稳定。
-- CosyVoice 侧只取 `last_hidden_state` 和 `past_key_values`。
-- `Qwen2ForCausalLM.forward()` 不走 hidden-only；hidden-only 由 CosyVoice 侧显式调用 `self.model.model.forward_hidden_only()`。这样原始文本生成能力仍可保留，TTS 推理路径单独优化。
-
-CosyVoice 侧接入文件：
-
-```text
-cosyvoice/llm/llm.py
-```
-
-逻辑：
-
-```python
-if self.hidden_only and hasattr(self.model.model, 'forward_hidden_only'):
-    ...
-    outs, last_hidden_state = self.model.model.forward_hidden_only(...)
-    return last_hidden_state, outs.past_key_values
-```
-
-回退方式：
-
-```bash
-COSYVOICE2_QWEN_HIDDEN_ONLY=0 bash run_manual_concurrent.sh
 ```
 
 ## 7. 默认性能配置和原因
@@ -1003,6 +837,7 @@ cosyvoice/utils/mask.py
 data/manual_transcript_20260720.txt
 experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
 tools/export_hift_decode_onnx.py
+docs/transformers_replacement/src/transformers/models/qwen2/modeling_qwen2.py
 transformers
 ```
 
