@@ -12,6 +12,43 @@ import time
 from datetime import datetime
 
 
+ENV_FINGERPRINT_KEYS = (
+    'ASCEND_RT_VISIBLE_DEVICES',
+    'ASCEND_GEO_W8A16',
+    'DYNAMIC_QUANT',
+    'ACLNN_CACHE_LIMIT',
+    'ENABLE_DYNAMIC_SHAPE_MULTI_STREAM',
+    'TASK_QUEUE_ENABLE',
+    'COSYVOICE2_QWEN_HIDDEN_ONLY',
+    'COSYVOICE2_SAMPLING_MODE',
+    'COSYVOICE2_FAST_TOPK_K',
+    'COSYVOICE2_FAST_TOPK_RAW_LOGITS',
+    'COSYVOICE2_REUSE_EMBEDDING_OUTPUT',
+    'COSYVOICE2_CACHE_DECODE_METADATA',
+    'COSYVOICE2_PIPELINE_LLM_FLOW',
+    'COSYVOICE2_FLOW_STATIC_SET_CONTEXT',
+    'COSYVOICE2_DEVICE_TOKEN_DECODE',
+    'COSYVOICE2_DISABLE_TQDM',
+    'COSYVOICE2_EMPTY_CACHE_EACH_UTT',
+    'COSYVOICE2_MARK_STATIC_INPUTS',
+    'COSYVOICE2_HIFT_DECODE_OM',
+    'COSYVOICE2_OM_SET_CONTEXT_EACH_CHUNK',
+    'COSYVOICE2_FLOW_HIFT_STREAM',
+    'OMP_NUM_THREADS',
+    'MKL_NUM_THREADS',
+    'TORCH_INTEROP_THREADS',
+    'OMP_PROC_BIND',
+    'OMP_PLACES',
+    'OPENBLAS_NUM_THREADS',
+    'PYTORCH_NPU_ALLOC_CONF',
+    'LD_PRELOAD',
+)
+
+
+def environment_fingerprint():
+    return {key: os.environ.get(key, '<unset>') for key in ENV_FINGERPRINT_KEYS}
+
+
 # ---------------------------------------------------------------------------
 # 平台感知：获取 CPU 总数
 # ---------------------------------------------------------------------------
@@ -368,6 +405,7 @@ def main():
     print('[INFO] total_cpus={}, stagger_delay={:.1f}s, cpu_affinity={}, serial_warmup={}'.format(
         total_cpus, args.stagger_delay, args.enable_cpu_affinity,
         args.serial_warmup), flush=True)
+    print('[INFO] environment_fingerprint={}'.format(environment_fingerprint()), flush=True)
 
     # --- 计算 CPU 亲和性范围 ---
     cpu_ranges = None
@@ -391,6 +429,7 @@ def main():
         'no_save_audio': args.no_save_audio,
         'text_file': args.text_file,
         'spk_id': args.spk_id,
+        'environment_fingerprint': environment_fingerprint(),
     }
 
     clients = []

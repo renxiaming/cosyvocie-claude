@@ -13,34 +13,6 @@ export SYNC_START_TIMEOUT="${SYNC_START_TIMEOUT:-1800}"
 export NO_SAVE_AUDIO="${NO_SAVE_AUDIO:-1}"
 export LOG_DIR="${LOG_DIR:-logs/manual_hift_om_v2_sync_run}"
 export TEXT_FILE="${TEXT_FILE:-data/manual_transcript_20260720.txt}"
-export SFT_SPK_ID="${SFT_SPK_ID:-03729}"
-
-# 默认按正式 10 并发验收口径执行 1 轮；需要更长压测时可覆盖 INFER_COUNT。
-export INFER_COUNT="${INFER_COUNT:-1}"
-
-# 默认完整 warmup 当前抄本，覆盖正式推理会遇到的文本长度/shape。
-# 如需缩短启动时间，可显式覆盖 WARM_UP_TIMES。
-if [ -z "${WARM_UP_TIMES:-}" ]; then
-  if [ -f "${TEXT_FILE}" ]; then
-    DEFAULT_WARM_UP_TIMES="$(awk 'NF {count++} END {print count + 0}' "${TEXT_FILE}")"
-    if [ "${DEFAULT_WARM_UP_TIMES}" -gt 0 ]; then
-      export WARM_UP_TIMES="${DEFAULT_WARM_UP_TIMES}"
-    else
-      export WARM_UP_TIMES=5
-    fi
-  else
-    export WARM_UP_TIMES=5
-  fi
-fi
-
-# 提高调度优先级，降低 10 进程并发下的 CPU 抢占抖动。无权限时仅告警并继续。
-export COSYVOICE2_NICE_LEVEL="${COSYVOICE2_NICE_LEVEL:--10}"
-if [ "${COSYVOICE2_APPLY_NICE:-1}" = "1" ]; then
-  if command -v renice >/dev/null 2>&1; then
-    renice -n "${COSYVOICE2_NICE_LEVEL}" -p $$ >/dev/null 2>&1 || \
-      echo "[WARN] failed to renice current process to ${COSYVOICE2_NICE_LEVEL}, continue with current priority" >&2
-  fi
-fi
 
 # NPU 设备绑定
 export ASCEND_RT_VISIBLE_DEVICES="${ASCEND_RT_VISIBLE_DEVICES:-0}"
@@ -67,6 +39,11 @@ export TORCHAIR_CACHE_HOME="${TORCHAIR_CACHE_HOME:-experiments/torchair_cache_hi
 export COSYVOICE2_SAMPLING_MODE="${COSYVOICE2_SAMPLING_MODE:-fast_topk}"
 export COSYVOICE2_FAST_TOPK_K="${COSYVOICE2_FAST_TOPK_K:-25}"
 export COSYVOICE2_DEVICE_TOKEN_DECODE="${COSYVOICE2_DEVICE_TOKEN_DECODE:-1}"
+# 复用 decode 阶段的 position/KV 元数据，避免每个 token 重建小张量。
+export COSYVOICE2_CACHE_DECODE_METADATA="${COSYVOICE2_CACHE_DECODE_METADATA:-1}"
+# 复用 speech embedding 输出，避免逐 token 的无必要 clone。
+export COSYVOICE2_REUSE_EMBEDDING_OUTPUT="${COSYVOICE2_REUSE_EMBEDDING_OUTPUT:-1}"
+export COSYVOICE2_MARK_STATIC_INPUTS="${COSYVOICE2_MARK_STATIC_INPUTS:-1}"
 
 # --- 限制每个进程的 CPU 线程数，减少 10 进程下 CPU/BLAS 竞争 ---
 export OMP_NUM_THREADS="${OMP_NUM_THREADS:-2}"
@@ -93,7 +70,30 @@ export COSYVOICE2_SKIP_MASK_SANITY="${COSYVOICE2_SKIP_MASK_SANITY:-1}"
 export COSYVOICE2_FLOW_HIFT_STREAM="${COSYVOICE2_FLOW_HIFT_STREAM:-0}"
 # CPU/NPU 拓扑亲和。NPU0 在当前机器上的就近 CPU 是 144-167；
 # 为空时仍按全机器 CPU 均分。
-export CPU_AFFINITY_CPUS="${CPU_AFFINITY_CPUS:-144-167}"
+if [ -z "${CPU_AFFINITY_CPUS+x}" ]; then
+  NPU_ID="${ASCEND_RT_VISIBLE_DEVICES%%,*}"
+  AUTO_CPU_AFFINITY=""
+  if command -v npu-smi >/dev/null 2>&1; then
+    AUTO_CPU_AFFINITY="$(npu-smi info -t topo -i 0 2>/dev/null | awk -v npu="NPU${NPU_ID}" '$1 == npu && $NF ~ /^[0-9]+-[0-9]+$/ {print $NF; exit}')"
+  fi
+  case "${AUTO_CPU_AFFINITY}" in
+    ''|*[!0-9,-]*)
+      # Fallback for this host's 8-card topology if npu-smi is unavailable.
+      case "${NPU_ID}" in
+        0|2) CPU_AFFINITY_CPUS="144-167" ;;
+        1|3) CPU_AFFINITY_CPUS="0-23" ;;
+        4|6) CPU_AFFINITY_CPUS="96-119" ;;
+        5|7) CPU_AFFINITY_CPUS="48-71" ;;
+        *)
+          CPU_AFFINITY_CPUS=""
+          echo "[WARN] unknown NPU ${NPU_ID}; set CPU_AFFINITY_CPUS explicitly" >&2
+          ;;
+      esac
+      ;;
+    *) CPU_AFFINITY_CPUS="${AUTO_CPU_AFFINITY}" ;;
+  esac
+fi
+export CPU_AFFINITY_CPUS
 export CPU_AFFINITY_SHARE="${CPU_AFFINITY_SHARE:-1}"
 
 # 性能压测时可设 NO_SAVE_AUDIO=1，只消费推理输出，不拼接/保存 wav
@@ -135,10 +135,9 @@ python3 infer_manual_concurrent.py \
   --model_path="${MODEL_PATH:-../weight/CosyVoice2-0.5B_sft_shenhu_25_60}" \
   --stream \
   --concurrency="${CONCURRENCY:-10}" \
-  --infer_count="${INFER_COUNT}" \
-  --warm_up_times="${WARM_UP_TIMES}" \
+  --infer_count="${INFER_COUNT:-1}" \
+  --warm_up_times="${WARM_UP_TIMES:-5}" \
   --text_file="${TEXT_FILE}" \
-  --spk_id="${SFT_SPK_ID}" \
   --warmup_full \
   --log_dir="${LOG_DIR:-logs/manual}" \
   --enable_cpu_affinity \

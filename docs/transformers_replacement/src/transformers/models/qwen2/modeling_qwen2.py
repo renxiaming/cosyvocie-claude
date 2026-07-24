@@ -20,6 +20,7 @@
 """ PyTorch Qwen2 model."""
 import inspect
 import math
+import os
 import warnings
 from typing import List, Optional, Tuple, Union
 import time
@@ -1375,6 +1376,7 @@ class Qwen2ForCausalLM(Qwen2PreTrainedModel):
         self.model = Qwen2Model(config)
         self.vocab_size = config.vocab_size
         self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
+        self._decode_metadata_tables = {}
 
         # Initialize weights and apply final processing
         self.post_init()
@@ -1509,11 +1511,36 @@ class Qwen2ForCausalLM(Qwen2PreTrainedModel):
             updated_kv_positions = torch.zeros(bsz, dtype=torch.long, device=inputs_embeds.device)
             position_ids = None
         else:
-            updated_kv_positions = torch.ones(bsz, dtype=torch.long, device=inputs_embeds.device) * (prompt_length - 1)
-            position_ids = torch.tensor([prompt_length], device=inputs_embeds.device)
+            if os.environ.get('COSYVOICE2_CACHE_DECODE_METADATA', '0') == '1':
+                device_key = str(inputs_embeds.device)
+                tables = self._decode_metadata_tables.get(device_key)
+                if tables is None:
+                    positions = torch.arange(
+                        self.config.max_position_embeddings,
+                        dtype=torch.long,
+                        device=inputs_embeds.device,
+                    )
+                    tables = (
+                        positions,
+                        positions - 1,
+                        self.config.max_position_embeddings - positions,
+                    )
+                    self._decode_metadata_tables[device_key] = tables
+                positions, updated_positions, padding_sizes = tables
+                position_ids = positions[prompt_length:prompt_length + 1]
+                updated_kv_positions = updated_positions[prompt_length - 1:prompt_length]
+                if bsz != 1:
+                    updated_kv_positions = updated_kv_positions.expand(bsz)
+            else:
+                updated_kv_positions = torch.ones(bsz, dtype=torch.long, device=inputs_embeds.device) * (prompt_length - 1)
+                position_ids = torch.tensor([prompt_length], device=inputs_embeds.device)
 
         # ifa Computational optimization inputs
-        kv_padding_size = torch.tensor(self.config.max_position_embeddings - prompt_length, device=inputs_embeds.device)
+        if (seq_length == 1
+                and os.environ.get('COSYVOICE2_CACHE_DECODE_METADATA', '0') == '1'):
+            kv_padding_size = padding_sizes[prompt_length:prompt_length + 1]
+        else:
+            kv_padding_size = torch.tensor(self.config.max_position_embeddings - prompt_length, device=inputs_embeds.device)
         actual_seq_len = ([prompt_length])
 
         return updated_kv_positions, past_key_values, position_ids, kv_padding_size, actual_seq_len

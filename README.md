@@ -1,29 +1,98 @@
 # CosyVoice2 Ascend 910B 推理加速交付说明
 
-本文档说明当前仓库如何从开源 CosyVoice2 代码演进到交付版本、每类模型文件如何处理、代码做了哪些关键修改，以及如何复现单卡 10 进程流式推理指标。
+本仓库是在开源 [CosyVoice2](https://github.com/FunAudioLLM/CosyVoice) 基础上，面向 **Ascend 910B aarch64** 的单卡 **10 进程流式推理**交付版本。文档覆盖环境配置、权重准备、代码改动、运行方式与验收口径。
 
-当前交付目标：
+## 交付目标
 
-- 不改变当前业务 chunk 配置：首包 `25`，中间包 hop `60`。
-- 单张 Ascend 910B，10 个独立进程同时正式推理。
+- 业务 chunk 配置不变：首包 token `25`，中间包 hop `60`。
+- 单张 Ascend 910B，10 个独立进程同步正式推理。
 - 正式推理首包 p90 `< 400ms`。
 - 正式推理中间包 p90 RTF `< 0.3`。
-- 中间包统计口径排除 final tail。final tail 是每句话结束时的收尾包，长度、cache 状态和普通中间包不同，不能混入中间包验收。
+- 中间包统计排除 final tail（每句话最后一个 chunk）。
 
-## 1. 快速复现
+## 交付清单
 
-进入环境和代码目录：
+接收方至少需要以下内容：
+
+| 类别 | 内容 | 位置 |
+|---|---|---|
+| 代码 | 本仓库 + `transformers` 子模块 | 当前目录 |
+| 业务权重 | SFT 模型目录 | 默认 `../weight/CosyVoice2-0.5B_sft_shenhu_25_60` |
+| HiFT decode OM | 已编译 OM + 导出 ONNX | `experiments/hift_decode_om_20260706_230701/` |
+| 验收抄本 | 67 行业务文本 | `data/manual_transcript_20260720.txt` |
+| 运行环境 | CANN + torch/torch_npu + conda 依赖 | 见第 1 节 |
+
+仓库 **不包含** 数 GB 的业务权重；Flow/speech OM 在权重目录中，需单独准备。
+
+## 1. 环境与依赖
+
+### 1.1 硬件与系统
+
+- 芯片：Ascend 910B（aarch64）
+- 操作系统：Linux aarch64
+- 驱动：与 CANN 版本匹配的 Ascend 驱动
+- 建议：整卡推理，不要对目标 NPU 做 vNPU 切分
+
+### 1.2 CANN 与 Python 环境
+
+当前脚本按 **CANN 8.1.RC1** 验证，`run.sh` / `run_manual_concurrent.sh` 会自动执行：
 
 ```bash
+source /usr/local/Ascend/ascend-toolkit/set_env.sh
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+```
+
+Python 侧建议使用 conda 环境（验证环境名：`voxcpm`，Python 3.11）：
+
+```bash
+conda create -n voxcpm python=3.11 -y
 conda activate voxcpm
-cd /data/xmren/work/work/test/model/CosyVoice-claude
+conda install -y -c conda-forge pynini==2.1.5
+pip install -r requirements.txt
+```
+
+还需要安装与 CANN 匹配的 **torch / torch_npu**（不在 `requirements.txt` 中，需按 Ascend 官方 wheel 安装）。安装完成后确认：
+
+```bash
+python3 -c "import torch; import torch_npu; print(torch.__version__)"
 npu-smi info
 ```
 
-10 进程正式压测：
+### 1.3 获取代码
 
 ```bash
-bash run_manual_concurrent.sh
+git clone --recursive https://github.com/renxiaming/cosyvocie-claude.git CosyVoice-claude
+cd CosyVoice-claude
+git submodule update --init --recursive
+```
+
+如果 `transformers` 子模块未拉取，Qwen hidden-only 路径无法复现。也可按第 7 节用 `docs/transformers_replacement/` 中的文件手动替换。
+
+### 1.4 权重目录
+
+默认模型路径：
+
+```bash
+export MODEL_PATH=/path/to/CosyVoice2-0.5B_sft_shenhu_25_60
+```
+
+该目录必须包含第 4 节列出的 `.pt` / `.om` / `.onnx` 文件。默认脚本通过 `MODEL_PATH` 或相对路径 `../weight/CosyVoice2-0.5B_sft_shenhu_25_60` 加载。
+
+默认 SFT 音色：
+
+```bash
+SFT_SPK_ID=03729
+```
+
+该 speaker 必须已写入 `$MODEL_PATH/spk2info.pt`，注册方法见第 4.2 节。
+
+## 2. 快速开始
+
+```bash
+conda activate voxcpm
+cd /path/to/CosyVoice-claude
+export MODEL_PATH=/path/to/CosyVoice2-0.5B_sft_shenhu_25_60
+npu-smi info
 ```
 
 单进程推理并保存音频：
@@ -32,7 +101,19 @@ bash run_manual_concurrent.sh
 bash run.sh
 ```
 
-常用覆盖方式：
+10 进程正式压测（默认 NPU0，脚本会自动绑定近端 CPU）：
+
+```bash
+bash run_manual_concurrent.sh
+```
+
+推荐验收配置（当前最优组合：NPU2 + CPU 144-167）：
+
+```bash
+ASCEND_RT_VISIBLE_DEVICES=2 bash run_manual_concurrent.sh
+```
+
+常用覆盖：
 
 ```bash
 # 指定 NPU
@@ -41,26 +122,14 @@ ASCEND_RT_VISIBLE_DEVICES=0 bash run_manual_concurrent.sh
 # 多进程保存音频，只用于听音质，不用于性能验收
 NO_SAVE_AUDIO=0 bash run_manual_concurrent.sh
 
-# 使用指定 SFT 音色。该音色必须已经注册到 MODEL_DIR/spk2info.pt
+# 使用指定 SFT 音色
 SFT_SPK_ID=03729 bash run_manual_concurrent.sh
 
-# 换抄本。默认会自动完整 warmup 新抄本所有非空行
+# 换抄本；默认会对新抄本做完整 warmup
 TEXT_FILE=data/your_transcript.txt bash run_manual_concurrent.sh
 
 # 调试时缩短 warmup；正式验收不要这样做
 WARM_UP_TIMES=5 bash run_manual_concurrent.sh
-```
-
-默认模型路径：
-
-```bash
-../weight/CosyVoice2-0.5B_sft_shenhu_25_60
-```
-
-默认验收抄本：
-
-```bash
-data/manual_transcript_20260720.txt
 ```
 
 默认 HiFT decode OM：
@@ -69,7 +138,9 @@ data/manual_transcript_20260720.txt
 experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
 ```
 
-## 2. 从开源代码到当前版本的整体步骤
+Docker 打包见 `docker/README_ascend.md`。
+
+## 3. 从开源代码到当前版本的整体步骤
 
 当前版本不是纯开源 CosyVoice2 直接运行，而是在开源结构上做了 Ascend 910B 推理适配和多进程低延迟优化。
 
@@ -133,7 +204,7 @@ experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
 
    默认入口 `run_manual_concurrent.sh` 会启动 10 个独立进程，各自完整 warmup 当前抄本，然后统一进入正式推理，避免“部分进程先跑完，部分进程还没开始”的假低 RTF。
 
-## 3. 模型文件处理说明
+## 4. 模型文件处理说明
 
 默认外部模型目录中的核心文件如下：
 
@@ -151,7 +222,6 @@ experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
 | `CosyVoice-BlankEN/model.safetensors` | 保留在外部模型目录 | 否 | Qwen/HF 模型相关文件 |
 | `vllm/model.safetensors` | 保留在外部模型目录 | 否 | 早期 vLLM/MindIE 方向探索产物，当前默认推理不使用 |
 | `experiments/hift_decode_om_20260706_230701/hift.decode.fp32.onnx` | 本仓库跟踪 | 是 | HiFT decode 导出的 ONNX |
-| `experiments/hift_decode_om_20260706_230701/hift_decode_static.om` | 本仓库跟踪 | 是 | 早期 HiFT decode OM，首版验证产物 |
 | `experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om` | 本仓库跟踪 | 是 | 当前默认使用的 HiFT decode OM |
 | `experiments/hift_decode_om_20260706_230701/real_hift_decode_shapes.txt` | 本仓库跟踪 | 是 | 实测 HiFT decode shape/gear 记录 |
 
@@ -161,7 +231,7 @@ experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
 - `ais_bench` 会做路径安全检查。如果 OM 文件不是当前用户或用户组可访问，可能报 owner/ownergroup 相关错误。需要保证模型文件和目录 owner/group 满足当前运行用户要求。
 - 本仓库 `.gitignore` 明确忽略新生成的运行日志、NPU 编译缓存、profiling 产物和临时权重，避免交付代码被本机产物污染。
 
-### 3.1 从开源权重处理成当前可运行模型目录
+### 4.1 从开源权重处理成当前可运行模型目录
 
 如果别人只有开源 `CosyVoice2-0.5B` 权重，不能直接跑当前 10 进程脚本。需要先把权重目录处理成当前代码要求的 Ascend 推理目录。
 
@@ -194,7 +264,7 @@ experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
 
 如果开源权重中的 `hift.pt` 和当前交付模型不一致，建议按第 3.6 节重新导出并编译 HiFT decode OM。
 
-### 3.2 注册 SFT speaker 音色
+### 4.2 注册 SFT speaker 音色
 
 SFT 模式通过 `spk2info.pt` 查音色 embedding。当前推理默认：
 
@@ -250,7 +320,7 @@ python3 register_wav.py \
 SFT_SPK_ID=customer_a MODEL_PATH="$MODEL_DIR" bash run.sh
 ```
 
-### 3.3 导出 Flow estimator ONNX
+### 4.3 导出 Flow estimator ONNX
 
 仓库提供了参数化脚本：
 
@@ -288,7 +358,7 @@ dummy input:
 $MODEL_DIR/flow.decoder.estimator.fp32.onnx
 ```
 
-### 3.4 编译 Flow OM
+### 4.4 编译 Flow OM
 
 当前代码会优先使用 `flow_static.om`，并按 `COSYVOICE2_FLOW_GEARS` 手动 padding 到固定档位；没有命中时才退回动态 `flow_linux_aarch64.om`。
 
@@ -337,7 +407,7 @@ atc \
 $MODEL_DIR/flow_linux_aarch64.om
 ```
 
-### 3.5 编译 speech tokenizer OM
+### 4.5 编译 speech tokenizer OM
 
 当前前端 `_extract_speech_token()` 期望 speech OM 输入为：
 
@@ -371,7 +441,7 @@ atc \
 $MODEL_DIR/speech_linux_aarch64.om
 ```
 
-### 3.6 重新导出并编译 HiFT decode OM
+### 4.6 重新导出并编译 HiFT decode OM
 
 如果使用的 `hift.pt` 和当前交付模型不同，重新导出 HiFT decode ONNX：
 
@@ -424,7 +494,7 @@ COSYVOICE2_HIFT_DECODE_GEARS
 
 以及 ATC 的动态档位。
 
-## 4. HiFT decode 导出 OM 和运行时接入
+## 5. HiFT decode 导出 OM 和运行时接入
 
 HiFT 原始路径在 `cosyvoice/hifigan/generator.py` 中：
 
@@ -506,9 +576,9 @@ magnitude, phase = self.decode(x=speech_feat, s_stft=s_stft, index=index)
 - 如果实际 mel 长度超过 `COSYVOICE2_HIFT_DECODE_GEARS` 覆盖范围，会抛出 `no hift decode om gear`。
 - 当前 chunk 配置下已覆盖默认流式推理档位。换 chunk 或换 HiFT 结构，需要重新采集 shape 并补导出/补编译。
 
-## 5. CosyVoice 主仓库代码改动
+## 6. CosyVoice 主仓库代码改动
 
-### 5.1 启动脚本
+### 6.1 启动脚本
 
 多进程入口：
 
@@ -545,7 +615,7 @@ run.sh
 
 单进程同样使用 HiFT OM、Qwen hidden-only、fast topk、device-token decode、完整 warmup。区别是单进程默认 `NO_SAVE_AUDIO=0`，会保存音频到 `testout/run_single`。
 
-### 5.2 并发调度和同步
+### 6.2 并发调度和同步
 
 文件：
 
@@ -564,7 +634,7 @@ infer.py
 - 支持 `--warmup_full`，warmup 阶段完整消费流式输出，而不是只取首包。
 - 支持 `--no_save_audio`，用于性能压测。
 
-### 5.3 no-save 路径减少 CPU 同步
+### 6.3 no-save 路径减少 CPU 同步
 
 文件：
 
@@ -589,7 +659,7 @@ return {'tts_speech': tts_speech.cpu()}
 
 这样性能压测时不会把每个 chunk 的 device-to-host copy 和 wav 保存开销计入 RTF。保存音频时仍保持原行为。
 
-### 5.4 Flow mask 同步点优化
+### 6.4 Flow mask 同步点优化
 
 文件：
 
@@ -606,7 +676,7 @@ cosyvoice/utils/mask.py
 
 这些改动不改变模型数学结果，主要减少同步点和日志/检查开销。
 
-### 5.5 LLM 采样和 token tensor 优化
+### 6.5 LLM 采样和 token tensor 优化
 
 文件：
 
@@ -623,7 +693,7 @@ cosyvoice/cli/model.py
 - `_speech_tokens_to_tensor()` 支持 token 列表里是 Tensor 的情况，避免中间把 token 拉回 CPU。
 - 默认保留 `COSYVOICE2_FAST_TOPK_K=25`。TopK=10 曾作为探索方向，但会改变采样分布，未作为交付默认。
 
-## 6. transformers 从官方版本替换到当前版本
+## 7. transformers 从官方版本替换到当前版本
 
 当前推理必须使用本仓库适配过的 Qwen2 transformers 文件。主仓库通过：
 
@@ -633,7 +703,7 @@ export PYTHONPATH=transformers/src:${PYTHONPATH:-}
 
 优先加载本地 `transformers`，而不是环境里 pip 安装的 HuggingFace transformers。
 
-### 6.1 改动文件清单
+### 7.1 改动文件清单
 
 只改了一个 transformers 文件：
 
@@ -659,7 +729,7 @@ e352348b1442775fda3d6faf2aa716d6dd581ff5
 8e3e145b42
 ```
 
-### 6.2 从官方 transformers 复现到当前版本
+### 7.2 从官方 transformers 复现到当前版本
 
 从官方 HuggingFace transformers 拉代码：
 
@@ -697,7 +767,7 @@ git commit -m "adapt qwen2 for cosyvoice2 ascend hidden-only"
 cd ..
 ```
 
-### 6.3 为什么要替换这个文件
+### 7.3 为什么要替换这个文件
 
 这个文件里包含当前性能路径依赖的 Qwen2 改动：
 
@@ -717,7 +787,7 @@ self.model.model.forward_hidden_only(...)
 
 如果不替换这个文件，`COSYVOICE2_QWEN_HIDDEN_ONLY=1` 不会生效，当前 10 进程低延迟路径无法复现。
 
-### 6.4 可选：把 transformers 作为子仓库上传
+### 7.4 可选：把 transformers 作为子仓库上传
 
 如果你希望别人 clone 后不手动替换文件，可以把替换后的 `transformers` 目录作为单独 GitHub 仓库上传，然后在主仓库 `.gitmodules` 里登记这个 URL。
 
@@ -743,7 +813,7 @@ cd <your-cosyvoice-repo>
 git submodule update --init --recursive
 ```
 
-## 7. 默认性能配置和原因
+## 8. 默认性能配置和原因
 
 多进程默认参数在 `run_manual_concurrent.sh` 中固化：
 
@@ -775,7 +845,7 @@ CPU_AFFINITY_SHARE=1
 - 完整 warmup 能显著降低正式阶段首次遇到新文本长度/shape 的抖动。
 - `infer.py` 会在导入 `torch/torch_npu` 之前先执行 CPU 亲和和线程环境设置，避免 torch_npu 初始化阶段创建的 Host 线程落到非亲和 CPU 上。
 
-## 8. 验收口径和已验证结果
+## 9. 验收口径和已验证结果
 
 正式统计只解析 `[INFO] infer round ...` 之后的输出，排除 warmup。
 
@@ -786,7 +856,7 @@ CPU_AFFINITY_SHARE=1
 
 中间包：
 
-- 每条文本非首包、非 final tail 的 chunk。
+- 每条文本非首包、非 final tail 的 chunk（`yields[1:-1]`）。
 - RTF 直接使用日志里的 `rtf`。
 
 final tail：
@@ -794,51 +864,46 @@ final tail：
 - 每条文本最后一个 chunk。
 - 单独统计，不混入中间包验收。
 
-默认 5 条 warmup 时会在未 warmup 文本上出现边界抖动：
+解析工具：
 
-```text
-logs/manual_hift_om_v2_sync_run/run_20260722_203656
-first p90 = 403.82ms
-middle non-final p90 RTF = 0.30252
+```bash
+python3 tools/parse_run_metrics.py logs/manual_hift_om_v2_sync_run/run_YYYYMMDD_HHMMSS
 ```
 
-完整 warmup 当前 67 行抄本后，连续两轮 10 进程同步推理达成 p90 目标：
+### 9.1 当前推荐验收配置
 
-```text
-logs/exp_full_warmup_67_24core/run_20260722_205133
-first p90 = 393.98ms
-middle non-final p90 RTF = 0.29962
-
-logs/exp_full_warmup_67_24core_rerun/run_20260722_205954
-first p90 = 399.61ms
-middle non-final p90 RTF = 0.29501
+```bash
+ASCEND_RT_VISIBLE_DEVICES=2 bash run_manual_concurrent.sh
 ```
 
-新增 CPU 初始化顺序优化后，默认 24 核共享配置连续两轮达成 p90 目标：
+脚本会自动将 10 进程绑定到 NPU2 近端 CPU `144-167`。如需手动指定：
 
-```text
-logs/exp_cpu_early_affinity_default/run_20260722_223830
-first p90 = 398.48ms
-middle non-final p90 RTF = 0.29907
-
-logs/exp_cpu_early_affinity_default_rerun/run_20260722_234203
-first p90 = 394.37ms
-middle non-final p90 RTF = 0.29782
+```bash
+ASCEND_RT_VISIBLE_DEVICES=2 CPU_AFFINITY_CPUS=144-167 bash run_manual_concurrent.sh
 ```
 
-已尝试但不作为默认的 CPU/系统侧方案：
+### 9.2 最新复现结果（2026-07-24）
 
-```text
-独立 2 核/进程，144-163 分段：首包 p90 404.99ms，中间包 p90 0.30014，放弃。
-OMP_NUM_THREADS=1：首包 p90 397.65ms，但中间包 p90 0.30165，放弃。
-关闭 kernel.numa_balancing：首包 p90 398.26ms，但中间包 p90 0.30589，放弃。
-停止 irqbalance 并绑定 dev0_sq_task：首包 p90 403.93ms，中间包 p90 0.30650，放弃。
-共享 144-163 预留 164-167：单轮中间包 p90 0.29825，但复跑退化到 0.30170，放弃。
-```
+在 `data/manual_transcript_20260720.txt`、67 行完整 warmup、10 进程 sync_start 条件下：
 
-注意：性能仍接近单卡 10 进程硬件边界。正式验收前需要保证 NPU 上没有其他推理进程，CPU 亲和核没有明显外部高负载，并使用默认完整 warmup。
+| run | NPU | CPU | 首包 p90 | 首包 p95 | 中间包 p90 RTF | 中间包 p95 RTF | 平均中间包 RTF | RTF>0.3 |
+|---|---|---|---:|---:|---:|---:|---:|---:|
+| `run_20260724_131659` | 2 | 144-167 | 392.0 ms | 398.8 ms | 0.2909 | 0.2929 | 0.2831 | 0.43% |
+| `run_20260724_033300` | 2 | 144-167 | 394.1 ms | 397.0 ms | 0.2910 | 0.2935 | 0.2835 | 1.29% |
 
-## 9. 交付文件和运行产物清理策略
+两次 run 均满足首包 p90 `< 400ms`、中间包 p90 RTF `< 0.3`。
+
+### 9.3 验收注意事项
+
+- 压测时不要保存音频：保持默认 `NO_SAVE_AUDIO=1`。
+- 不要缩短 warmup：正式验收使用默认完整 warmup。
+- 不要在压测时持续运行 `watch npu-smi info`，会干扰设备管理接口。
+- 目标 NPU 必须是整卡，不要存在 vNPU 切分残留。
+- 性能仍接近单卡 10 进程硬件边界；正式验收前确认 NPU 上无其他推理进程，CPU 亲和核无外部高负载。
+
+更完整的优化过程记录见 `docs/cosyvoice2_10proc_latency_optimization_record.md`。
+
+## 10. 交付文件和运行产物清理策略
 
 已纳入版本控制的交付关键文件：
 
@@ -860,289 +925,34 @@ cosyvoice/utils/mask.py
 data/manual_transcript_20260720.txt
 experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
 tools/export_hift_decode_onnx.py
+tools/parse_run_metrics.py
+docker/README_ascend.md
 docs/transformers_replacement/src/transformers/models/qwen2/modeling_qwen2.py
 transformers
 ```
 
-已从交付版本移除的旧入口/产物：
+本版本已从 git 中清理的中间/本机产物：
 
 ```text
-run copy.sh
-run1.sh
-run_infer_py.sh
-run_streaming.sh
-run_streaming copy.sh
-infer_streaming.py
-run_stream_chunk_web.sh
-stream_chunk_web.py
-stream_chunk_probe.html
-STREAM_CHUNK_WEB_README.md
+logs/
+testout/
+kernel_meta/
+extra-info/
+huawei_model/
+.torchair_cache/
+experiments/torchair_cache_*/
+experiments/hift_decode_om_20260706_230701/*.log
+cosyvoice/cli/model copy.py
+cosyvoice/flow/flow_matching-Copy1.py
+cosyvoice/flow/flow_matching.py.bak
 fusion_result.json
 exception_cb_index_*.bin
-xmren_log.log
 ```
 
-移除原因：
+`.gitignore` 会忽略上述运行产物以及新生成的音频、大权重、profiling/CANN 临时文件。重新跑压测不会污染 git 状态。
 
-- `run.sh` 和 `run_manual_concurrent.sh` 已经覆盖单进程和 10 进程交付推理。
-- 旧 streaming/web probe 脚本仍使用早期 hard-coded 模型路径、旧音色名或 HiFT torch.compile 路径，容易误导复现。
-- `fusion_result.json`、`exception_cb_index_*.bin`、`xmren_log.log` 是本机运行/编译产物，不属于代码交付。
+## 附录
 
-`.gitignore` 会忽略：
-
-- `logs/`
-- `testout/`
-- `*.log`
-- `kernel_meta/`
-- `extra-info/`
-- `fusion_result.json`
-- `exception_cb_index_*.bin`
-- `.torchair_cache/`
-- `experiments/torchair_cache_hidden_safe/`
-- profiling / CANN 临时产物
-- 新生成的音频和大权重文件
-
-如果重新跑压测，生成的日志和音频不会污染 git 状态。
-
----
-
-以下为上游 CosyVoice 原始 README 内容，保留用于查询开源项目基础用法。
-
-
-[![SVG Banners](https://svg-banners.vercel.app/api?type=origin&text1=CosyVoice🤠&text2=Text-to-Speech%20💖%20Large%20Language%20Model&width=800&height=210)](https://github.com/Akshay090/svg-banners)
-
-## 👉🏻 CosyVoice 👈🏻
-**CosyVoice 2.0**: [Demos](https://funaudiollm.github.io/cosyvoice2/); [Paper](https://arxiv.org/abs/2412.10117); [Modelscope](https://www.modelscope.cn/studios/iic/CosyVoice2-0.5B); [HuggingFace](https://huggingface.co/spaces/FunAudioLLM/CosyVoice2-0.5B)
-
-**CosyVoice 1.0**: [Demos](https://fun-audio-llm.github.io); [Paper](https://funaudiollm.github.io/pdf/CosyVoice_v1.pdf); [Modelscope](https://www.modelscope.cn/studios/iic/CosyVoice-300M)
-
-## Highlight🔥
-
-**CosyVoice 2.0** has been released! Compared to version 1.0, the new version offers more accurate, more stable, faster, and better speech generation capabilities.
-### Multilingual
-- **Supported Language**: Chinese, English, Japanese, Korean, Chinese dialects (Cantonese, Sichuanese, Shanghainese, Tianjinese, Wuhanese, etc.)
-- **Crosslingual & Mixlingual**：Support zero-shot voice cloning for cross-lingual and code-switching scenarios.
-### Ultra-Low Latency
-- **Bidirectional Streaming Support**: CosyVoice 2.0 integrates offline and streaming modeling technologies.
-- **Rapid First Packet Synthesis**: Achieves latency as low as 150ms while maintaining high-quality audio output.
-### High Accuracy
-- **Improved Pronunciation**: Reduces pronunciation errors by 30% to 50% compared to CosyVoice 1.0.
-- **Benchmark Achievements**: Attains the lowest character error rate on the hard test set of the Seed-TTS evaluation set.
-### Strong Stability
-- **Consistency in Timbre**: Ensures reliable voice consistency for zero-shot and cross-language speech synthesis.
-- **Cross-language Synthesis**: Marked improvements compared to version 1.0.
-### Natural Experience
-- **Enhanced Prosody and Sound Quality**: Improved alignment of synthesized audio, raising MOS evaluation scores from 5.4 to 5.53.
-- **Emotional and Dialectal Flexibility**: Now supports more granular emotional controls and accent adjustments.
-
-## Roadmap
-
-- [x] 2024/12
-
-    - [x] 25hz cosyvoice 2.0 released
-
-- [x] 2024/09
-
-    - [x] 25hz cosyvoice base model
-    - [x] 25hz cosyvoice voice conversion model
-
-- [x] 2024/08
-
-    - [x] Repetition Aware Sampling(RAS) inference for llm stability
-    - [x] Streaming inference mode support, including kv cache and sdpa for rtf optimization
-
-- [x] 2024/07
-
-    - [x] Flow matching training support
-    - [x] WeTextProcessing support when ttsfrd is not available
-    - [x] Fastapi server and client
-
-
-## Install
-
-**Clone and install**
-
-- Clone the repo
-``` sh
-git clone --recursive https://github.com/FunAudioLLM/CosyVoice.git
-# If you failed to clone submodule due to network failures, please run following command until success
-cd CosyVoice
-git submodule update --init --recursive
-```
-
-- Install Conda: please see https://docs.conda.io/en/latest/miniconda.html
-- Create Conda env:
-
-``` sh
-conda create -n cosyvoice -y python=3.10
-conda activate cosyvoice
-# pynini is required by WeTextProcessing, use conda to install it as it can be executed on all platform.
-conda install -y -c conda-forge pynini==2.1.5
-pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/ --trusted-host=mirrors.aliyun.com
-
-# If you encounter sox compatibility issues
-# ubuntu
-sudo apt-get install sox libsox-dev
-# centos
-sudo yum install sox sox-devel
-```
-
-**Model download**
-
-We strongly recommend that you download our pretrained `CosyVoice2-0.5B` `CosyVoice-300M` `CosyVoice-300M-SFT` `CosyVoice-300M-Instruct` model and `CosyVoice-ttsfrd` resource.
-
-``` python
-# SDK模型下载
-from modelscope import snapshot_download
-snapshot_download('iic/CosyVoice2-0.5B', local_dir='pretrained_models/CosyVoice2-0.5B')
-snapshot_download('iic/CosyVoice-300M', local_dir='pretrained_models/CosyVoice-300M')
-snapshot_download('iic/CosyVoice-300M-25Hz', local_dir='pretrained_models/CosyVoice-300M-25Hz')
-snapshot_download('iic/CosyVoice-300M-SFT', local_dir='pretrained_models/CosyVoice-300M-SFT')
-snapshot_download('iic/CosyVoice-300M-Instruct', local_dir='pretrained_models/CosyVoice-300M-Instruct')
-snapshot_download('iic/CosyVoice-ttsfrd', local_dir='pretrained_models/CosyVoice-ttsfrd')
-```
-
-``` sh
-# git模型下载，请确保已安装git lfs
-mkdir -p pretrained_models
-git clone https://www.modelscope.cn/iic/CosyVoice2-0.5B.git pretrained_models/CosyVoice2-0.5B
-git clone https://www.modelscope.cn/iic/CosyVoice-300M.git pretrained_models/CosyVoice-300M
-git clone https://www.modelscope.cn/iic/CosyVoice-300M-25Hz.git pretrained_models/CosyVoice-300M-25Hz
-git clone https://www.modelscope.cn/iic/CosyVoice-300M-SFT.git pretrained_models/CosyVoice-300M-SFT
-git clone https://www.modelscope.cn/iic/CosyVoice-300M-Instruct.git pretrained_models/CosyVoice-300M-Instruct
-git clone https://www.modelscope.cn/iic/CosyVoice-ttsfrd.git pretrained_models/CosyVoice-ttsfrd
-```
-
-Optionally, you can unzip `ttsfrd` resouce and install `ttsfrd` package for better text normalization performance.
-
-Notice that this step is not necessary. If you do not install `ttsfrd` package, we will use WeTextProcessing by default.
-
-``` sh
-cd pretrained_models/CosyVoice-ttsfrd/
-unzip resource.zip -d .
-pip install ttsfrd_dependency-0.1-py3-none-any.whl
-pip install ttsfrd-0.4.2-cp310-cp310-linux_x86_64.whl
-```
-
-**Basic Usage**
-
-We strongly recommend using `CosyVoice2-0.5B` for better performance.
-Follow code below for detailed usage of each model.
-
-``` python
-import sys
-sys.path.append('third_party/Matcha-TTS')
-from cosyvoice.cli.cosyvoice import CosyVoice, CosyVoice2
-from cosyvoice.utils.file_utils import load_wav
-import torchaudio
-```
-
-**CosyVoice2 Usage**
-```python
-cosyvoice = CosyVoice2('pretrained_models/CosyVoice2-0.5B', load_jit=False, load_trt=False, fp16=False)
-
-# NOTE if you want to reproduce the results on https://funaudiollm.github.io/cosyvoice2, please add text_frontend=False during inference
-# zero_shot usage
-prompt_speech_16k = load_wav('./asset/zero_shot_prompt.wav', 16000)
-for i, j in enumerate(cosyvoice.inference_zero_shot('收到好友从远方寄来的生日礼物，那份意外的惊喜与深深的祝福让我心中充满了甜蜜的快乐，笑容如花儿般绽放。', '希望你以后能够做的比我还好呦。', prompt_speech_16k, stream=False)):
-    torchaudio.save('zero_shot_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)
-
-# fine grained control, for supported control, check cosyvoice/tokenizer/tokenizer.py#L248
-for i, j in enumerate(cosyvoice.inference_cross_lingual('在他讲述那个荒诞故事的过程中，他突然[laughter]停下来，因为他自己也被逗笑了[laughter]。', prompt_speech_16k, stream=False)):
-    torchaudio.save('fine_grained_control_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)
-
-# instruct usage
-for i, j in enumerate(cosyvoice.inference_instruct2('收到好友从远方寄来的生日礼物，那份意外的惊喜与深深的祝福让我心中充满了甜蜜的快乐，笑容如花儿般绽放。', '用四川话说这句话', prompt_speech_16k, stream=False)):
-    torchaudio.save('instruct_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)
-
-# bistream usage, you can use generator as input, this is useful when using text llm model as input
-# NOTE you should still have some basic sentence split logic because llm can not handle arbitrary sentence length
-def text_generator():
-    yield '收到好友从远方寄来的生日礼物，'
-    yield '那份意外的惊喜与深深的祝福'
-    yield '让我心中充满了甜蜜的快乐，'
-    yield '笑容如花儿般绽放。'
-for i, j in enumerate(cosyvoice.inference_zero_shot(text_generator(), '希望你以后能够做的比我还好呦。', prompt_speech_16k, stream=False)):
-    torchaudio.save('zero_shot_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)
-```
-
-**CosyVoice Usage**
-```python
-cosyvoice = CosyVoice('pretrained_models/CosyVoice-300M-SFT', load_jit=False, load_trt=False, fp16=False)
-# sft usage
-print(cosyvoice.list_available_spks())
-# change stream=True for chunk stream inference
-for i, j in enumerate(cosyvoice.inference_sft('你好，我是通义生成式语音大模型，请问有什么可以帮您的吗？', '中文女', stream=False)):
-    torchaudio.save('sft_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)
-
-cosyvoice = CosyVoice('pretrained_models/CosyVoice-300M') # or change to pretrained_models/CosyVoice-300M-25Hz for 25Hz inference
-# zero_shot usage, <|zh|><|en|><|jp|><|yue|><|ko|> for Chinese/English/Japanese/Cantonese/Korean
-prompt_speech_16k = load_wav('./asset/zero_shot_prompt.wav', 16000)
-for i, j in enumerate(cosyvoice.inference_zero_shot('收到好友从远方寄来的生日礼物，那份意外的惊喜与深深的祝福让我心中充满了甜蜜的快乐，笑容如花儿般绽放。', '希望你以后能够做的比我还好呦。', prompt_speech_16k, stream=False)):
-    torchaudio.save('zero_shot_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)
-# cross_lingual usage
-prompt_speech_16k = load_wav('./asset/cross_lingual_prompt.wav', 16000)
-for i, j in enumerate(cosyvoice.inference_cross_lingual('<|en|>And then later on, fully acquiring that company. So keeping management in line, interest in line with the asset that\'s coming into the family is a reason why sometimes we don\'t buy the whole thing.', prompt_speech_16k, stream=False)):
-    torchaudio.save('cross_lingual_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)
-# vc usage
-prompt_speech_16k = load_wav('./asset/zero_shot_prompt.wav', 16000)
-source_speech_16k = load_wav('./asset/cross_lingual_prompt.wav', 16000)
-for i, j in enumerate(cosyvoice.inference_vc(source_speech_16k, prompt_speech_16k, stream=False)):
-    torchaudio.save('vc_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)
-
-cosyvoice = CosyVoice('pretrained_models/CosyVoice-300M-Instruct')
-# instruct usage, support <laughter></laughter><strong></strong>[laughter][breath]
-for i, j in enumerate(cosyvoice.inference_instruct('在面对挑战时，他展现了非凡的<strong>勇气</strong>与<strong>智慧</strong>。', '中文男', 'Theo \'Crimson\', is a fiery, passionate rebel leader. Fights with fervor for justice, but struggles with impulsiveness.', stream=False)):
-    torchaudio.save('instruct_{}.wav'.format(i), j['tts_speech'], cosyvoice.sample_rate)
-```
-
-**Start web demo**
-
-You can use our web demo page to get familiar with CosyVoice quickly.
-
-Please see the demo website for details.
-
-``` python
-# change iic/CosyVoice-300M-SFT for sft inference, or iic/CosyVoice-300M-Instruct for instruct inference
-python3 webui.py --port 50000 --model_dir pretrained_models/CosyVoice-300M
-```
-
-**Advanced Usage**
-
-For advanced user, we have provided train and inference scripts in `examples/libritts/cosyvoice/run.sh`.
-
-**Build for deployment**
-
-Optionally, if you want service deployment,
-you can run following steps.
-
-``` sh
-cd runtime/python
-docker build -t cosyvoice:v1.0 .
-# change iic/CosyVoice-300M to iic/CosyVoice-300M-Instruct if you want to use instruct inference
-# for grpc usage
-docker run -d --runtime=nvidia -p 50000:50000 cosyvoice:v1.0 /bin/bash -c "cd /opt/CosyVoice/CosyVoice/runtime/python/grpc && python3 server.py --port 50000 --max_conc 4 --model_dir iic/CosyVoice-300M && sleep infinity"
-cd grpc && python3 client.py --port 50000 --mode <sft|zero_shot|cross_lingual|instruct>
-# for fastapi usage
-docker run -d --runtime=nvidia -p 50000:50000 cosyvoice:v1.0 /bin/bash -c "cd /opt/CosyVoice/CosyVoice/runtime/python/fastapi && python3 server.py --port 50000 --model_dir iic/CosyVoice-300M && sleep infinity"
-cd fastapi && python3 client.py --port 50000 --mode <sft|zero_shot|cross_lingual|instruct>
-```
-
-## Discussion & Communication
-
-You can directly discuss on [Github Issues](https://github.com/FunAudioLLM/CosyVoice/issues).
-
-You can also scan the QR code to join our official Dingding chat group.
-
-<img src="./asset/dingding.png" width="250px">
-
-## Acknowledge
-
-1. We borrowed a lot of code from [FunASR](https://github.com/modelscope/FunASR).
-2. We borrowed a lot of code from [FunCodec](https://github.com/modelscope/FunCodec).
-3. We borrowed a lot of code from [Matcha-TTS](https://github.com/shivammehta25/Matcha-TTS).
-4. We borrowed a lot of code from [AcademiCodec](https://github.com/yangdongchao/AcademiCodec).
-5. We borrowed a lot of code from [WeNet](https://github.com/wenet-e2e/wenet).
-
-## Disclaimer
-The content provided above is for academic purposes only and is intended to demonstrate technical capabilities. Some examples are sourced from the internet. If any content infringes on your rights, please contact us to request its removal.
+- 上游 CosyVoice 原始 README：`docs/UPSTREAM_COSYVOICE_README.md`
+- 10 进程延迟优化过程记录：`docs/cosyvoice2_10proc_latency_optimization_record.md`
+- Ascend Docker 打包说明：`docker/README_ascend.md`

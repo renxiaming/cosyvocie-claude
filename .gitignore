@@ -1,69 +1,77 @@
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-.pytest_cache/
-.ipynb_checkpoints/
 
-# Editors / OS
-.vscode/
-.vs/
-.idea/
-.settings/
+# Visual Studio Code files
+.vscode
+.vs
+
+# PyCharm files
+.idea
+
+# Eclipse Project settings
+*.*project
+.settings
+
+# Sublime Text settings
 *.sublime-workspace
 *.sublime-project
+
+# Editor temporaries
 *.swn
 *.swo
 *.swp
 *.swm
 *~
+
+# IPython notebook checkpoints
+.ipynb_checkpoints
+
+# macOS dir files
 .DS_Store
 
-# Local caches
-.cache/
-.torchair_cache/
+exp
+raw_wav
+tensorboard
+**/*build*
+!docker/build_ascend_image.sh
+
+# Clangd files
+.cache
 compile_commands.json
 
-# Runtime outputs
-logs/
-testout/
-tensorboard/
-raw_wav/
-exp/
-*.log
-stream_chunk_probe.html
-
-# Ascend / CANN generated artifacts
-kernel_meta/
-kernel_meta.bak_*/
-extra-info/
-edm_capture_artifacts.bak_*/
-fusion_result.json
-exception_cb_index_*.bin
-
-# Training / inference generated files
+# train/inference outputs
 *.wav
 *.m4a
 *.aac
 *.pt
-*.tar
-*.whl
+pretrained_models/*
 *_pb2_grpc.py
 *_pb2.py
+*.tar
+*.whl
 
-# External model weights should stay outside this repo.
-pretrained_models/*
+# runtime / benchmark artifacts
+logs/
+testout/
+*.log
+kernel_meta/
+extra-info/
+fusion_result.json
+exception_cb_index_*.bin
+huawei_model/
+.torchair_cache/
+experiments/torchair_cache_*/
 
-# Keep the delivery transcript tracked; ignore other local data files by default.
+# keep tracked delivery assets under experiments/hift_decode_om_*/
+experiments/*
+!experiments/hift_decode_om_20260706_230701/
+!experiments/hift_decode_om_20260706_230701/**
+
+# local transcript overrides; default benchmark transcript stays tracked
 data/*
 !data/manual_transcript_20260720.txt
 
-# experiments contains tracked HiFT OM assets required by delivery.
-# New experiment outputs remain ignored unless explicitly force-added.
-experiments/*
-!experiments/hift_decode_om_20260706_230701/
-!experiments/hift_decode_om_20260706_230701/hift.decode.fp32.onnx
-!experiments/hift_decode_om_20260706_230701/hift_decode_static.om
-!experiments/hift_decode_om_20260706_230701/hift_decode_static_v2.om
-!experiments/hift_decode_om_20260706_230701/real_hift_decode_shapes.txt
-!experiments/hift_decode_om_20260706_230701/*.log
+# docker runtime outputs
+docker_outputs/

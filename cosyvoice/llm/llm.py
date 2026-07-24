@@ -246,7 +246,7 @@ class Qwen2Encoder(torch.nn.Module):
                     "actual_seq_len": actual_seq_len,
                     "attention_mask": masks,
                 }
-                if xs.shape[1] == 1:
+                if xs.shape[1] == 1 and os.environ.get('COSYVOICE2_MARK_STATIC_INPUTS', '1') == '1':
                     self.model._mark_model_inputs_static(model_inputs)
                 outs, last_hidden_state = self.model.model.forward_hidden_only(
                     attention_mask=masks,
@@ -314,6 +314,7 @@ class Qwen2LM(TransformerLM):
         # 4. sampling method
         self.sampling = sampling
         self.mix_ratio = mix_ratio
+        self._prefill_mask_cache = {}
 
     @torch.inference_mode()
     def inference(
@@ -355,22 +356,38 @@ class Qwen2LM(TransformerLM):
             os.environ.get('COSYVOICE2_DEVICE_TOKEN_DECODE', '0') == '1'
             and os.environ.get('COSYVOICE2_SAMPLING_MODE', '') == 'fast_topk'
         )
+        raw_logits_topk = (
+            device_token_decode
+            and os.environ.get('COSYVOICE2_FAST_TOPK_RAW_LOGITS', '0') == '1'
+        )
+        reuse_embedding_output = (
+            device_token_decode
+            and os.environ.get('COSYVOICE2_REUSE_EMBEDDING_OUTPUT', '0') == '1'
+        )
         for i in range(max_len):
             # 档位统计
             # if i % 25 == 0:
             #     print(f"[LLM] input_length={input_length}, i={i}, curr_len={input_length + i}")
             prompt_length = input_length + i
             if i == 0:
-                masks = torch.tril(torch.ones((1, lm_input.shape[1], lm_input.shape[1]), device=lm_input.device)).to(torch.bool).logical_not()
+                mask_len = lm_input.shape[1]
+                masks = self._prefill_mask_cache.get(mask_len)
+                if masks is None or masks.device != lm_input.device:
+                    masks = torch.tril(torch.ones((1, mask_len, mask_len), device=lm_input.device)).to(torch.bool).logical_not()
+                    self._prefill_mask_cache[mask_len] = masks
             else:
                 masks = None
             y_pred, cache = self.llm.forward_one_step(lm_input,
                                                       masks=masks,
                                                       prompt_length=prompt_length,
                                                       cache=cache)
-            logp = self.llm_decoder(y_pred[:, -1]).log_softmax(dim=-1)
             if device_token_decode:
-                weighted_scores = logp.squeeze(dim=0)
+                # softmax(log_softmax(logits)) is numerically equivalent to
+                # softmax(topk(logits)); skip the full-vocabulary log_softmax
+                # when the fast sampler is enabled.
+                weighted_scores = self.llm_decoder(y_pred[:, -1]).squeeze(dim=0)
+                if not raw_logits_topk:
+                    weighted_scores = weighted_scores.log_softmax(dim=-1)
                 if i < min_len:
                     weighted_scores[self.speech_token_size:] = -float('inf')
                 else:
@@ -379,9 +396,11 @@ class Qwen2LM(TransformerLM):
                 if i >= min_len and int(top_ids.item()) == self.speech_token_size:
                     break
                 yield top_ids
-                out_tokens.append(top_ids)
-                lm_input = self.speech_embedding(top_ids.reshape(1, 1)).detach().clone()
+                lm_input = self.speech_embedding(top_ids.reshape(1, 1)).detach()
+                if not reuse_embedding_output:
+                    lm_input = lm_input.clone()
                 continue
+            logp = self.llm_decoder(y_pred[:, -1]).log_softmax(dim=-1)
             top_ids = self.sampling_ids(logp.squeeze(dim=0), out_tokens, sampling, ignore_eos=True if i < min_len else False).item()
             if top_ids == self.speech_token_size:
                 break

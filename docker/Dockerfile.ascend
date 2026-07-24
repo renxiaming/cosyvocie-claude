@@ -1,0 +1,26 @@
+ARG BASE_IMAGE=swr.cn-southwest-2.myhuaweicloud.com/aslp/cosyvoice2:62g
+FROM ${BASE_IMAGE}
+
+USER root
+SHELL ["/bin/bash", "-lc"]
+
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    PYTHONUNBUFFERED=1 \
+    PROJECT_ROOT=/data/xmren/work/work/test/model/CosyVoice-claude \
+    MODEL_PATH=/data/xmren/work/work/test/model/weight/CosyVoice2-0.5B_sft_shenhu_25_60 \
+    PATH=/home/ma-user/anaconda3/envs/PyTorch-2.1.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+WORKDIR /data/xmren/work/work/test/model/CosyVoice-claude
+
+COPY weight/CosyVoice2-0.5B_sft_shenhu_25_60/ /data/xmren/work/work/test/model/weight/CosyVoice2-0.5B_sft_shenhu_25_60/
+COPY CosyVoice-claude/ /data/xmren/work/work/test/model/CosyVoice-claude/
+
+RUN chmod +x run.sh run_manual_concurrent.sh && \
+    python3 --version && \
+    python3 -c 'import platform, torch; print("arch", platform.machine()); print("torch", torch.__version__)'
+
+# The base image carries a broken ModelArts entrypoint. Clear it so users can
+# execute bash run.sh or bash run_manual_concurrent.sh directly.
+ENTRYPOINT []
+CMD ["/bin/bash"]

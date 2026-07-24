@@ -171,7 +171,7 @@ if __name__ == '__main__':
     else:
         prompt_texts = default_prompt_texts
 
-    with torch.no_grad():
+    with torch.inference_mode():
         if args.warm_up_times > 0 and not skip_warmup:
             print('warm up start', flush=True)
             warmup_start = time.time()

@@ -36,6 +36,13 @@ class ConditionalCFM(BASECFM):
         self.lock = threading.Lock()
         self.flow_om = None
         self.flow_om_static = None
+        gears_env = os.environ.get('COSYVOICE2_FLOW_GEARS', '')
+        if gears_env:
+            self.flow_gears = [
+                int(g.strip()) for g in gears_env.split(',') if g.strip()
+            ]
+        else:
+            self.flow_gears = [40, 90, 140, 190, 240, 290, 340, 390, 440, 490, 540, 590, 640, 690]
 
     @torch.inference_mode()
     def forward(self, mu, mask, n_timesteps, temperature=1.0, spks=None, cond=None, prompt_len=0, flow_cache=torch.zeros(1, 80, 0, 2)):
@@ -111,14 +118,8 @@ class ConditionalCFM(BASECFM):
             cond_in[0] = cond
             # --- 修改开始：增加 Padding 对齐档位 ---
             curr_len = x.size(2)
-            # 定义你在 ATC 转换时设置的所有档位（可通过 COSYVOICE2_FLOW_GEARS 环境变量覆盖）
-            _gears_env = os.environ.get('COSYVOICE2_FLOW_GEARS', '')
-            if _gears_env:
-                gears = [int(g.strip()) for g in _gears_env.split(',') if g.strip()]
-            else:
-                gears = [40, 90, 140, 190, 240, 290, 340, 390, 440, 490, 540, 590, 640, 690]
             # 找到第一个大于等于当前长度的档位
-            target_len = next((g for g in gears if g >= curr_len), None)
+            target_len = next((g for g in self.flow_gears if g >= curr_len), None)
             if os.environ.get('COSYVOICE2_VERBOSE_FLOW', '0') == '1':
                 print(f"[Flow Gear] curr_len={curr_len} → gear={target_len} (pad={target_len - curr_len if target_len else 'N/A'})")
 
@@ -142,7 +143,10 @@ class ConditionalCFM(BASECFM):
                 else:
                     feed = [i.cpu().detach().numpy().astype(np.float32) for i in feed_list]
 
-                # 3. NPU 推理
+                # 3. NPU 推理。独立 Flow stream 下必须先切到 static OM
+                # 的 ACL context，否则 dynamic dims 会落到其他 session。
+                if os.environ.get('COSYVOICE2_FLOW_STATIC_SET_CONTEXT', '0') == '1':
+                    self.flow_om_static.set_context()
                 dphi_dt = self.flow_om_static.infer(feed, mode="dymdims")
                 self.flow_om.set_context()
                 
